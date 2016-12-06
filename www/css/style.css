@@ -46,9 +46,17 @@ svg {
 
 }
 
+.elements {
+    float: left;
+    margin: 0px 10px 0px 0px;
+    width: 15vh;
+    height: 11vw;
+}
+
 .elements svg{
-	width: 20vw;
-	height: 20vh;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
 }
 
 .ellemetspanel {
@@ -58,6 +66,13 @@ svg {
 	padding: 5px;
 	border-top: 1px solid black;
 	background-color: rgba(0, 0, 0, 0.25);
+}
+
+.elementplaceholder {
+    width: 15vh;
+    height: 11vw;
+	border: 1px solid black;
+	/*padding: 1px;*/
 }
 /* bestimmte Ansichten ausblenden */
 
@@ -70,4 +85,8 @@ svg {
 
 .gameDiv {
 	display: none;
+}
+
+.ui-state-active {
+	background-color: #00ffff;
 }

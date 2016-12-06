@@ -75,13 +75,15 @@
         <div class="container">
           <div>
             <span class="lsvg Btn" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
-            <span class="lsvg Btn droppable" do="showellemets" svgsrc="svg/levelBtn.svg"></span>
+            <div class="droppable elementplaceholder" do="accept"></div>
+            <div class="droppable elementplaceholder" do="accept"></div>
+            <div class="droppable elementplaceholder" do="accept"></div>
           </div>
         </div>
         <div class="ellemetspanel droppable">
-          <span class="lsvg elements" svgsrc="svg/elements/and.svg"></span>
-          <span class="lsvg elements" svgsrc="svg/elements/or.svg"></span>
-          <span class="lsvg elements" svgsrc="svg/elements/xor.svg"></span>
+          <div class="lsvg elements" svgsrc="svg/elements/and.svg"></div>
+          <div class="lsvg elements" svgsrc="svg/elements/or.svg"></div>
+          <div class="lsvg elements" svgsrc="svg/elements/xor.svg"></div>
         </div>
       </div>
     </div>
@@ -109,12 +111,20 @@
       $( ".elements" ).draggable({ revert: "invalid", scroll: false });
 
       $( ".droppable" ).droppable({
+        accept: ".elements",
         classes: {
           "ui-droppable-active": "ui-state-active",
           "ui-droppable-hover": "ui-state-hover"
         },
+        // bei drop immer nur in bestimmte Regionen zulassen und immer auf diese zurückswitchen
         drop: function( event, ui ) {
-
+          $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
+          if($(this).attr('do') == 'accept'){
+            $(this).droppable('option', 'accept', ui.draggable);
+          }
+        },
+        out: function(event, ui){
+          $(this).droppable('option', 'accept', '.elements');
         }
       });
 
