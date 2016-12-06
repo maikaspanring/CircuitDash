@@ -62,10 +62,24 @@
       <div id="BackgroundScroll">
         <div class="container">
           <div>
-            <span class="lsvg Btn" do="mainmenu" svgsrc="svg/settingsBtn.svg"></span>
-            <span class="lsvg Btn" svgsrc="svg/newgameBtn.svg"></span>
-            <span class="lsvg Btn" svgsrc="svg/statsBtn.svg"></span>
+            <span class="lsvg Btn" do="startlevel" svgsrc="svg/elements/levelBtn.svg"></span>
+            <span class="lsvg Btn" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="gameDiv">
+      <div id="BackgroundScroll2">
+        <div class="container">
+          <div>
+            <span class="lsvg Btn" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
+            <span class="lsvg Btn" do="showellemets" svgsrc="svg/levelBtn.svg"></span>
+          </div>
+        </div>
+        <div class="ellemetspanel">
+          <span class="lsvg elements" svgsrc="svg/elements/and.svg"></span>
+          <span class="lsvg elements" svgsrc="svg/elements/or.svg"></span>
+          <span class="lsvg elements" svgsrc="svg/elements/xor.svg"></span>
         </div>
       </div>
     </div>
@@ -101,13 +115,19 @@
       $( ".Btn" ).on("tap",function(){
         var todo = $(this).attr('do');
         switch(todo){
-          case 'newgame':
-            $('.mainMenuDiv').toggle();
-            $('.gameMenuDiv').toggle();
-          break;
           case 'mainmenu':
-            $('.mainMenuDiv').toggle();
-            $('.gameMenuDiv').toggle();
+            $('.mainMenuDiv').show();
+            $('.gameMenuDiv').hide();
+            $('.gameDiv').hide();
+          break;
+           case 'newgame':
+            $('.mainMenuDiv').hide();
+            $('.gameMenuDiv').show();
+            $('.gameDiv').hide();
+          break;
+          case 'startlevel':
+            $('.gameMenuDiv').hide();
+            $('.gameDiv').show();
           break;
           default:
 
