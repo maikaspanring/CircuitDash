@@ -44,6 +44,8 @@
     </audio>
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript" src="js/d3.min.js"></script>
     <div class="mainMenuDiv">
@@ -62,7 +64,7 @@
       <div id="BackgroundScroll">
         <div class="container">
           <div>
-            <span class="lsvg Btn" do="startlevel" svgsrc="svg/elements/levelBtn.svg"></span>
+            <span class="lsvg Btn" do="startlevel" svgsrc="svg/levelBtn.svg"></span>
             <span class="lsvg Btn" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
           </div>
         </div>
@@ -73,10 +75,10 @@
         <div class="container">
           <div>
             <span class="lsvg Btn" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
-            <span class="lsvg Btn" do="showellemets" svgsrc="svg/levelBtn.svg"></span>
+            <span class="lsvg Btn droppable" do="showellemets" svgsrc="svg/levelBtn.svg"></span>
           </div>
         </div>
-        <div class="ellemetspanel">
+        <div class="ellemetspanel droppable">
           <span class="lsvg elements" svgsrc="svg/elements/and.svg"></span>
           <span class="lsvg elements" svgsrc="svg/elements/or.svg"></span>
           <span class="lsvg elements" svgsrc="svg/elements/xor.svg"></span>
@@ -101,6 +103,18 @@
           bmusic.muted = true;
         } else {
           bmusic.muted = false;
+        }
+      });
+
+      $( ".elements" ).draggable({ revert: "invalid", scroll: false });
+
+      $( ".droppable" ).droppable({
+        classes: {
+          "ui-droppable-active": "ui-state-active",
+          "ui-droppable-hover": "ui-state-hover"
+        },
+        drop: function( event, ui ) {
+
         }
       });
 
