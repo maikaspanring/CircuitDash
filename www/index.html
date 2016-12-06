@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">-->
+    <link href="css/orbitron.css" rel="stylesheet">
+
+    <!-- materialize -->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+  </head>
+  <body ng-app="starter">
+    <audio autoplay loop id="bmusic">
+      <source src="music/CDmainTheme2.wav" type="audio/wav">
+      Your Engine does not support the audio element.
+    </audio>
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/d3.min.js"></script>
+    <div class="mainMenuDiv">
+      <div id="BackgroundScroll">
+        <div class="container">
+          <div>
+            <span class="lsvg maintitle" svgsrc="svg/maintitle.svg"></span>
+            <span class="lsvg Btn" do="newgame" svgsrc="svg/newgameBtn.svg"></span>
+            <span class="lsvg Btn" do="settings" svgsrc="svg/settingsBtn.svg"></span>
+            <span class="lsvg Btn" do="stats" svgsrc="svg/statsBtn.svg"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gameMenuDiv">
+      <div id="BackgroundScroll">
+        <div class="container">
+          <div>
+            <span class="lsvg Btn" do="mainmenu" svgsrc="svg/settingsBtn.svg"></span>
+            <span class="lsvg Btn" svgsrc="svg/newgameBtn.svg"></span>
+            <span class="lsvg Btn" svgsrc="svg/statsBtn.svg"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      /* fires when doc ready */
+      $(document).ready(function(){
+        var bmusic = document.getElementById("bmusic");
+        bmusic.volume = 0.5;
+
+        $(".lsvg").each(function(){
+          $(this).load($(this).attr('svgsrc'));
+        });
+      });
+
+      /* Debug Click Handler */
+      $( "#mute" ).on( "click", function() {
+        var bmusic = document.getElementById("bmusic");
+        if(bmusic.muted == false) {
+          bmusic.muted = true;
+        } else {
+          bmusic.muted = false;
+        }
+      });
+
+      $('.Btn').bind('touchstart', function() {
+          d3.select(this).select('svg').select('#layer2').select('path').style('fill', "white");
+      });
+
+      $('.Btn').bind('touchend', function() {
+          d3.select(this).select('svg').select('#layer2').select('path').style('fill', "black");
+      });
+
+      $( ".Btn" ).on("tap",function(){
+        var todo = $(this).attr('do');
+        switch(todo){
+          case 'newgame':
+            $('.mainMenuDiv').toggle();
+            $('.gameMenuDiv').toggle();
+          break;
+          case 'mainmenu':
+            $('.mainMenuDiv').toggle();
+            $('.gameMenuDiv').toggle();
+          break;
+          default:
+
+          break;
+        }
+      });
+
+      /* Main SVG Loader Function */
+      function loadsvg(src){
+        $(this).html($.get(src));
+      }
+
+      function ContentController($scope, $ionicSideMenuDelegate) {
+        $scope.toggleLeft = function() {
+          $ionicSideMenuDelegate.toggleLeft();
+        };
+      }
+    </script>
+  </body>
+</html>

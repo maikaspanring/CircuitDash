@@ -1,0 +1,49 @@
+
+
+/* Scrollen von Hintergrundbild linear und unendlich */
+
+/* latin */
+@font-face {
+  font-family: 'Orbitron';
+  src: url(../fonts/HmnHiRzvcnQr8CjBje6GQvesZW2xOQ-xsNqO47m55DA.woff2);
+}
+
+#BackgroundScroll {
+	height: 100vh;
+	background: url(../img/background.png);
+	-webkit-animation: backgroundScroll 20s linear infinite;
+	animation: backgroundScroll 20s linear infinite;
+}
+/* Zusatzfunktion für BackgroundScroll -> Definiert Anfang und Ende */
+@-webkit-keyframes backgroundScroll {
+	from {background-position: 0 0;}
+	to {background-position: 600px 800px;}
+}
+ /* Backup-Lösung falls Handy webkit-keyframes nicht unterstützt */       
+@keyframes backgroundScroll {
+	from {background-position: 0 0;}
+	to {background-position: 600px 800px;}
+}
+
+/* TODO: TEST IF USEFULE*/
+body {
+	font-family: 'Orbitron';
+}
+/* Bild von Titel */
+svg {
+	width: 100%;
+	height: 100%;
+	padding-top: 10px;
+	font-family: 'Orbitron';
+}
+
+.Btn {
+	
+}
+
+.mainMenuDiv{
+	display: block;
+}
+.gameMenuDiv{
+	display: none;
+}
