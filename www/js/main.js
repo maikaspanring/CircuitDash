@@ -58,15 +58,15 @@ $( ".Btn" ).on("tap",function(){
       $('.gameDiv').hide();
     break;
     // switch to level selection
-     case 'newgame':
-      $('.mainMenuDiv').hide();
+    case 'newgame':
       $('.gameMenuDiv').show();
+      $('.mainMenuDiv').hide();
       $('.gameDiv').hide();
     break;
     // switch to Game View
     case 'startlevel':
-      $('.gameMenuDiv').hide();
       $('.gameDiv').show();
+      $('.gameMenuDiv').hide();
     break;
     // TODO: Check for posible expetions
     default:
