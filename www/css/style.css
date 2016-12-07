@@ -1,20 +1,18 @@
-
-
-/* Scrollen von Hintergrundbild linear und unendlich */
-
-/* latin */
+/* set the Orbitron font face */
 @font-face {
   font-family: 'Orbitron';
   src: url(../fonts/HmnHiRzvcnQr8CjBje6GQvesZW2xOQ-xsNqO47m55DA.woff2);
 }
 
+/* Scrollen von Hintergrundbild linear und unendlich */
 #BackgroundScroll {
 	height: 100vh;
 	background: url(../img/background.png);
-	-webkit-animation: backgroundScroll 20s linear infinite;
-	animation: backgroundScroll 20s linear infinite;
+	-webkit-animation: backgroundScroll 50s linear infinite;
+	animation: backgroundScroll 50s linear infinite;
 }
 
+/* not scrolling background */
 #BackgroundScroll2 {
 	height: 100vh;
 	background: url(../img/background2.png);
@@ -24,7 +22,7 @@
 	from {background-position: 0 0;}
 	to {background-position: 600px 800px;}
 }
- /* Backup-Lösung falls Handy webkit-keyframes nicht unterstützt */       
+ /* Backup-Lösung falls Handy webkit-keyframes nicht unterstützt */
 @keyframes backgroundScroll {
 	from {background-position: 0 0;}
 	to {background-position: 600px 800px;}
@@ -41,24 +39,24 @@ svg {
 	padding-top: 10px;
 	font-family: 'Orbitron';
 }
-
+/*TODO: Define a standard Btn*/
 .Btn {
 
 }
-
+/* all movable elements*/
 .elements {
     float: left;
     margin: 0px 10px 0px 0px;
     width: 15vh;
     height: 11vw;
 }
-
+/* define the svg part of a element*/
 .elements svg{
 	width: 100%;
 	height: 100%;
 	padding: 0px;
 }
-
+/* Drop list for elements*/
 .ellemetspanel {
 	position: absolute;
 	bottom: 1px;
@@ -67,26 +65,26 @@ svg {
 	border-top: 1px solid black;
 	background-color: rgba(0, 0, 0, 0.25);
 }
-
+/* Was this for a place holder while moving? NS*/
 .elementplaceholder {
     width: 15vh;
     height: 11vw;
 	border: 1px solid black;
 	/*padding: 1px;*/
 }
-/* bestimmte Ansichten ausblenden */
 
+/* bestimmte Ansichten ausblenden */
 .mainMenuDiv{
 	display: block;
 }
 .gameMenuDiv{
 	display: none;
 }
-
 .gameDiv {
 	display: none;
 }
 
+/* TODO: DEBUG state */
 .ui-state-active {
 	background-color: #00ffff;
 }

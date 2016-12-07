@@ -39,8 +39,8 @@
     <script src="js/app.js"></script>
   </head>
   <body ng-app="starter">
-    <!-- Autostarting funny music (autoplay loop)-->
-    <audio autoplay loop id="bmusic">
+    <!-- Autostarting funny music (autoplay loop) (edit: no autoplay its driving me crazy ...)-->
+    <audio loop id="bmusic">
       <source src="music/CDmainTheme2.wav" type="audio/wav">
     </audio>
     <!-- There we have gute JS Frameworks -->
@@ -50,6 +50,7 @@
     <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript" src="js/d3.min.js"></script>
+    <!-- Main Menu -->
     <div class="mainMenuDiv">
       <div id="BackgroundScroll">
         <div class="container">
@@ -62,6 +63,7 @@
         </div>
       </div>
     </div>
+    <!-- Level Menu -->
     <div class="gameMenuDiv">
       <div id="BackgroundScroll">
         <div class="container">
@@ -72,6 +74,7 @@
         </div>
       </div>
     </div>
+    <!-- Game View -->
     <div class="gameDiv">
       <div id="BackgroundScroll2">
         <div class="container">
@@ -89,88 +92,7 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-      /* fires when doc ready */
-      $(document).ready(function(){
-        var bmusic = document.getElementById("bmusic");
-        bmusic.volume = 0.5;
-
-        $(".lsvg").each(function(){
-          $(this).load($(this).attr('svgsrc'));
-        });
-      });
-
-      /* Debug Click Handler */
-      $( "#mute" ).on( "click", function() {
-        var bmusic = document.getElementById("bmusic");
-        if(bmusic.muted == false) {
-          bmusic.muted = true;
-        } else {
-          bmusic.muted = false;
-        }
-      });
-
-      $( ".elements" ).draggable({ revert: "invalid", scroll: false });
-
-      $( ".droppable" ).droppable({
-        accept: ".elements",
-        classes: {
-          "ui-droppable-active": "ui-state-active",
-          "ui-droppable-hover": "ui-state-hover"
-        },
-        // bei drop immer nur in bestimmte Regionen zulassen und immer auf diese zurückswitchen
-        drop: function( event, ui ) {
-          $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
-          if($(this).attr('do') == 'accept'){
-            $(this).droppable('option', 'accept', ui.draggable);
-          }
-        },
-        out: function(event, ui){
-          $(this).droppable('option', 'accept', '.elements');
-        }
-      });
-
-      $('.Btn').bind('touchstart', function() {
-          d3.select(this).select('svg').select('#layer2').select('path').style('fill', "white");
-      });
-
-      $('.Btn').bind('touchend', function() {
-          d3.select(this).select('svg').select('#layer2').select('path').style('fill', "black");
-      });
-
-      $( ".Btn" ).on("tap",function(){
-        var todo = $(this).attr('do');
-        switch(todo){
-          case 'mainmenu':
-            $('.mainMenuDiv').show();
-            $('.gameMenuDiv').hide();
-            $('.gameDiv').hide();
-          break;
-           case 'newgame':
-            $('.mainMenuDiv').hide();
-            $('.gameMenuDiv').show();
-            $('.gameDiv').hide();
-          break;
-          case 'startlevel':
-            $('.gameMenuDiv').hide();
-            $('.gameDiv').show();
-          break;
-          default:
-
-          break;
-        }
-      });
-
-      /* Main SVG Loader Function */
-      function loadsvg(src){
-        $(this).html($.get(src));
-      }
-
-      function ContentController($scope, $ionicSideMenuDelegate) {
-        $scope.toggleLeft = function() {
-          $ionicSideMenuDelegate.toggleLeft();
-        };
-      }
-    </script>
+    <!-- at least start the main JS file -->
+    <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>
