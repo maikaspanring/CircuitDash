@@ -1,4 +1,4 @@
-// fires when the document is ready \(o.o)/
+// fires when the document is ready \(o.o)/ test
 $(document).ready(function(){
   var bmusic = document.getElementById("bmusic");
   bmusic.volume = 0.5;
