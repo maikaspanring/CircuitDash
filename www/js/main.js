@@ -68,15 +68,20 @@ $(document).ready(function(){
         hideMenu();
         $('.gameMenuDiv').show();
       break;
-      // TODO: settings is for DEBUG MODE (change this to real settings)
+      // switch to settings menu
       case 'settings':
         hideMenu();
-        $('.levelEngine').show();
+        $('.settingsMenuDiv').show();
       break;
       // switch to Game View
       case 'startlevel':
         hideMenu();
         $('.gameDiv').show();
+      break;
+      // switch to stats menu
+      case 'stats':
+      hideMenu();
+        $('.statsMenuDiv').show();
       break;
       // TODO: Check for posible expetions
       default:
