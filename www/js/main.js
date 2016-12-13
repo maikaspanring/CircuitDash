@@ -1,5 +1,10 @@
+var dwidth = 0;
+var dheight = 0;
 // fires when the document is ready \(o.o)/
 $(document).ready(function(){
+  dwidth = $(document).width();
+  dheight = $(document).height();
+  console.log(dwidth+" "+dheight);
   var bmusic = document.getElementById("bmusic");
   bmusic.volume = 0.5;
 
@@ -25,25 +30,6 @@ $(document).ready(function(){
 
   // make all classes "elements" draggable
   $( ".elements" ).draggable({ revert: "invalid", scroll: false });
-
-  // make all classes droppable to droppable place
-  $( ".droppable" ).droppable({
-    accept: ".elements",
-    classes: {
-      "ui-droppable-active": "ui-state-active",
-      "ui-droppable-hover": "ui-state-hover"
-    },
-    // bei drop immer nur in bestimmte Regionen zulassen und immer auf diese zurückswitchen
-    drop: function( event, ui ) {
-      $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
-      if($(this).attr('do') == 'accept'){
-        $(this).droppable('option', 'accept', ui.draggable);
-      }
-    },
-    out: function(event, ui){
-      $(this).droppable('option', 'accept', '.elements');
-    }
-  });
 
   // touch feedback start
   $('.Btn').bind('touchstart', function() {
@@ -84,10 +70,16 @@ $(document).ready(function(){
       break;
     }
   });
+
+  // TODO: [change this to level selector] Start Level
+  addLevel("debug");
+
+// end document ready function
 });
 
+// Hide all div with the class menuDiv
 function hideMenu(){
-  $('.menu').hide();
+  $('.menuDiv').hide();
 }
 
 
