@@ -51,7 +51,7 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript" src="js/d3.min.js"></script>
     <!-- Main Menu -->
-    <div class="mainMenuDiv menu">
+    <div class="mainMenuDiv menuDiv">
       <div id="BackgroundScroll">
         <div class="container">
           <div>
@@ -64,7 +64,7 @@
       </div>
     </div>
     <!-- Level Menu -->
-    <div class="gameMenuDiv  menu">
+    <div class="gameMenuDiv  menuDiv">
       <div id="BackgroundScroll2">
         <div class="container">
           <div>
@@ -99,7 +99,7 @@
       </div>
     </div>
     <!-- TODO: DEBUG MODE levelEngine Menu -->
-    <div class="levelEngine  menu">
+    <div class="levelEngine  menuDiv">
       <div id="BackgroundScroll2">
         <div class="container">
           <div>
@@ -110,14 +110,12 @@
       </div>
     </div>
     <!-- Game View -->
-    <div class="gameDiv  menu">
+    <div class="gameDiv  menuDiv">
       <div id="BackgroundScroll2">
         <div class="container">
           <div>
             <span class="lsvg Btn" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
-            <div class="droppable elementplaceholder" do="accept"></div>
-            <div class="droppable elementplaceholder" do="accept"></div>
-            <div class="droppable elementplaceholder" do="accept"></div>
+            <engine></engine>
           </div>
         </div>
         <div class="ellemetspanel droppable">
@@ -128,6 +126,7 @@
       </div>
     </div>
     <!-- at least start the main JS file -->
+    <script type="text/javascript" src="js/engine.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>

@@ -69,14 +69,14 @@ svg {
 
 /* Was this for a place holder while dragging ellemets? NS*/
 .elementplaceholder {
-    width: 15vh;
-    height: 11vw;
+  width: 15vh;
+  height: 11vw;
 	border: 1px solid black;
 	/*padding: 1px;*/
 }
 
 /* bestimmte Ansichten ausblenden */
-.menu {
+.menuDiv {
   display: none;
 }
 
@@ -87,4 +87,14 @@ svg {
 /* TODO: DEBUG state */
 .ui-state-active {
 	background-color: #00ffff;
+  fill: #00ffff;
+}
+
+/**********
+ * ENGINE *
+ **********/
+
+.gatter image{
+  width: 15vh;
+  height: 11vw;
 }
