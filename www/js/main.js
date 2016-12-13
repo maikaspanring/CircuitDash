@@ -4,8 +4,9 @@ var dheight = 0;
 $(document).ready(function(){
   dwidth = $(document).width();
   dheight = $(document).height();
-  
+
   var bmusic = document.getElementById("bmusic");
+  //bmusic.play();
   bmusic.volume = 0.5;
 
   // load svg files into all elements with the class lsvg and an svgsrc attr
@@ -27,9 +28,6 @@ $(document).ready(function(){
       bmusic.muted = false;
     }
   });
-
-  // make all classes "elements" draggable
-  $( ".elements" ).draggable({ revert: "invalid", scroll: false });
 
   // touch feedback start
   $('.Btn').bind('touchstart', function() {
@@ -62,6 +60,8 @@ $(document).ready(function(){
       // switch to Game View
       case 'startlevel':
         hideMenu();
+        // TODO: [change this to level selector] Start Level
+        addLevel("debug");
         $('.gameDiv').show();
       break;
       // switch to stats menu
@@ -76,9 +76,6 @@ $(document).ready(function(){
     }
   });
 
-  // TODO: [change this to level selector] Start Level
-  addLevel("debug");
-
 // end document ready function
 });
 
@@ -86,7 +83,6 @@ $(document).ready(function(){
 function hideMenu(){
   $('.menuDiv').hide();
 }
-
 
 // Main SVG Loader Function
 function loadsvg(obj, src){
