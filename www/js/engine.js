@@ -19,7 +19,7 @@ function addLevel(id){
     $(obj_level.circuit).each(function(index){
       var lineGraph = svgContainer.append("path")
                                   .attr("d", lineFunction(this.line))
-                                  .attr("stroke", "black")
+                                  .attr("stroke", "yellow")
                                   .attr("stroke-width", 2)
                                   .attr("fill", "none");
     });
@@ -28,7 +28,7 @@ function addLevel(id){
       //Draw the Rectangle
       var rectangle = svgContainer.append("rect")
                                     .attr("x", this.x)
-                                    .attr("y", this.x)
+                                    .attr("y", this.y)
                                     .attr("width", "15vh")
                                     .attr("height", "11vh")
                                     .attr("stroke", "black")
