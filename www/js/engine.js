@@ -59,8 +59,6 @@ function dragstarted(d) {
 }
 
 function dragged(d) {
-  console.log(parseInt($(this).width()));
-  console.log(parseInt($(this).attr("height")));
   d3.select(this)
       .attr("x", d3.event.x - dwidth * 0.15 / 2)
       .attr("y", d3.event.y - dheight * 0.11 / 2);

@@ -4,7 +4,7 @@ var dheight = 0;
 $(document).ready(function(){
   dwidth = $(document).width();
   dheight = $(document).height();
-  console.log(dwidth+" "+dheight);
+  
   var bmusic = document.getElementById("bmusic");
   bmusic.volume = 0.5;
 
