@@ -53,17 +53,22 @@ function addLevel(id){
   });
 }
 
-
+var
 function dragstarted(d) {
   d3.select(this).raise().classed("active", true);
 }
 
 function dragged(d) {
   d3.select(this)
-      .attr("x", d3.event.x - dwidth * 0.15 / 2)
-      .attr("y", d3.event.y - dheight * 0.11 / 2);
+      .attr("x", d3.event.x - (dwidth * 0.08))
+      .attr("y", d3.event.y - (dheight * 0.03));
 }
 
 function dragended(d) {
   d3.select(this).classed("active", false);
+  d3.select(this)
+      .transition()
+        .duration(500)
+          .attr("x", 300)
+          .attr("y", 300);
 }

@@ -76,8 +76,16 @@ $(document).ready(function(){
     }
   });
 
+  if($(this).attr("from") == "closeLevel"){
+    closeLevel();
+  }
 // end document ready function
 });
+
+// Hide all div with the class menuDiv
+function closeLevel(){
+  $('engine').remove();
+}
 
 // Hide all div with the class menuDiv
 function hideMenu(){
