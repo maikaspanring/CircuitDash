@@ -53,7 +53,6 @@ function addLevel(id){
   });
 }
 
-var
 function dragstarted(d) {
   d3.select(this).raise().classed("active", true);
 }
