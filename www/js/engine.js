@@ -15,48 +15,64 @@ function addLevel(id){
     // The SVG Container
     svgContainer = d3.select("engine").append("svg");
 
-    // The line SVG Path we draw
-    $(obj_level.circuit).each(function(index){
-      $(this.line).each(function(index){
-        var lineGraph = svgContainer.append("path")
-                                    .attr("d", lineFunction(this.path))
-                                    .attr("stroke", "yellow")
-                                    .attr("stroke-width", 2)
-                                    .attr("fill", "none");
-      });
+    var cendponts = obj_level.endpoints.length;
+    // The endpoints we have
+    $(obj_level.endpoints).each(function(index){
+      //Draw the Rectangle
+      p_x = (dwidth / (cendponts + 1)) * (index + 1);
+      p_y = 10;
+       var rectangle = svgContainer.append("rect")
+                                     .attr("x", p_x)
+                                     .attr("y", p_y)
+                                     .attr("width", "10")
+                                     .attr("height", "10")
+                                     .attr("stroke", "black")
+                                     .attr("stroke-width", 2)
+                                     .attr("fill", "grey");
     });
-
+    /* TODO: make a line from obj to obj
+    var lineGraph = svgContainer.append("path")
+                                .attr("d", lineFunction(this.path))
+                                .attr("stroke", "yellow")
+                                .attr("stroke-width", 2)
+                                .attr("fill", "none");
+    */
     $(obj_level.elements).each(function(index){
-      var tmp_x = this.x;
-      var tmp_y = this.y;
-      d3.xml("svg/elements/place.svg").mimeType("image/svg+xml").get(function(error, xml) {
-        if (error) throw error;
-        svgContainer.append("g")
-                      .attr("class","drop")
-                      .attr("id","drop"+index)
-                      .attr("drop", "0")
-                      .attr("x", tmp_x)
-                      .attr("y", tmp_y)
-                      .html($(xml).find("g").html())
-                      .attr("transform", "scale(0.2,0.2) translate("+(tmp_x * 5)+","+(tmp_y * 5)+")");
-      });
+      if(this.type == "endpoint"){
 
-      d3.xml("svg/elements/"+this.id+".svg").mimeType("image/svg+xml").get(function(error, xml) {
-        if (error) throw error;
-        svgContainer.append("g")
-                      .attr("class","gatter")
-                      .attr("id","g"+index)
-                      .attr("x", 0)
-                      .attr("y", 0)
-                      .html($(xml).find("g").html())
-                      .attr("transform", "scale(0.2,0.2)")
-                        .call(d3.drag()
-                          .on("start", dragstarted)
-                          .on("drag", dragged)
-                          .on("end", dragended));
+      }
+      if(this.type == "drop"){
+        var tmp_x = this.x * 10; // 10 Raster x
+        var tmp_y = this.y * 10; // 10 Raster y
+        d3.xml("svg/elements/place.svg").mimeType("image/svg+xml").get(function(error, xml) {
+          if (error) throw error;
+          svgContainer.append("g")
+                        .attr("class","drop")
+                        .attr("id","drop"+index)
+                        .attr("drop", "0")
+                        .attr("x", tmp_x)
+                        .attr("y", tmp_y)
+                        .html($(xml).find("g").html())
+                        .attr("transform", "scale(0.2,0.2) translate("+(tmp_x * 5)+","+(tmp_y * 5)+")");
+        });
 
-      });
-      // each elements end
+        d3.xml("svg/elements/"+this.obj+".svg").mimeType("image/svg+xml").get(function(error, xml) {
+          if (error) throw error;
+          svgContainer.append("g")
+                        .attr("class","gatter")
+                        .attr("id","g"+index)
+                        .attr("x", 0)
+                        .attr("y", 0)
+                        .html($(xml).find("g").html())
+                        .attr("transform", "scale(0.2,0.2)")
+                          .call(d3.drag()
+                            .on("start", dragstarted)
+                            .on("drag", dragged)
+                            .on("end", dragended));
+
+        });
+        // each elements end
+      }
     });
   // load json end
   });

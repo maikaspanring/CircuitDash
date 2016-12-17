@@ -2,43 +2,48 @@
   "ID":1,
   "Name":"Debug",
   "Time":3600,
-  "circuit":[
+  "endpoints":[
     {
-      "line": [
-        {
-          "path": [
-            { "x": 200,   "y": 250},  { "x": 300,  "y": 150},
-            { "x": 300,  "y": 110}, { "x": 200,  "y": 50}
-          ]
-        },
-        {
-          "path": [
-            { "x": 100,  "y": 50}, { "x": 140,  "y": 150}
-          ]
-        },
-        {
-          "path": [
-            { "x": 140,  "y": 150},  { "x": 200, "y": 250}
-          ]
-        }
-      ]
+      "id":"p1",
+      "need":1
+    },
+    {
+      "id":"p2",
+      "need":0
     }
   ],
   "elements":[
     {
-      "id":"and",
-      "x": 100,
-      "y": 50
+      "type":"drop",
+      "id":"block4",
+      "obj":"and",
+      "x": 15,
+      "y": 5,
+      "next":"p1"
     },
     {
-      "id":"xor",
-      "x": 140,
-      "y": 150
+      "type":"drop",
+      "id":"block3",
+      "obj":"xor",
+      "x": 5,
+      "y": 5,
+      "next":"p2"
     },
     {
-      "id":"or",
-      "x": 200,
-      "y": 250
+      "type":"drop",
+      "id":"block2",
+      "obj":"xor",
+      "x": 14,
+      "y": 15,
+      "next":"block3"
+    },
+    {
+      "type":"drop",
+      "id":"block1",
+      "obj":"or",
+      "x": 17,
+      "y": 25,
+      "next":"block2"
     }
   ]
 }
