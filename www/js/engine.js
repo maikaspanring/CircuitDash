@@ -25,20 +25,21 @@ function addLevel(id){
     });
 
     $(obj_level.elements).each(function(index){
-      //Draw the Rectangle
-      var rectangle = svgContainer.append("rect")
-                                    .attr("x", this.x)
-                                    .attr("y", this.y)
-                                    .attr("width", "10vh")
-                                    .attr("height", "11vh")
-                                    .attr("stroke", "black")
-                                    .attr("stroke-width", 2)
-                                    .attr("fill", "grey")
-                                    .attr("class", "drop");
+      var tmp_x = this.x;
+      var tmp_y = this.y;
+      d3.xml("svg/elements/place.svg").mimeType("image/svg+xml").get(function(error, xml) {
+        if (error) throw error;
+        svgContainer.append("g")
+                      .attr("class","drop")
+                      .attr("id","drop"+index)
+                      .attr("x", tmp_x)
+                      .attr("y", tmp_y)
+                      .html($(xml).find("g").html())
+                      .attr("transform", "scale(0.2,0.2) translate("+(tmp_x * 5)+","+(tmp_y * 5)+")");
+      });
 
       d3.xml("svg/elements/"+this.id+".svg").mimeType("image/svg+xml").get(function(error, xml) {
         if (error) throw error;
-        //console.log($(xml).find("g").html());
         svgContainer.append("g")
                       .attr("class","gatter")
                       .attr("id","g"+index)
@@ -49,7 +50,8 @@ function addLevel(id){
                         .call(d3.drag()
                           .on("start", dragstarted)
                           .on("drag", dragged)
-                          .on("end", dragended))
+                          .on("end", dragended));
+
       });
       // each elements end
     });
@@ -63,6 +65,10 @@ function dragstarted(d) {
   d3.select(this).raise().classed("active", true);
   start_x = d3.select(this).attr("x");
   start_y = d3.select(this).attr("y");
+  d3.select(this)
+          .attr("lx", start_x)
+          .attr("ly", start_y);
+  console.log({start_x, start_y});
 }
 
 function dragged(d) {
@@ -78,13 +84,12 @@ function dragended(d) {
   //console.log(parseInt(d3.select(this).attr("x")) - (this.getBBox().width / 2));
   //console.log(parseInt(d3.select(this).attr("y")) - (this.getBBox().height / 2));
   box1 = {
-            left: parseInt(d3.select(this).attr("x")) - parseInt(this.getBBox().width / 2) ,
-            top: parseInt(d3.select(this).attr("y")) - parseInt(this.getBBox().height / 2),
-            right: parseInt(d3.select(this).attr("x")) + (this.getBBox().width * 0.2),
-            bottom: parseInt(d3.select(this).attr("y")) + (this.getBBox().height * 0.2)
+            left: parseInt(d3.select(this).attr("x")) - ((this.getBBox().width * 0.2) / 2 ),
+            top: parseInt(d3.select(this).attr("y")) - ((this.getBBox().height * 0.2) / 2 ),
+            right: parseInt(d3.select(this).attr("x")) + ((this.getBBox().width * 0.2) / 2),
+            bottom: parseInt(d3.select(this).attr("y")) + ((this.getBBox().height * 0.2))
           };
 
-  console.log(box1);
   var inscetion_obj;
   var insection_box;
   var intersect = false;
@@ -93,10 +98,10 @@ function dragended(d) {
         box2 = {
               left: parseInt(d3.select(this).attr("x")),
               top: parseInt(d3.select(this).attr("y")),
-              right: parseInt(d3.select(this).attr("x")) + this.getBBox().width,
-              bottom: parseInt(d3.select(this).attr("y")) + this.getBBox().height
+              right: parseInt(d3.select(this).attr("x")) + this.getBBox().width * 0.2,
+              bottom: parseInt(d3.select(this).attr("y")) + this.getBBox().height * 0.2
             };
-
+        console.log(box2);
         intersect = intersectRect(box1, box2);
       }
       if(intersect == true && inscetion_obj === undefined){
@@ -106,23 +111,24 @@ function dragended(d) {
   });
 
   if(intersect != true){
+    last_x = d3.select(this).attr("lx");
+    last_y = d3.select(this).attr("ly");
+    console.log({last_x, last_y});
     d3.select(this)
         .transition()
           .duration(500)
-            .attr("x", start_x)
-            .attr("y", start_y)
-            .attr("transform", "scale(0.2,0.2) translate(" + start_x + "," + start_y + ")");;
+            .attr("x", last_x)
+            .attr("y", last_y)
+            .attr("transform", "scale(0.2,0.2) translate(" + last_x * 5 + "," + last_y * 5 + ")");;
   } else {
-    new_x = insection_box.left + ((insection_box.right - insection_box.left)/1.85);
-    new_y = insection_box.top + ((insection_box.bottom - insection_box.top)/2.55);
-    new_x = new_x - (dwidth * 0.08);
-    new_y = new_y - (dheight * 0.03);
+    new_x = insection_box.left;
+    new_y = insection_box.top;
     d3.select(this)
         .transition()
           .duration(500)
             .attr("x", new_x)
             .attr("y", new_y)
-            .attr("transform", "scale(0.2,0.2) translate(" + (new_x * 5 - 10) + "," + (new_y * 5) + ")");
+            .attr("transform", "scale(0.2,0.2) translate(" + (new_x * 5) + "," + (new_y * 5 - 32) + ")");
   }
 }
 
