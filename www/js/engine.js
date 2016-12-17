@@ -4,7 +4,7 @@ var svgContainer;
 // SVG Path function for leiterbahnen
 function addLevel(id){
   var obj_level;
-  d3.json("data/"+id+"level.json", function(error, data) {
+  d3.json("data/level/"+id+"level.json", function(error, data) {
     obj_level = data; // put data into obj_level
 
     // This is the accessor function
