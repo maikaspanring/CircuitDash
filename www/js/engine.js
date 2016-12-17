@@ -17,11 +17,13 @@ function addLevel(id){
 
     // The line SVG Path we draw
     $(obj_level.circuit).each(function(index){
-      var lineGraph = svgContainer.append("path")
-                                  .attr("d", lineFunction(this.line))
-                                  .attr("stroke", "yellow")
-                                  .attr("stroke-width", 2)
-                                  .attr("fill", "none");
+      $(this.line).each(function(index){
+        var lineGraph = svgContainer.append("path")
+                                    .attr("d", lineFunction(this.path))
+                                    .attr("stroke", "yellow")
+                                    .attr("stroke-width", 2)
+                                    .attr("fill", "none");
+      });
     });
 
     $(obj_level.elements).each(function(index){
