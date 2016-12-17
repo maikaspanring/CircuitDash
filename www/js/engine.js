@@ -67,22 +67,24 @@ function dragstarted(d) {
 
 function dragged(d) {
   d3.select(this)
-      .attr("x", d3.event.x )
-      .attr("y", d3.event.y )
-      .attr("transform", "scale(0.2,0.2) translate("+(d3.event.x * 5) + "," + (d3.event.y * 5) + ")");
+      .attr("x", d3.event.x)
+      .attr("y", d3.event.y)
+      .attr("transform", "scale(0.2,0.2) translate("+((d3.event.x * 5) - ((this.getBBox().width / 2) )) + "," + ((d3.event.y * 5) - ((this.getBBox().height / 2) )) + ")");
 }
 
 function dragended(d) {
   d3.select(this).classed("active", false);
 
-
+  //console.log(parseInt(d3.select(this).attr("x")) - (this.getBBox().width / 2));
+  //console.log(parseInt(d3.select(this).attr("y")) - (this.getBBox().height / 2));
   box1 = {
-            left: parseInt(d3.select(this).attr("x")),
-            top: parseInt(d3.select(this).attr("y")),
+            left: parseInt(d3.select(this).attr("x")) - parseInt(this.getBBox().width / 2) ,
+            top: parseInt(d3.select(this).attr("y")) - parseInt(this.getBBox().height / 2),
             right: parseInt(d3.select(this).attr("x")) + (this.getBBox().width * 0.2),
             bottom: parseInt(d3.select(this).attr("y")) + (this.getBBox().height * 0.2)
           };
 
+  console.log(box1);
   var inscetion_obj;
   var insection_box;
   var intersect = false;
