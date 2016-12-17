@@ -32,6 +32,7 @@ function addLevel(id){
         svgContainer.append("g")
                       .attr("class","drop")
                       .attr("id","drop"+index)
+                      .attr("drop", "0")
                       .attr("x", tmp_x)
                       .attr("y", tmp_y)
                       .html($(xml).find("g").html())
@@ -68,7 +69,7 @@ function dragstarted(d) {
   d3.select(this)
           .attr("lx", start_x)
           .attr("ly", start_y);
-  console.log({start_x, start_y});
+  console.log({start_x, start_y });
 }
 
 function dragged(d) {
@@ -101,7 +102,6 @@ function dragended(d) {
               right: parseInt(d3.select(this).attr("x")) + this.getBBox().width * 0.2,
               bottom: parseInt(d3.select(this).attr("y")) + this.getBBox().height * 0.2
             };
-        console.log(box2);
         intersect = intersectRect(box1, box2);
       }
       if(intersect == true && inscetion_obj === undefined){
@@ -110,7 +110,7 @@ function dragended(d) {
       }
   });
 
-  if(intersect != true){
+  if(intersect != true || d3.select(inscetion_obj).attr("drop") != "0"){
     last_x = d3.select(this).attr("lx");
     last_y = d3.select(this).attr("ly");
     console.log({last_x, last_y});
@@ -119,16 +119,18 @@ function dragended(d) {
           .duration(500)
             .attr("x", last_x)
             .attr("y", last_y)
-            .attr("transform", "scale(0.2,0.2) translate(" + last_x * 5 + "," + last_y * 5 + ")");;
+            .attr("transform", "scale(0.2,0.2) translate(" + last_x * 5 + "," + (last_y * 5 - 32) + ")");
   } else {
-    new_x = insection_box.left;
-    new_y = insection_box.top;
-    d3.select(this)
-        .transition()
-          .duration(500)
-            .attr("x", new_x)
-            .attr("y", new_y)
-            .attr("transform", "scale(0.2,0.2) translate(" + (new_x * 5) + "," + (new_y * 5 - 32) + ")");
+      new_x = insection_box.left;
+      new_y = insection_box.top;
+      d3.select(this)
+          .transition()
+            .duration(500)
+              .attr("x", new_x)
+              .attr("y", new_y)
+              .attr("transform", "scale(0.2,0.2) translate(" + (new_x * 5) + "," + (new_y * 5 - 32) + ")");
+      d3.select(".drop[drop="+'"'+d3.select(this).attr("id")+'"'+"]").attr("drop", "0")
+      d3.select(inscetion_obj).attr("drop", d3.select(this).attr("id"));
   }
 }
 
