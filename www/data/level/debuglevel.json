@@ -33,7 +33,7 @@
       "type":"drop",
       "id":"block2",
       "obj":"xor",
-      "x": 14,
+      "x": 10,
       "y": 15,
       "next":"block3"
     },
@@ -41,7 +41,7 @@
       "type":"drop",
       "id":"block1",
       "obj":"or",
-      "x": 17,
+      "x": 10,
       "y": 25,
       "next":"block2"
     }
