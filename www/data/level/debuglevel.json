@@ -10,6 +10,32 @@
     {
       "id":"p2",
       "need":0
+    },
+    {
+      "id":"p3",
+      "need":0
+    }
+  ],
+  "startpoints":[
+    {
+      "id":"sp1",
+      "on":1,
+      "next":[{"id":"block1"}]
+    },
+    {
+      "id":"sp2",
+      "on":0,
+      "next":[{"id":"block1"}]
+    },
+    {
+      "id":"sp3",
+      "on":1,
+      "next":[{"id":"block0"}]
+    },
+    {
+      "id":"sp4",
+      "on":0,
+      "next":[{"id":"block0"}]
     }
   ],
   "elements":[
@@ -17,37 +43,36 @@
       "type":"drop",
       "id":"block4",
       "obj":"and",
-      "x": 15,
-      "y": 5,
-      "ebene":1,
-      "next":[{"id":"p2"}]
-    },
-    {
-      "type":"drop",
-      "id":"block3",
-      "obj":"xor",
-      "x": 5,
-      "y": 5,
       "ebene":1,
       "next":[{"id":"p1"}]
     },
     {
       "type":"drop",
+      "id":"block3",
+      "obj":"xor",
+      "ebene":1,
+      "next":[{"id":"p3"}]
+    },
+    {
+      "type":"drop",
       "id":"block2",
       "obj":"xor",
-      "x": 10,
-      "y": 15,
       "ebene":2,
-      "next":[{"id":"block3"},{"id":"block4"}]
+      "next":[{"id":"block4"}, {"id":"p2"}, {"id":"block3"}]
     },
     {
       "type":"drop",
       "id":"block1",
       "obj":"or",
-      "x": 10,
-      "y": 25,
       "ebene":3,
-      "next":[{"id":"block2"}]
+      "next":[{"id":"block4"}, {"id":"block2"}]
+    },
+    {
+      "type":"drop",
+      "id":"block0",
+      "obj":"or",
+      "ebene":3,
+      "next":[{"id":"block2"}, {"id":"block3"}]
     }
   ]
 }
