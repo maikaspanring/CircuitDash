@@ -1,6 +1,20 @@
 
 var svgContainer;
 
+d3.selection.prototype.moveToFront = function() {
+ return this.each(function(){
+   this.parentNode.appendChild(this);
+ });
+};
+d3.selection.prototype.moveToBack = function() {
+   return this.each(function() {
+       var firstChild = this.parentNode.firstChild;
+       if (firstChild) {
+           this.parentNode.insertBefore(this, firstChild);
+       }
+   });
+};
+
 // SVG Path function for leiterbahnen
 function addLevel(id){
   var obj_level;
@@ -21,14 +35,18 @@ function addLevel(id){
       //Draw the Rectangle
       p_x = (dwidth / (cendponts + 1)) * (index + 1);
       p_y = 10;
-       var rectangle = svgContainer.append("rect")
-                                     .attr("x", p_x)
-                                     .attr("y", p_y)
-                                     .attr("width", "10")
-                                     .attr("height", "10")
-                                     .attr("stroke", "black")
-                                     .attr("stroke-width", 2)
-                                     .attr("fill", "grey");
+      var id = this.id;
+      var need = this.need;
+      var rectangle = svgContainer.append("rect")
+                                   .attr("x", p_x)
+                                   .attr("y", p_y)
+                                   .attr("id", id)
+                                   .attr("type", "endpoint")
+                                   .attr("width", "10")
+                                   .attr("height", "10")
+                                   .attr("stroke", "black")
+                                   .attr("stroke-width", 2)
+                                   .attr("fill", "grey");
     });
     /* TODO: make a line from obj to obj
     var lineGraph = svgContainer.append("path")
@@ -37,23 +55,90 @@ function addLevel(id){
                                 .attr("stroke-width", 2)
                                 .attr("fill", "none");
     */
+    var celements = obj_level.elements.length;
+    var ebene = 0;
+    var ebene_car = [];
+    var idx_ebene = 0;
+    var tmp_y = 0;
+    var tmp_x = 0;
+    // count places per ebene
     $(obj_level.elements).each(function(index){
-      if(this.type == "endpoint"){
-
-      }
       if(this.type == "drop"){
-        var tmp_x = this.x * 10; // 10 Raster x
-        var tmp_y = this.y * 10; // 10 Raster y
+        if(ebene_car[this.ebene] == undefined){
+          ebene_car[this.ebene] = 1;
+        }else{
+          ebene_car[this.ebene] = parseInt(ebene_car[this.ebene]) + 1;
+        }
+      }
+    });
+    $(obj_level.elements).each(function(index){
+      if(this.type == "drop"){
+
+        var id = this.id;
+        var next = this.next;
+        var this_ebene = this.ebene;
         d3.xml("svg/elements/place.svg").mimeType("image/svg+xml").get(function(error, xml) {
           if (error) throw error;
-          svgContainer.append("g")
-                        .attr("class","drop")
-                        .attr("id","drop"+index)
-                        .attr("drop", "0")
-                        .attr("x", tmp_x)
-                        .attr("y", tmp_y)
-                        .html($(xml).find("g").html())
-                        .attr("transform", "scale(0.2,0.2) translate("+(tmp_x * 5)+","+(tmp_y * 5)+")");
+
+          if(ebene != this_ebene){
+            ebene = this_ebene;
+            tmp_y = ebene * 100; // new y position
+            idx_ebene = 0;
+          } else {
+            idx_ebene = idx_ebene + 1;
+          }
+
+          tmp_x = (dwidth / (ebene_car[this_ebene] + 1)) * (idx_ebene + 1); // test idx_ebene
+
+          console.log({tmp_x, tmp_y});
+
+          var newplace =  svgContainer.append("g")
+                                        .attr("class","drop")
+                                        .attr("id", id)
+                                        .attr("drop", "0")
+                                        .attr("x", tmp_x)
+                                        .attr("y", tmp_y)
+                                        .html($(xml).find("g").html())
+                                        .attr("transform", "scale(0.2,0.2) translate("+(tmp_x * 5)+","+(tmp_y * 5)+")");
+
+          $(next).each(function(index){
+            placew = newplace.node().getBBox().width * 0.2 / 2;
+            var linetoobj = $("#"+(this.id));
+            lx = parseInt(linetoobj.attr("x"));
+            ly = parseInt(linetoobj.attr("y"));
+            if(linetoobj.attr("type") != "endpoint"){
+              lw = d3.select("#"+this.id).node().getBBox().width * 0.2 / 2;
+              lh = d3.select("#"+this.id).node().getBBox().height * 0.2;
+            } else {
+              lw = 5;
+              lh = 10;
+            }
+            // define startpoints: stp, endpoints: enp
+            lx_stp = lx + lw;
+            ly_stp = ly + lh;
+            lx_enp = tmp_x + placew;
+            ly_enp = tmp_y;
+            // make angular lines between
+            lx_a1 = lx_stp;
+            ly_a1 = (ly_enp + ly_stp) / 2;
+
+            lx_a2 = lx_enp;
+            ly_a2 = ly_a1;
+
+            ldata = [
+                      { "x": lx_stp,  "y": ly_stp},
+                      { "x": lx_a1,   "y": ly_a1},
+                      { "x": lx_a2,   "y": ly_a2},
+                      { "x": lx_enp,  "y": ly_enp}
+                    ];
+
+            var lineGraph = svgContainer.append("path")
+                                        .attr("d", lineFunction(ldata))
+                                        .attr("stroke", "yellow")
+                                        .attr("stroke-width", 2)
+                                        .attr("fill", "none")
+                                        .moveToBack();
+          });
         });
 
         d3.xml("svg/elements/"+this.obj+".svg").mimeType("image/svg+xml").get(function(error, xml) {
@@ -72,7 +157,7 @@ function addLevel(id){
 
         });
         // each elements end
-      }
+      } // if type drop
     });
   // load json end
   });
@@ -87,7 +172,6 @@ function dragstarted(d) {
   d3.select(this)
           .attr("lx", start_x)
           .attr("ly", start_y);
-  console.log({start_x, start_y });
 }
 
 function dragged(d) {
@@ -131,21 +215,20 @@ function dragended(d) {
   if(intersect != true || d3.select(inscetion_obj).attr("drop") != "0"){
     last_x = d3.select(this).attr("lx");
     last_y = d3.select(this).attr("ly");
-    console.log({last_x, last_y});
     d3.select(this)
+        .attr("x", last_x)
+        .attr("y", last_y)
         .transition()
           .duration(500)
-            .attr("x", last_x)
-            .attr("y", last_y)
             .attr("transform", "scale(0.2,0.2) translate(" + last_x * 5 + "," + (last_y * 5 - 32) + ")");
   } else {
       new_x = insection_box.left;
       new_y = insection_box.top;
       d3.select(this)
+          .attr("x", new_x)
+          .attr("y", new_y)
           .transition()
             .duration(500)
-              .attr("x", new_x)
-              .attr("y", new_y)
               .attr("transform", "scale(0.2,0.2) translate(" + (new_x * 5) + "," + (new_y * 5 - 32) + ")");
       d3.select(".drop[drop="+'"'+d3.select(this).attr("id")+'"'+"]").attr("drop", "0")
       d3.select(inscetion_obj).attr("drop", d3.select(this).attr("id"));

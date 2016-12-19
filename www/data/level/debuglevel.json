@@ -19,7 +19,8 @@
       "obj":"and",
       "x": 15,
       "y": 5,
-      "next":"p1"
+      "ebene":1,
+      "next":[{"id":"p2"}]
     },
     {
       "type":"drop",
@@ -27,7 +28,8 @@
       "obj":"xor",
       "x": 5,
       "y": 5,
-      "next":"p2"
+      "ebene":1,
+      "next":[{"id":"p1"}]
     },
     {
       "type":"drop",
@@ -35,7 +37,8 @@
       "obj":"xor",
       "x": 10,
       "y": 15,
-      "next":"block3"
+      "ebene":2,
+      "next":[{"id":"block3"},{"id":"block4"}]
     },
     {
       "type":"drop",
@@ -43,7 +46,8 @@
       "obj":"or",
       "x": 10,
       "y": 25,
-      "next":"block2"
+      "ebene":3,
+      "next":[{"id":"block2"}]
     }
   ]
 }
