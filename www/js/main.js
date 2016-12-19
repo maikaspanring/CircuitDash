@@ -41,6 +41,7 @@ $(document).ready(function(){
   // user tab/click event Handler
   $( ".Btn" ).on("tap",function(){
     var todo = $(this).attr('do');
+    var from = $(this).attr('from');
     switch(todo){
       // switch back Main Menu
       case 'mainmenu':
@@ -74,17 +75,18 @@ $(document).ready(function(){
 
       break;
     }
+    if(from == "gameDiv"){
+      closeLevel();
+    }
   });
 
-  if($(this).attr("from") == "closeLevel"){
-    closeLevel();
-  }
+
 // end document ready function
 });
 
 // Hide all div with the class menuDiv
 function closeLevel(){
-  $('engine').remove();
+  $('engine').html('');
 }
 
 // Hide all div with the class menuDiv
