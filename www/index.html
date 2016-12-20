@@ -71,7 +71,7 @@
           <div>
             <span class="lsvg Btn" svgsrc="svg/newgameTitle.svg"></span>
             <span class="lsvg Btn" do="startlevel" svgsrc="svg/levelBtn.svg"></span>
-            <span class="lsvg Btn" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
+            <span class="lsvg Btn back" do="mainmenu" from="gameDiv" svgsrc="svg/backMini.svg"></span>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
             <span class="lsvg Btn" id="mute" svgsrc="svg/musicBtn.svg"></span>
             <span class="lsvg Btn" id="colorchange" svgsrc="svg/colorBtn.svg"></span>
             <span class="lsvg Btn" do="help" id="help" svgsrc="svg/helpBtn.svg"></span>
-            <span class="lsvg Btn" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
+            <span class="lsvg Btn back" do="mainmenu" from="gameDiv" svgsrc="svg/backMini.svg"></span>
           </div>
         </div>
       </div>
@@ -107,7 +107,7 @@
             else {
               elem.style.display = "none";
               }
-          }     
+          }
         </script>
 			<script src='js/help.js'></script>
           </div>
@@ -120,18 +120,7 @@
         <div class="container">
           <div>
             <span class="lsvg Btn" svgsrc="svg/statsTitle.svg"></span>
-            <span class="lsvg Btn" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- TODO: DEBUG MODE levelEngine Menu -->
-    <div class="levelEngine  menuDiv">
-      <div id="BackgroundScroll2">
-        <div class="container">
-          <div>
-            <span class="lsvg Btn" do="startlevel" svgsrc="svg/levelBtn.svg"></span>
-            <span class="lsvg Btn" from="levelEngine" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
+            <span class="lsvg Btn back" do="mainmenu" from="gameDiv" svgsrc="svg/backMini.svg"></span>
           </div>
         </div>
       </div>
@@ -141,7 +130,7 @@
       <div id="BackgroundScroll2">
         <div class="container">
           <engine></engine>
-          <span class="lsvg Btn" do="mainmenu" from="gameDiv" svgsrc="svg/backBtn.svg"></span>
+          <span class="lsvg Btn gameback" do="mainmenu" from="gameDiv" svgsrc="svg/backMini.svg"></span>
         </div>
       </div>
     </div>

@@ -33,21 +33,57 @@
 body {
 	font-family: 'Orbitron';
 }
+
 /* Bild von Titel */
 svg {
 	width: 100%;
 	height: 100%;
-	padding-top: 10px;
 	font-family: 'Orbitron';
 }
 /*TODO: Define a standard Btn*/
-.Btn {
+.Btn svg{
 
+  padding-top: 10px;
 }
 /* TODO: on Mainpage a little help icon */
-.Btn .help {
-
+.help svg{
+  width: 14vw;
 }
+
+.helpgatter svg{
+  width: 20vw;
+}
+
+.back svg {
+  width: 13vw;
+  padding-top: 2.8vh !important;
+}
+
+.back svg ellipse {
+  stroke: black !important;
+}
+
+.back {
+  position: absolute;
+  left: 1.5vw;
+  top: 1vh;
+}
+
+.gameback svg {
+  width: 60px;
+	padding-top: 0px !important;
+}
+
+.gameback svg ellipse {
+  stroke: black !important;
+}
+
+.gameback {
+  position: absolute;
+  left: 1.5vw;
+  top: 1vh;
+}
+
 /* all movable elements*/
 .elements {
     float: left;
@@ -105,7 +141,7 @@ svg {
 
 engine {
   position: absolute;
-  top: 16vh;
+  top: 0px;
   left: 0px;
   padding: 0px;
   margin: 0px;

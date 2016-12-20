@@ -25,6 +25,19 @@ var elemnts_svg_html = [];
 var obj_level;
 // SVG Path function for leiterbahnen
 function addLevel(id){
+
+  place_svg_html = "";
+  elemnts_svg_html = [];
+  obj_level = undefined;
+  Pline_map = [];
+  Nline_map = [];
+  Input_map = [];
+  gamecontainer
+  start_x = 0;
+  start_y = 0;
+  Gatter_map = [];
+  Gatter_id_map = [];
+
   d3.json("data/level/"+id+"level.json", function(error, data) {
     obj_level = data; // put data into obj_level
 
@@ -57,11 +70,28 @@ function addLevel(id){
 var Pline_map = [];
 var Nline_map = [];
 var Input_map = [];
+var gamecontainer;
 function start_first_render(obj_level){
   // The SVG Container
   svgContainer = d3.select("engine").append("svg").append("g");
 
+  gamecontainer = svgContainer.append("g")
+                                .attr("transform", "translate(30, 0)");
+
   var cendponts = obj_level.endpoints.length;
+
+  // render elements store field
+  svgContainer.append("rect")
+                 .attr("x", 0)
+                 .attr("y", 0)
+                 .attr("id", "storedrop")
+                 .attr("type", "storedrop")
+                 .attr("width", "75")
+                 .attr("height", "100%")
+                 .attr("stroke", "black")
+                 .attr("stroke-width", 2)
+                 .attr("fill", "")
+                 .attr("fill-opacity", 0.39607843);
 
   /**
    * Reander the endpoints
@@ -74,7 +104,7 @@ function start_first_render(obj_level){
     var need = this.need;
     if(need == 0) endfill = "red";
     else  endfill = "lightgreen";
-    var rectangle = svgContainer.append("rect")
+    var rectangle = gamecontainer.append("rect")
                                  .attr("x", p_x)
                                  .attr("y", p_y)
                                  .attr("id", id)
@@ -123,7 +153,6 @@ function start_first_render(obj_level){
     });
   });
 
-
   $(obj_level.elements).each(function(index){
     if(this.type == "drop"){
 
@@ -141,7 +170,7 @@ function start_first_render(obj_level){
 
       tmp_x = (dwidth / (ebene_car[this_ebene] + 1)) * (idx_ebene + 1) - 28; // test idx_ebene
 
-      var newplace =  svgContainer.append("g")
+      var newplace =  gamecontainer.append("g")
                                     .attr("class","drop")
                                     .attr("id", id)
                                     .attr("drop", "0")
@@ -183,7 +212,7 @@ function start_first_render(obj_level){
         if(Input_map[this.id] == undefined) Input_map[this.id] = [];
         if(Input_map[this.id][id] == undefined) Input_map[this.id][id] = [];
         Input_map[this.id][id][Input_map[this.id][id].length] = 0;
-        var lineGraph = svgContainer.append("path")
+        var lineGraph = gamecontainer.append("path")
                                     .attr("d", lineFunction(ldata))
                                     .attr("stroke", "yellow")
                                     .attr("stroke-width", 2)
@@ -191,7 +220,7 @@ function start_first_render(obj_level){
                                     .moveToBack();
         if(Nline_map[id] == undefined) Nline_map[id] = [];
         Nline_map[id][index] = lineGraph;
-        var PlineGraph = svgContainer.append("path")
+        var PlineGraph = gamecontainer.append("path")
                                    .attr("d", lineFunction(ldata))
                                    .attr("class", "pline"+id)
                                    .attr("stroke", "none")
@@ -203,15 +232,14 @@ function start_first_render(obj_level){
         poweronline(PlineGraph);
         $(".pline"+id).hide();
       }); // each next obj
-
       svgContainer.append("g")
                     .attr("class","gatter")
                     .attr("obj", this.obj)
                     .attr("id","g"+index)
                     .attr("x", 0)
-                    .attr("y", 0)
+                    .attr("y", 100 * (index + 1))
                     .html(elemnts_svg_html[this.obj])
-                    .attr("transform", "scale(0.2,0.2)")
+                    .attr("transform", "scale(0.2,0.2) translate(20, "+((dwidth / (celements + 1)) * (index + 1) * 5)+")")
                       .call(d3.drag()
                         .on("start", dragstarted)
                         .on("drag", dragged)
@@ -240,7 +268,7 @@ function start_first_render(obj_level){
       stafill = "lightgreen";
       stroke_color = "blue";
     }
-    var rectangle = svgContainer.append("rect")
+    var rectangle = gamecontainer.append("rect")
                                  .attr("x", tmp_x)
                                  .attr("y", tmp_y)
                                  .attr("id", id)
@@ -283,7 +311,7 @@ function start_first_render(obj_level){
       if(Input_map[this.id] == undefined) Input_map[this.id] = [];
       if(Input_map[this.id][id] == undefined) Input_map[this.id][id] = [];
       Input_map[this.id][id][Input_map[this.id][id].length] = on;
-      var lineGraph = svgContainer.append("path")
+      var lineGraph = gamecontainer.append("path")
                                  .attr("d", lineFunction(ldata))
                                  .attr("stroke", stroke_color)
                                  .attr("stroke-width", 2)
@@ -292,7 +320,7 @@ function start_first_render(obj_level){
      if(Nline_map[id] == undefined) Nline_map[id] = [];
      Nline_map[id][index] = lineGraph;
       if(on != 0) {
-        var PlineGraph = svgContainer.append("path")
+        var PlineGraph = gamecontainer.append("path")
                                    .attr("d", lineFunction(ldata))
                                    .attr("class", "pline"+id)
                                    .attr("stroke", "lightblue")
@@ -300,7 +328,7 @@ function start_first_render(obj_level){
                                    .attr("fill", "none");
         poweronline(PlineGraph, ldata);
       } else {
-        var PlineGraph = svgContainer.append("path")
+        var PlineGraph = gamecontainer.append("path")
                                    .attr("d", lineFunction(ldata))
                                    .attr("class", "pline"+id)
                                    .attr("stroke", "none")
@@ -378,11 +406,11 @@ function dragended(d) {
       new_x = insection_box.left;
       new_y = insection_box.top;
       d3.select(this)
-          .attr("x", new_x)
+          .attr("x", new_x + 30)
           .attr("y", new_y)
           .transition()
             .duration(500)
-              .attr("transform", "scale(0.2,0.2) translate(" + (new_x * 5) + "," + (new_y * 5 - 32) + ")");
+              .attr("transform", "scale(0.2,0.2) translate(" + ((new_x + 30) * 5) + "," + (new_y * 5 - 32) + ")");
       d3.select(".drop[drop="+'"'+d3.select(this).attr("id")+'"'+"]").attr("drop", "0")
       d3.select(inscetion_obj).attr("drop", d3.select(this).attr("id"));
       place_gatter(this, inscetion_obj);
