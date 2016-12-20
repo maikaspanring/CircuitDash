@@ -22,9 +22,9 @@ var lineFunction = d3.line()
 
 var place_svg_html;
 var elemnts_svg_html = [];
+var obj_level;
 // SVG Path function for leiterbahnen
 function addLevel(id){
-  var obj_level;
   d3.json("data/level/"+id+"level.json", function(error, data) {
     obj_level = data; // put data into obj_level
 
@@ -54,6 +54,9 @@ function addLevel(id){
 /**
  * START Rendering after loading the assets
  */
+var Pline_map = [];
+var Nline_map = [];
+var Input_map = [];
 function start_first_render(obj_level){
   // The SVG Container
   svgContainer = d3.select("engine").append("svg").append("g");
@@ -177,17 +180,33 @@ function start_first_render(obj_level){
         ly_enp = tmp_y;
 
         ldata = calc_line(lx_stp, ly_stp, lx_enp, ly_enp);
-
+        if(Input_map[this.id] == undefined) Input_map[this.id] = [];
+        if(Input_map[this.id][id] == undefined) Input_map[this.id][id] = [];
+        Input_map[this.id][id][Input_map[this.id][id].length] = 0;
         var lineGraph = svgContainer.append("path")
                                     .attr("d", lineFunction(ldata))
                                     .attr("stroke", "yellow")
                                     .attr("stroke-width", 2)
                                     .attr("fill", "none")
                                     .moveToBack();
+        if(Nline_map[id] == undefined) Nline_map[id] = [];
+        Nline_map[id][index] = lineGraph;
+        var PlineGraph = svgContainer.append("path")
+                                   .attr("d", lineFunction(ldata))
+                                   .attr("class", "pline"+id)
+                                   .attr("stroke", "none")
+                                   .attr("stroke-width", 2)
+                                   .attr("fill", "none");
+        if(Pline_map[id] == undefined) Pline_map[id] = [];
+        Pline_map[id][index] = PlineGraph;
+
+        poweronline(PlineGraph);
+        $(".pline"+id).hide();
       }); // each next obj
 
       svgContainer.append("g")
                     .attr("class","gatter")
+                    .attr("obj", this.obj)
                     .attr("id","g"+index)
                     .attr("x", 0)
                     .attr("y", 0)
@@ -214,13 +233,19 @@ function start_first_render(obj_level){
     var id = this.id;
     var on = this.on;
     var next = this.next;
-    if(on == 0) stafill = "red";
-    else  stafill = "lightgreen";
+    if(on == 0) {
+      stafill = "red";
+      stroke_color = "yellow";
+    } else {
+      stafill = "lightgreen";
+      stroke_color = "blue";
+    }
     var rectangle = svgContainer.append("rect")
                                  .attr("x", tmp_x)
                                  .attr("y", tmp_y)
                                  .attr("id", id)
-                                 .attr("type", "endpoint")
+                                 .attr("class", "startpoints")
+                                 .attr("type", "startpoints")
                                  .attr("width", "10")
                                  .attr("height", "10")
                                  .attr("stroke", "black")
@@ -253,15 +278,42 @@ function start_first_render(obj_level){
       ly_enp = tmp_y;
 
       ldata = calc_line(lx_stp, ly_stp, lx_enp, ly_enp);
-
+      // stroke-dashoffset
+      // stroke-dasharray: 25;
+      if(Input_map[this.id] == undefined) Input_map[this.id] = [];
+      if(Input_map[this.id][id] == undefined) Input_map[this.id][id] = [];
+      Input_map[this.id][id][Input_map[this.id][id].length] = on;
       var lineGraph = svgContainer.append("path")
                                  .attr("d", lineFunction(ldata))
-                                 .attr("stroke", "yellow")
+                                 .attr("stroke", stroke_color)
                                  .attr("stroke-width", 2)
                                  .attr("fill", "none")
                                  .moveToBack();
+     if(Nline_map[id] == undefined) Nline_map[id] = [];
+     Nline_map[id][index] = lineGraph;
+      if(on != 0) {
+        var PlineGraph = svgContainer.append("path")
+                                   .attr("d", lineFunction(ldata))
+                                   .attr("class", "pline"+id)
+                                   .attr("stroke", "lightblue")
+                                   .attr("stroke-width", 2)
+                                   .attr("fill", "none");
+        poweronline(PlineGraph, ldata);
+      } else {
+        var PlineGraph = svgContainer.append("path")
+                                   .attr("d", lineFunction(ldata))
+                                   .attr("class", "pline"+id)
+                                   .attr("stroke", "none")
+                                   .attr("stroke-width", 2)
+                                   .attr("fill", "none");
+      }
+      if(Pline_map[id] == undefined) Pline_map[id] = [];
+      Pline_map[id][index] = PlineGraph;
     });
+    // was da lost
   });
+  circelThrouLogic();
+  // end of start level
 }
 
 var start_x = 0;
@@ -333,6 +385,7 @@ function dragended(d) {
               .attr("transform", "scale(0.2,0.2) translate(" + (new_x * 5) + "," + (new_y * 5 - 32) + ")");
       d3.select(".drop[drop="+'"'+d3.select(this).attr("id")+'"'+"]").attr("drop", "0")
       d3.select(inscetion_obj).attr("drop", d3.select(this).attr("id"));
+      place_gatter(this, inscetion_obj);
   }
 }
 
@@ -341,6 +394,113 @@ function intersectRect(r1, r2) {
            r2.right < r1.left ||
            r2.top > r1.bottom ||
            r2.bottom < r1.top);
+}
+
+var Gatter_map = [];
+// check dependecie and update logigater/power mode
+function place_gatter(gatter, place){
+
+  $(obj_level.elements).each(function(index){
+    if(this.type == "drop"){
+      if(this.id == d3.select(place).attr("id")){
+        if(this.obj == d3.select(gatter).attr("obj")){
+          // element is ok
+          console.log("gatter is on the right place");
+        } else {
+          // element is wrong
+          console.log("gatter is on the wrong place");
+        }
+        Gatter_map[this.id] = d3.select(gatter).attr("obj");
+
+        /*
+        $(Pline_map[this.id]).each(function(){
+          this.attr("stroke", "lightblue")
+          poweronline(this);
+        });
+        $(Nline_map[this.id]).each(function(){
+          this.attr("stroke", "blue");
+        });
+        */
+      }
+    }
+  });
+  circelThrouLogic();
+}
+
+function circelThrouLogic(){
+  $(obj_level.elements).reverse().each(function(index){
+    tmp_this = this;
+    tmp_input = [];
+    $(obj_level.startpoints).each(function(index){
+      if(Input_map[tmp_this.id][this.id] !== undefined){
+        $.each(Input_map[tmp_this.id][this.id], function(index, data){
+          tmp_input[tmp_input.length] = data;
+        });
+      }
+    });
+    $(obj_level.elements).each(function(index){
+      if(Input_map[tmp_this.id][this.id] !== undefined){
+        //$.each(Input_map[tmp_this.id][this.id], function(index, data){
+          tmp_input[tmp_input.length] = Input_map[tmp_this.id][this.id];
+        //});
+      }
+    });
+
+    result = 0;
+    switch (Gatter_map[this.id]) {
+      case "and":
+        result = 1;
+        $.each(tmp_input, function(index, val){
+          if(val == 0){
+            result = 0;
+          }
+        });
+        break;
+      case "or":
+        result = 0;
+        $.each(tmp_input, function(index, val){
+          if(val == 1){
+            result = 1;
+          }
+        });
+        break;
+      case "xor":
+        result = 0;
+        $.each(tmp_input, function(index, val){
+          if(!result ^ !val) result = 1;
+          else result = 0;
+        });
+        break;
+      default:
+        result = 0;
+      break;
+    }
+    renew = 0;
+    $(tmp_this.next).each(function(index){
+      if(Input_map[this.id][tmp_this.id] != result){
+        renew = 1;
+      }
+      Input_map[this.id][tmp_this.id] = result;
+    });
+
+    if(result == 1){
+      $(".pline"+tmp_this.id).show();
+      $(Pline_map[tmp_this.id]).each(function(){
+        this.attr("stroke", "lightblue")
+      });
+      $(Nline_map[tmp_this.id]).each(function(){
+        this.attr("stroke", "blue");
+      });
+    } else {
+      $(".pline"+tmp_this.id).hide();
+      $(Nline_map[tmp_this.id]).each(function(){
+        this.attr("stroke", "yellow");
+      });
+    }
+    if(renew == 1){
+      circelThrouLogic();
+    }
+  });
 }
 
 function calc_line(lx_stp, ly_stp, lx_enp, ly_enp){
@@ -358,4 +518,14 @@ function calc_line(lx_stp, ly_stp, lx_enp, ly_enp){
             { "x": lx_enp,  "y": ly_enp}
           ];
   return ldata;
+}
+
+function poweronline(obj){
+  obj.attr("stroke-dasharray", "2,15")
+      .attr("stroke-dashoffset", "0%")
+      .transition()
+        .duration(20000)
+        .ease(d3.easeLinear)
+          .attr("stroke-dashoffset", "100%")
+          .on("end",  function() { poweronline(obj); });
 }
