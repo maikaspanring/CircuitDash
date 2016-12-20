@@ -6,7 +6,6 @@
     <title></title>
 
     <link rel="manifest" href="manifest.json">
-
     <!-- un-comment this code to enable service worker
     <script>
       if ('serviceWorker' in navigator) {
@@ -60,6 +59,7 @@
             <span class="lsvg Btn" do="newgame" svgsrc="svg/newgameBtn.svg"></span>
             <span class="lsvg Btn" do="settings" svgsrc="svg/settingsBtn.svg"></span>
             <span class="lsvg Btn" do="stats" svgsrc="svg/statsBtn.svg"></span>
+            <span class="lsvg Btn help" do="help" svgsrc="svg/helpMini.svg"></span>
           </div>
         </div>
       </div>
@@ -83,7 +83,33 @@
           <div>
             <span class="lsvg Btn" svgsrc="svg/settingsTitle.svg"></span>
             <span class="lsvg Btn" id="mute" svgsrc="svg/musicBtn.svg"></span>
+            <span class="lsvg Btn" id="colorchange" svgsrc="svg/colorBtn.svg"></span>
+            <span class="lsvg Btn" do="help" id="help" svgsrc="svg/helpBtn.svg"></span>
             <span class="lsvg Btn" do="mainmenu" svgsrc="svg/backBtn.svg"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+     <!-- Help menu -->
+    <div class="helpMenuDiv  menuDiv">
+      <div id="BackgroundScroll2">
+        <div class="container">
+          <div>
+            <span class="lsvg Btn" svgsrc="svg/helpTitle.svg"></span>
+			<span id="helptext"></span>
+        <!-- Script for the fold-out links -->
+        <script type="text/javascript">
+          function toggle(control) {
+            var elem = document.getElementById(control);
+            if(elem.style.display == "none"){
+              elem.style.display = "block";
+            }
+            else {
+              elem.style.display = "none";
+              }
+          }     
+        </script>
+			<script src='js/help.js'></script>
           </div>
         </div>
       </div>

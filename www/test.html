@@ -1,0 +1,15 @@
+<script type="text/javascript">
+function toggle(control){
+var elem = document.getElementById(control);
+if(elem.style.display == "none"){
+elem.style.display = "block";
+}else{
+elem.style.display = "none";
+    }
+}
+$('#helptext').html('test.html');
+</script>
+
+<a href="javascript:toggle('test')"> x Zum aufklappen hier klicken.</a>
+<br /><div id="test" style="display: none">Dein Text hier</div>
+
