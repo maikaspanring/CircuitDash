@@ -58,6 +58,11 @@ $(document).ready(function(){
         hideMenu();
         $('.settingsMenuDiv').show();
       break;
+      // switch to help menu
+      case 'help':
+        hideMenu();
+        $('.helpMenuDiv').show();
+      break;
       // switch to Game View
       case 'startlevel':
         hideMenu();
