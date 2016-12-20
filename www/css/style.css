@@ -94,7 +94,7 @@ svg {
  * ENGINE *
  **********/
 
-.gatter image{
+.gatter path, .gatter text{
   width: 10vh;
   height: 11vw;
 }
