@@ -397,6 +397,7 @@ function intersectRect(r1, r2) {
 }
 
 var Gatter_map = [];
+var Gatter_id_map = [];
 // check dependecie and update logigater/power mode
 function place_gatter(gatter, place){
 
@@ -410,8 +411,14 @@ function place_gatter(gatter, place){
           // element is wrong
           console.log("gatter is on the wrong place");
         }
-        Gatter_map[this.id] = d3.select(gatter).attr("obj");
-
+        if(Gatter_id_map[d3.select(gatter).attr("id")] != this.id){
+          Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
+          Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
+          Gatter_map[this.id] = d3.select(gatter).attr("obj");
+        } else {
+          Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
+          Gatter_map[this.id] = d3.select(gatter).attr("obj");
+        }
         /*
         $(Pline_map[this.id]).each(function(){
           this.attr("stroke", "lightblue")
