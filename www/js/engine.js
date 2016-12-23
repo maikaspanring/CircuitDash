@@ -70,6 +70,7 @@ function addLevel(id){
 var Pline_map = [];
 var Nline_map = [];
 var Input_map = [];
+var Rightplace_map = [];
 var gamecontainer;
 function start_first_render(obj_level){
   // The SVG Container
@@ -141,6 +142,7 @@ function start_first_render(obj_level){
           next_calc_arr[this.id] = parseInt(next_calc_arr[this.id]) + 1;
         }
       });
+      Rightplace_map[this.id] = 0;
     }
   });
   $(obj_level.startpoints).each(function(index){
@@ -431,14 +433,8 @@ function place_gatter(gatter, place){
 
   $(obj_level.elements).each(function(index){
     if(this.type == "drop"){
+      Rightplace_map[this.id] = 0;
       if(this.id == d3.select(place).attr("id")){
-        if(this.obj == d3.select(gatter).attr("obj")){
-          // element is ok
-          console.log("gatter is on the right place");
-        } else {
-          // element is wrong
-          console.log("gatter is on the wrong place");
-        }
         if(Gatter_id_map[d3.select(gatter).attr("id")] != this.id){
           Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
           Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
@@ -447,18 +443,22 @@ function place_gatter(gatter, place){
           Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
           Gatter_map[this.id] = d3.select(gatter).attr("obj");
         }
-        /*
-        $(Pline_map[this.id]).each(function(){
-          this.attr("stroke", "lightblue")
-          poweronline(this);
-        });
-        $(Nline_map[this.id]).each(function(){
-          this.attr("stroke", "blue");
-        });
-        */
       }
     }
   });
+  win = 1;
+  $(obj_level.elements).each(function(index){
+    if(Gatter_map[this.id] == this.obj){
+      Rightplace_map[this.id] = 1;
+    }
+    if(Rightplace_map[this.id] == 0){
+      win = 0;
+    }
+  });
+
+  if(win == 1){
+    triggerWin();
+  }
   circelThrouLogic();
 }
 
@@ -536,6 +536,10 @@ function circelThrouLogic(){
       circelThrouLogic();
     }
   });
+}
+
+function triggerWin(){
+  alert("OMG YOU WINER!");
 }
 
 function calc_line(lx_stp, ly_stp, lx_enp, ly_enp){
