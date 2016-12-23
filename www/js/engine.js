@@ -539,7 +539,7 @@ function circelThrouLogic(){
 }
 
 function triggerWin(){
-  alert("OMG YOU WINER!");
+  alert("OMG YOU ARE THE WINNER!");
 }
 
 function calc_line(lx_stp, ly_stp, lx_enp, ly_enp){
