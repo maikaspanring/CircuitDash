@@ -100,7 +100,8 @@ function start_first_render(obj_level){
                  .attr("stroke", "black")
                  .attr("stroke-width", 2)
                  .attr("fill", "")
-                 .attr("fill-opacity", 0.39607843);
+                 .attr("fill-opacity", 0.39607843)
+                 .moveToBack();
 
   var bombeC = svgContainer.append("g")
                             .attr("id", "bomb")
@@ -252,14 +253,14 @@ function start_first_render(obj_level){
         poweronline(PlineGraph);
         $(".pline"+id).hide();
       }); // each next obj
-      svgContainer.append("g")
+      gamecontainer.append("g")
                     .attr("class","gatter")
                     .attr("obj", this.obj)
                     .attr("id","g"+index)
-                    .attr("x", 0)
-                    .attr("y", 100 * (index + 1))
+                    .attr("x", -25)
+                    .attr("y", 81 * (index + 1))
                     .html(elemnts_svg_html[this.obj])
-                    .attr("transform", "scale(0.2,0.2) translate(20, "+((dwidth / (celements + 1)) * (index + 1) * 5)+")")
+                    .attr("transform", "scale(0.2,0.2) translate(-120, "+((dwidth / (celements + 1)) * (index + 1) * 5)+")")
                       .call(d3.drag()
                         .on("start", dragstarted)
                         .on("drag", dragged)
@@ -426,11 +427,11 @@ function dragended(d) {
       new_x = insection_box.left;
       new_y = insection_box.top;
       d3.select(this)
-          .attr("x", new_x + 30)
+          .attr("x", new_x)
           .attr("y", new_y)
           .transition()
             .duration(500)
-              .attr("transform", "scale(0.2,0.2) translate(" + ((new_x + 30) * 5) + "," + (new_y * 5 - 32) + ")");
+              .attr("transform", "scale(0.2,0.2) translate(" + ((new_x) * 5) + "," + (new_y * 5 - 32) + ")");
       d3.select(".drop[drop="+'"'+d3.select(this).attr("id")+'"'+"]").attr("drop", "0")
       d3.select(inscetion_obj).attr("drop", d3.select(this).attr("id"));
       place_gatter(this, inscetion_obj);
