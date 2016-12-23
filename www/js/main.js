@@ -6,8 +6,11 @@ $(document).ready(function(){
   dheight = $(document).height();
 
   var bmusic = document.getElementById("bmusic");
-  //bmusic.play();
+  bmusic.play();
   bmusic.volume = 0.5;
+  if(localStorage.muted == "true") {
+    bmusic.muted = true;
+  }
 
   // load svg files into all elements with the class lsvg and an svgsrc attr
   $(".lsvg").each(function(){
@@ -23,8 +26,10 @@ $(document).ready(function(){
   $( "#mute" ).on( "click", function() {
     var bmusic = document.getElementById("bmusic");
     if(bmusic.muted == false) {
+      localStorage.muted = true;
       bmusic.muted = true;
     } else {
+      localStorage.muted = false;
       bmusic.muted = false;
     }
   });
