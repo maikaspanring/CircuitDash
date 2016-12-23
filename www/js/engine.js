@@ -23,6 +23,7 @@ var lineFunction = d3.line()
 var place_svg_html;
 var elemnts_svg_html = [];
 var obj_level;
+var bomb_svg_html;
 // SVG Path function for leiterbahnen
 function addLevel(id){
 
@@ -41,6 +42,9 @@ function addLevel(id){
   d3.json("data/level/"+id+"level.json", function(error, data) {
     obj_level = data; // put data into obj_level
 
+    d3.xml("svg/bombe.svg").mimeType("image/svg+xml").get(function(error, xml) {
+      bomb_svg_html = $(xml).find("g").html();
+    });
 
     var celements = obj_level.elements.length - 1;
     $(obj_level.elements).each(function(index){
@@ -72,12 +76,16 @@ var Nline_map = [];
 var Input_map = [];
 var Rightplace_map = [];
 var gamecontainer;
+var counter1;
+var counter2;
+var counter3;
+var counter4;
 function start_first_render(obj_level){
   // The SVG Container
   svgContainer = d3.select("engine").append("svg").append("g");
 
   gamecontainer = svgContainer.append("g")
-                                .attr("transform", "translate(30, 0)");
+                                .attr("transform", "translate(30, 130)");
 
   var cendponts = obj_level.endpoints.length;
 
@@ -93,6 +101,16 @@ function start_first_render(obj_level){
                  .attr("stroke-width", 2)
                  .attr("fill", "")
                  .attr("fill-opacity", 0.39607843);
+
+  var bombeC = svgContainer.append("g")
+                            .attr("id", "bomb")
+                            .html(bomb_svg_html)
+                            .attr("transform", "scale(0.5) translate(270,0)");
+  console.log(bombeC.node().getBBox().width);
+  bwidth = bombeC.node().getBBox().width / 2;
+  bombeC.attr("transform", "scale(0.5) translate("+(dwidth - bwidth + (30*2))+", 0)");
+
+  createBombClock(obj_level.time);
 
   /**
    * Reander the endpoints
@@ -567,4 +585,242 @@ function poweronline(obj){
         .ease(d3.easeLinear)
           .attr("stroke-dashoffset", "100%")
           .on("end",  function() { poweronline(obj); });
+}
+
+function createBombClock(time){
+
+  // make number for bomb
+  bcounter1 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 1), 42, 0.14, 'grey');
+  bcounter2 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 2), 42, 0.14, 'grey');
+  bcounter3 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 3) + 4, 42, 0.14, 'grey');
+  bcounter4 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 4) + 4, 42, 0.14, 'grey');
+
+  svgContainer.append("rect")
+                .attr("x", ((dwidth / 2) + 30.5) + (21.5 * 3))
+                .attr("y", 48)
+                .attr("width", 2)
+                .attr("height", 3)
+                .attr("fill", "#cc1010");
+
+  svgContainer.append("rect")
+                .attr("x", ((dwidth / 2) + 30.5) + (21.5 * 3))
+                .attr("y", 48 + 17)
+                .attr("width", 2)
+                .attr("height", 3)
+                .attr("fill", "#cc1010");
+
+
+  counter1 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 1), 42, 0.14, '#cc1010');
+  counter2 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 2), 42, 0.14, '#cc1010');
+  counter3 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 3) + 3, 42, 0.14, '#cc1010');
+  counter4 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 4) + 3, 42, 0.14, '#cc1010');
+
+  console.log(time);
+  setInterval(function(){
+    if(time > 0) time--;
+    min10 = Math.floor(time / 60 / 10);
+    min1 = Math.floor(time / 60 % 10);
+    sec10 = Math.floor((time - ((min10 * 10 + min1) * 60)) / 10);
+    sec1 = Math.floor((time - ((min10 * 10 + min1) * 60)) % 10);
+    counter1 = changeDigit(counter1, (min10), 0.14, '#cc1010');
+    counter2 = changeDigit(counter2, (min1), 0.14, '#cc1010');
+    counter3 = changeDigit(counter3, (sec10), 0.14, '#cc1010');
+    counter4 = changeDigit(counter4, (sec1), 0.14, '#cc1010');
+  }, 1000);
+}
+
+/**
+ * NUMBER GENERATOR
+ */
+var data_digit = [];
+
+data_digit['add_x'] = [];
+data_digit['add_y'] = [];
+data_digit['width'] = [];
+data_digit['height'] = [];
+
+data_digit['add_x'][0] = 20;
+data_digit['add_y'][0] = 0;
+data_digit['width'][0] = 100;
+data_digit['height'][0] = 10;
+
+data_digit['add_x'][1] = 10;
+data_digit['add_y'][1] = 0;
+data_digit['width'][1] = 10;
+data_digit['height'][1] = 100;
+
+data_digit['add_x'][2] = 120;
+data_digit['add_y'][2] = 0;
+data_digit['width'][2] = 10;
+data_digit['height'][2] = 100;
+
+data_digit['add_x'][3] = 20;
+data_digit['add_y'][3] = 110;
+data_digit['width'][3] = 100;
+data_digit['height'][3] = 10;
+
+data_digit['add_x'][4] = 10;
+data_digit['add_y'][4] = 130;
+data_digit['width'][4] = 10;
+data_digit['height'][4] = 100;
+
+data_digit['add_x'][5] = 120;
+data_digit['add_y'][5] = 130;
+data_digit['width'][5] = 10;
+data_digit['height'][5] = 100;
+
+data_digit['add_x'][6] = 20;
+data_digit['add_y'][6] = 220;
+data_digit['width'][6] = 100;
+data_digit['height'][6] = 10;
+
+function createDigit(number, x, y, size, color){
+  dig_arr = makeDigit(number);
+  var obj = generateDigit(dig_arr, x, y, size, color);
+  return obj;
+}
+
+function changeDigit(obj, to_number, size, color){
+    dig_arr = makeDigit(to_number);
+    pos_x = parseInt(obj.attr("x"));
+    pos_y = parseInt(obj.attr("y"));
+    obj.remove();
+    var nobj = generateDigit(dig_arr, pos_x, pos_y, size, color);
+    return nobj;
+}
+
+function generateDigit(dig_arr, x, y, size, color){
+
+  digitContainerG = svgContainer.append("g")
+                                  .attr("x", x)
+                                  .attr("y", y)
+                                  .attr("transform", "translate("+x+","+y+")")
+                                  .style('fill-opacity', 1);
+  var digitContainer = [];
+  // oben
+  for (var i = 0; i < 10; i++) {
+    if(dig_arr[i] == 1)
+    digitContainer[digitContainer.length] = digitContainerG.append("rect")
+                                                          .attr("x", (data_digit['add_x'][i]) * size)
+                                                          .attr("y", (data_digit['add_y'][i]) * size)
+                                                          .attr("width", (data_digit['width'][i]) * size)
+                                                          .attr("height", (data_digit['height'][i]) * size)
+                                                          .attr("size", size)
+                                                          .attr("fill", color);
+  }
+
+  return digitContainerG;
+}
+
+function makeDigit(number){
+  /*
+    0: oben
+    1: links oben
+    2: rechts oben
+    3: mitte
+    4: links unten
+    5: rechts unten
+    6: unten
+  */
+  var res = [];
+  switch(number){
+    case 0:
+      res[0] = 1;
+      res[1] = 1;
+      res[2] = 1;
+      res[3] = 0;
+      res[4] = 1;
+      res[5] = 1;
+      res[6] = 1;
+      break;
+    case 1:
+      res[0] = 0;
+      res[1] = 0;
+      res[2] = 1;
+      res[3] = 0;
+      res[4] = 0;
+      res[5] = 1;
+      res[6] = 0;
+      break;
+    case 2:
+      res[0] = 1;
+      res[1] = 0;
+      res[2] = 1;
+      res[3] = 1;
+      res[4] = 1;
+      res[5] = 0;
+      res[6] = 1;
+      break;
+    case 3:
+      res[0] = 1;
+      res[1] = 0;
+      res[2] = 1;
+      res[3] = 1;
+      res[4] = 0;
+      res[5] = 1;
+      res[6] = 1;
+      break;
+    case 4:
+      res[0] = 0;
+      res[1] = 1;
+      res[2] = 1;
+      res[3] = 1;
+      res[4] = 0;
+      res[5] = 1;
+      res[6] = 0;
+      break;
+    case 5:
+      res[0] = 1;
+      res[1] = 1;
+      res[2] = 0;
+      res[3] = 1;
+      res[4] = 0;
+      res[5] = 1;
+      res[6] = 1;
+      break;
+    case 6:
+      res[0] = 1;
+      res[1] = 1;
+      res[2] = 0;
+      res[3] = 1;
+      res[4] = 1;
+      res[5] = 1;
+      res[6] = 1;
+      break;
+    case 7:
+      res[0] = 1;
+      res[1] = 0;
+      res[2] = 1;
+      res[3] = 0;
+      res[4] = 0;
+      res[5] = 1;
+      res[6] = 0;
+      break;
+    case 8:
+      res[0] = 1;
+      res[1] = 1;
+      res[2] = 1;
+      res[3] = 1;
+      res[4] = 1;
+      res[5] = 1;
+      res[6] = 1;
+      break;
+    case 9:
+      res[0] = 1;
+      res[1] = 1;
+      res[2] = 1;
+      res[3] = 1;
+      res[4] = 0;
+      res[5] = 1;
+      res[6] = 1;
+      break;
+  }
+  return res;
+}
+
+function rainbowNumber(obj){
+  obj.selectAll("rect").transition()
+                        .duration(1000)
+                        .attr("fill", function() { return d3.hsl(Math.random() * 360, 1, .5); })
+                        .on("end",  function() { rainbowNumber(obj); });
 }
