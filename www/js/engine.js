@@ -128,7 +128,9 @@ function start_first_render(obj_level){
                                  .attr("x", p_x)
                                  .attr("y", p_y)
                                  .attr("id", id)
+                                 .attr("class", "endpoints")
                                  .attr("type", "endpoint")
+                                 .attr("need", this.need)
                                  .attr("width", "10")
                                  .attr("height", "10")
                                  .attr("stroke", "black")
@@ -440,6 +442,17 @@ function dragended(d) {
       d3.select(inscetion_obj).attr("drop", d3.select(this).attr("id"));
       place_gatter(this, inscetion_obj);
   }
+  $(".endpoints").each(function(index){
+    tmp_this = this;
+    $(".drop").each(function(index){
+      if(Input_map[tmp_this.id][this.id] == 1){
+        if(d3.select('#'+tmp_this.id).attr("need") != Input_map[tmp_this.id][this.id]){
+          clockTime  = clockTime - 500;
+          Materialize.toast('- 500 Seconds !!!', 4000) // 4000 is the duration of the toast
+        }
+      }
+    });
+  });
 }
 
 function intersectRect(r1, r2) {
@@ -472,6 +485,8 @@ function place_gatter(gatter, place){
   if( "storedrop" == ptmp_id) {
     d3.select(".drop[drop="+'"'+d3.select(gatter).attr("id")+'"'+"]").attr("drop", "0")
     Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
+    clockTime  = clockTime - 100;
+    Materialize.toast('- 100 Seconds', 4000) // 4000 is the duration of the toast
   }
   win = 1;
   $(obj_level.elements).each(function(index){
@@ -597,7 +612,9 @@ function poweronline(obj){
 }
 
 var clockInterval;
+var clockTime;
 function createBombClock(time){
+  clockTime = time;
   if(clockInterval != undefined) clearInterval(clockInterval);
   // make number for bomb
   bcounter1 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 1), 42, 0.14, 'grey');
@@ -625,11 +642,11 @@ function createBombClock(time){
   counter4 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 4) + 3, 42, 0.14, '#cc1010');
 
   clockInterval = setInterval(function(){
-    if(time > 0) time--;
-    min10 = Math.floor(time / 60 / 10);
-    min1 = Math.floor(time / 60 % 10);
-    sec10 = Math.floor((time - ((min10 * 10 + min1) * 60)) / 10);
-    sec1 = Math.floor((time - ((min10 * 10 + min1) * 60)) % 10);
+    if(clockTime > 0) clockTime--;
+    min10 = Math.floor(clockTime / 60 / 10);
+    min1 = Math.floor(clockTime / 60 % 10);
+    sec10 = Math.floor((clockTime - ((min10 * 10 + min1) * 60)) / 10);
+    sec1 = Math.floor((clockTime - ((min10 * 10 + min1) * 60)) % 10);
     counter1 = changeDigit(counter1, (min10), 0.14, '#cc1010');
     counter2 = changeDigit(counter2, (min1), 0.14, '#cc1010');
     counter3 = changeDigit(counter3, (sec10), 0.14, '#cc1010');

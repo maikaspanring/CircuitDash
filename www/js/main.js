@@ -18,6 +18,11 @@ $(document).ready(function(){
     loadsvg(this, src);
   });
 
+  if(localStorage.theme == 1){
+    $('.BackgroundScroll').css("background","url(../img/backgroundB.png)");
+    $('.BackgroundScroll2').css("background","url(../img/background2B.png)");
+  }
+
   /*********************
    * APP Event Handler *
    *********************/
@@ -31,6 +36,18 @@ $(document).ready(function(){
     } else {
       localStorage.muted = false;
       bmusic.muted = false;
+    }
+  });
+
+  $("#colorchange").on("click", function(){
+    if(localStorage.theme == 0) {
+      localStorage.theme = 1;
+      $('.BackgroundScroll').css("background","url(../img/backgroundB.png)");
+      $('.BackgroundScroll2').css("background","url(../img/background2B.png)");
+    } else {
+      localStorage.theme = 0;
+      $('.BackgroundScroll').css("background","url(../img/background.png)");
+      $('.BackgroundScroll2').css("background","url(../img/background2.png)");
     }
   });
 
