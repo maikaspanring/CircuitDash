@@ -257,8 +257,8 @@ function start_first_render(obj_level){
                     .attr("class","gatter")
                     .attr("obj", this.obj)
                     .attr("id","g"+index)
-                    .attr("x", -25)
-                    .attr("y", 81 * (index + 1))
+                    .attr("lx", -25)
+                    .attr("ly", 81 * (index + 1))
                     .html(elemnts_svg_html[this.obj])
                     .attr("transform", "scale(0.2,0.2) translate(-120, "+((dwidth / (celements + 1)) * (index + 1) * 5)+")")
                       .call(d3.drag()
@@ -371,9 +371,9 @@ function dragstarted(d) {
   d3.select(this).raise().classed("active", true);
   start_x = d3.select(this).attr("x");
   start_y = d3.select(this).attr("y");
-  d3.select(this)
-          .attr("lx", start_x)
-          .attr("ly", start_y);
+  //d3.select(this)
+  //        .attr("lx", start_x)
+  //        .attr("ly", start_y);
 }
 
 function dragged(d) {
@@ -423,6 +423,10 @@ function dragended(d) {
         .transition()
           .duration(500)
             .attr("transform", "scale(0.2,0.2) translate(" + last_x * 5 + "," + (last_y * 5 - 32) + ")");
+    tmp_this = this;
+    $('#storedrop').each(function(){
+      place_gatter(tmp_this, this);
+    });
   } else {
       new_x = insection_box.left;
       new_y = insection_box.top;
@@ -449,11 +453,11 @@ var Gatter_map = [];
 var Gatter_id_map = [];
 // check dependecie and update logigater/power mode
 function place_gatter(gatter, place){
-
+  ptmp_id = d3.select(place).attr("id");
   $(obj_level.elements).each(function(index){
     if(this.type == "drop"){
       Rightplace_map[this.id] = 0;
-      if(this.id == d3.select(place).attr("id")){
+      if(this.id == ptmp_id){
         if(Gatter_id_map[d3.select(gatter).attr("id")] != this.id){
           Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
           Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
@@ -465,6 +469,10 @@ function place_gatter(gatter, place){
       }
     }
   });
+  if( "storedrop" == ptmp_id) {
+    d3.select(".drop[drop="+'"'+d3.select(gatter).attr("id")+'"'+"]").attr("drop", "0")
+    Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
+  }
   win = 1;
   $(obj_level.elements).each(function(index){
     if(Gatter_map[this.id] == this.obj){
@@ -558,7 +566,7 @@ function circelThrouLogic(){
 }
 
 function triggerWin(){
-  alert("OMG YOU ARE THE WINNER!");
+  alert("OMG YOU ARE A WINNER!");
 }
 
 function calc_line(lx_stp, ly_stp, lx_enp, ly_enp){
@@ -588,8 +596,9 @@ function poweronline(obj){
           .on("end",  function() { poweronline(obj); });
 }
 
+var clockInterval;
 function createBombClock(time){
-
+  if(clockInterval != undefined) clearInterval(clockInterval);
   // make number for bomb
   bcounter1 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 1), 42, 0.14, 'grey');
   bcounter2 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 2), 42, 0.14, 'grey');
@@ -610,14 +619,12 @@ function createBombClock(time){
                 .attr("height", 3)
                 .attr("fill", "#cc1010");
 
-
   counter1 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 1), 42, 0.14, '#cc1010');
   counter2 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 2), 42, 0.14, '#cc1010');
   counter3 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 3) + 3, 42, 0.14, '#cc1010');
   counter4 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 4) + 3, 42, 0.14, '#cc1010');
 
-  console.log(time);
-  setInterval(function(){
+  clockInterval = setInterval(function(){
     if(time > 0) time--;
     min10 = Math.floor(time / 60 / 10);
     min1 = Math.floor(time / 60 % 10);
