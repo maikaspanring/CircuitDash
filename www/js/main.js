@@ -64,6 +64,7 @@ $(document).ready(function(){
   $( ".Btn" ).on("tap",function(){
     var todo = $(this).attr('do');
     var from = $(this).attr('from');
+    var level = $(this).attr('level');
     switch(todo){
       // switch back Main Menu
       case 'mainmenu':
@@ -74,6 +75,13 @@ $(document).ready(function(){
       case 'newgame':
         hideMenu();
         $('.gameMenuDiv').show();
+        $(".levelBtn").each(function(){
+          var levelname = $(this).attr("level");
+          var obj = $(this).find("svg").find("text").find("tspan");
+          obj.html(levelname);
+          $(this).find("tspan").html("test");
+          $(this).find("tspan").html(levelname);
+        });
       break;
       // switch to settings menu
       case 'settings':
@@ -89,7 +97,7 @@ $(document).ready(function(){
       case 'startlevel':
         hideMenu();
         // TODO: [change this to level selector] Start Level
-        addLevel("debug");
+        addLevel(level);
         $('.gameDiv').show();
       break;
       // switch to stats menu

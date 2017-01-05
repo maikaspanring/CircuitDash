@@ -45,6 +45,12 @@ svg {
 
   padding-top: 10px;
 }
+
+.levelBtn {
+  float: left;
+  width: 20%;
+  padding-right: 5px;
+}
 /* TODO: on Mainpage a little help icon */
 .help svg{
   width: 14vw;
