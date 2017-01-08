@@ -68,6 +68,46 @@ function addLevel(id){
   });
 }
 
+function addProcLevel(obj){
+
+    place_svg_html = "";
+    elemnts_svg_html = [];
+    obj_level = undefined;
+    Pline_map = [];
+    Nline_map = [];
+    Input_map = [];
+    gamecontainer
+    start_x = 0;
+    start_y = 0;
+    Gatter_map = [];
+    Gatter_id_map = [];
+    obj_level = obj; // put data into obj_level
+
+    d3.xml("svg/bombe.svg").mimeType("image/svg+xml").get(function(error, xml) {
+      bomb_svg_html = $(xml).find("g").html();
+    });
+
+    var celements = obj_level.elements.length - 1;
+    $(obj_level.elements).each(function(index){
+      if(this.type == "drop"){
+        var obname = this.obj;
+        d3.xml("svg/elements/"+this.obj+".svg").mimeType("image/svg+xml").get(function(error, xml) {
+          elemnts_svg_html[obname] = $(xml).find("g").html();
+        });
+      }
+      if(celements == index){
+        //load finishd
+        d3.xml("svg/elements/place.svg").mimeType("image/svg+xml").get(function(error, xml) {
+          place_svg_html = $(xml).find("g").html();
+          // load function after assets are loaded
+          start_first_render(obj_level);
+        });
+      }
+    });
+
+  }
+
+
 /**
  * START Rendering after loading the assets
  */
@@ -231,7 +271,7 @@ function start_first_render(obj_level){
         lx_enp = tmp_x + placew;
         ly_enp = tmp_y;
 
-        ldata = calc_line(lx_stp, ly_stp, lx_enp, ly_enp);
+        ldata = calc_line(lx_stp, ly_stp, lx_enp, ly_enp, this_ebene);
         if(Input_map[this.id] == undefined) Input_map[this.id] = [];
         if(Input_map[this.id][id] == undefined) Input_map[this.id][id] = [];
         Input_map[this.id][id][Input_map[this.id][id].length] = 0;
@@ -314,7 +354,7 @@ function start_first_render(obj_level){
       lh = d3.select("#"+this.id).node().getBBox().height * 0.2;
 
       if(cnext > 1) {
-        placew = ((newplace.node().getBBox().width / (cnext + 1)) * (index + 1)) * 0.2;
+        placew = ((rectangle.node().getBBox().width / (cnext + 1)) * (index + 1)) * 0.2;
       }
       if(next_calc_arr[this.id] > 1) {
        if(next_calc_arr_idx[this.id] == undefined) next_calc_arr_idx[this.id] = 0;
@@ -328,7 +368,7 @@ function start_first_render(obj_level){
       lx_enp = tmp_x + placew;
       ly_enp = tmp_y;
 
-      ldata = calc_line(lx_stp, ly_stp, lx_enp, ly_enp);
+      ldata = calc_line(lx_stp, ly_stp, lx_enp, ly_enp, 0);
       // stroke-dashoffset
       // stroke-dasharray: 25;
       if(Input_map[this.id] == undefined) Input_map[this.id] = [];
@@ -445,10 +485,12 @@ function dragended(d) {
   $(".endpoints").each(function(index){
     tmp_this = this;
     $(".drop").each(function(index){
-      if(Input_map[tmp_this.id][this.id] == 1){
-        if(d3.select('#'+tmp_this.id).attr("need") != Input_map[tmp_this.id][this.id]){
-          clockTime  = clockTime - 500;
-          Materialize.toast('- 500 Seconds !!!', 4000) // 4000 is the duration of the toast
+      if(Input_map[tmp_this.id] !== undefined){
+        if(Input_map[tmp_this.id][this.id] == 1){
+          if(d3.select('#'+tmp_this.id).attr("need") != Input_map[tmp_this.id][this.id]){
+            clockTime  = clockTime - 500;
+            Materialize.toast('- 500 Seconds !!!', 4000) // 4000 is the duration of the toast
+          }
         }
       }
     });
@@ -509,17 +551,21 @@ function circelThrouLogic(){
     tmp_this = this;
     tmp_input = [];
     $(obj_level.startpoints).each(function(index){
-      if(Input_map[tmp_this.id][this.id] !== undefined){
-        $.each(Input_map[tmp_this.id][this.id], function(index, data){
-          tmp_input[tmp_input.length] = data;
-        });
+      if(Input_map[tmp_this.id] !== undefined){
+        if(Input_map[tmp_this.id][this.id] !== undefined){
+          $.each(Input_map[tmp_this.id][this.id], function(index, data){
+            tmp_input[tmp_input.length] = data;
+          });
+        }
       }
     });
     $(obj_level.elements).each(function(index){
-      if(Input_map[tmp_this.id][this.id] !== undefined){
-        //$.each(Input_map[tmp_this.id][this.id], function(index, data){
-          tmp_input[tmp_input.length] = Input_map[tmp_this.id][this.id];
-        //});
+      if(Input_map[tmp_this.id] !== undefined){
+        if(Input_map[tmp_this.id][this.id] !== undefined){
+          //$.each(Input_map[tmp_this.id][this.id], function(index, data){
+            tmp_input[tmp_input.length] = Input_map[tmp_this.id][this.id];
+          //});
+        }
       }
     });
 
@@ -584,8 +630,16 @@ function triggerWin(){
   alert("OMG YOU ARE A WINNER!");
 }
 
-function calc_line(lx_stp, ly_stp, lx_enp, ly_enp){
+var tmp_ebene = 'null';
+var multi = 0;
+function calc_line(lx_stp, ly_stp, lx_enp, ly_enp, ebene){
   // make angular lines between
+  if(tmp_ebene != ebene) {
+    tmp_ebene = ebene;
+    multi = 0;
+  } else {
+    multi++;
+  }
   lx_a1 = lx_stp;
   ly_a1 = (ly_enp + ly_stp) / 2;
 
@@ -594,8 +648,8 @@ function calc_line(lx_stp, ly_stp, lx_enp, ly_enp){
 
   ldata = [
             { "x": lx_stp,  "y": ly_stp},
-            { "x": lx_a1,   "y": ly_a1},
-            { "x": lx_a2,   "y": ly_a2},
+            { "x": lx_a1,   "y": ly_a1 - (multi * 6) + 10},
+            { "x": lx_a2,   "y": ly_a2 - (multi * 6) + 10},
             { "x": lx_enp,  "y": ly_enp}
           ];
   return ldata;

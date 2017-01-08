@@ -115,7 +115,11 @@ $(document).ready(function(){
     }
   });
 
-
+  // TODO: delete next lines after debug mode:
+  //var level_obj = makeNewLevel(123);
+  //hideMenu();
+  //addProcLevel(level_obj);
+  //$('.gameDiv').show();
 // end document ready function
 });
 
@@ -132,6 +136,14 @@ function hideMenu(){
 // Main SVG Loader Function
 function loadsvg(obj, src){
   $(obj).load(src);
+}
+
+// use only manual with the chromium console
+function makeNewLevel(id){
+  console.log("Start Procedural Level Module!");
+  var plg = new PLG(id);
+  console.log(plg.res());
+  return plg.json;
 }
 
 // TODO: Do we realy need this? NS
