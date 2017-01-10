@@ -26,6 +26,7 @@ var obj_level;
 var bomb_svg_html;
 var win_triggert = 0;
 var lost_triggert = 0;
+var level_id = "";
 // SVG Path function for leiterbahnen
 function addLevel(id){
 
@@ -43,6 +44,7 @@ function addLevel(id){
   win_triggert = 0;
   lostTime = 0;
   lost_triggert = 0;
+  level_id = id;
 
   d3.json("data/level/"+id+"level.json", function(error, data) {
     obj_level = data; // put data into obj_level
@@ -63,12 +65,28 @@ function addLevel(id){
         //load finishd
         d3.xml("svg/elements/place.svg").mimeType("image/svg+xml").get(function(error, xml) {
           place_svg_html = $(xml).find("g").html();
-          // load function after assets are loaded
-          start_first_render(obj_level);
         });
       }
     });
-
+    startInterval = setInterval(function(){
+      start = 1;
+      if(bomb_svg_html == undefined){
+        start = 0;
+      }
+      $(obj_level.elements).each(function(index){
+        if(elemnts_svg_html[this.obj] == undefined){
+          start = 0;
+        }
+      });
+      if(place_svg_html == undefined){
+        start = 0;
+      }
+      if(start == 1){
+        clearInterval(startInterval);
+        // load function after assets are loaded
+        start_first_render(obj_level);
+      }
+    }, 10);
   // load json end
   });
 }
@@ -671,15 +689,25 @@ function circelThrouLogic(){
 
 function triggerWin(){
   if(win_triggert == 0){
-    alert("OMG YOU ARE A WINNER!");
+    //alert("OMG YOU ARE A WINNER!");
   }
   win_triggert = 1;
+  localStorage[level_id + "win"] = 1;
+  localStorage[(parseInt(level_id) + 1) + "open"] = 1;
+  stopTime();
+  hideMenu();
+  $('#levelWinLost').html("You Win!");
+  $('.winloseMenuDiv').show();
 }
 function triggerLost(){
   if(lost_triggert == 0){
-    alert("OMG YOU ARE A LOOSER!");
+    //alert("OMG YOU ARE A LOOSER!");
   }
   lost_triggert = 1;
+  stopTime();
+  hideMenu();
+  $('#levelWinLost').html("Game Over!");
+  $('.winloseMenuDiv').show();
 }
 
 var tmp_ebene = 'null';
@@ -773,6 +801,10 @@ function createBombClock(time){
       triggerLost();
     }
   }, 1000);
+}
+
+function  stopTime(){
+  clearInterval(clockInterval);
 }
 
 /**
