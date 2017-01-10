@@ -5,7 +5,7 @@
 }
 
 /* Scrolling background to infinite (unendlichkeit :D ) */
-#BackgroundScroll {
+.BackgroundScroll {
 	height: 100vh;
   /* TODO: for DEBUGMODE the background is deactivated*/
 	background: url(../img/background.png);
@@ -14,7 +14,7 @@
 }
 
 /* not scrolling background */
-#BackgroundScroll2 {
+.BackgroundScroll2 {
 	height: 100vh;
 	background: url(../img/background2.png);
 }
@@ -44,6 +44,12 @@ svg {
 .Btn svg{
 
   padding-top: 10px;
+}
+
+.levelBtn {
+  float: left;
+  width: 20%;
+  padding-right: 5px;
 }
 /* TODO: on Mainpage a little help icon */
 .help svg{

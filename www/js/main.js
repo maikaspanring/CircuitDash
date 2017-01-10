@@ -6,14 +6,22 @@ $(document).ready(function(){
   dheight = $(document).height();
 
   var bmusic = document.getElementById("bmusic");
-  //bmusic.play();
+  bmusic.play();
   bmusic.volume = 0.5;
+  if(localStorage.muted == "true") {
+    bmusic.muted = true;
+  }
 
   // load svg files into all elements with the class lsvg and an svgsrc attr
   $(".lsvg").each(function(){
     src = $(this).attr('svgsrc');
     loadsvg(this, src);
   });
+
+  if(localStorage.theme == 1){
+    $('.BackgroundScroll').css("background","url(../img/backgroundB.png)");
+    $('.BackgroundScroll2').css("background","url(../img/background2B.png)");
+  }
 
   /*********************
    * APP Event Handler *
@@ -23,9 +31,23 @@ $(document).ready(function(){
   $( "#mute" ).on( "click", function() {
     var bmusic = document.getElementById("bmusic");
     if(bmusic.muted == false) {
+      localStorage.muted = true;
       bmusic.muted = true;
     } else {
+      localStorage.muted = false;
       bmusic.muted = false;
+    }
+  });
+
+  $("#colorchange").on("click", function(){
+    if(localStorage.theme == 0) {
+      localStorage.theme = 1;
+      $('.BackgroundScroll').css("background","url(../img/backgroundB.png)");
+      $('.BackgroundScroll2').css("background","url(../img/background2B.png)");
+    } else {
+      localStorage.theme = 0;
+      $('.BackgroundScroll').css("background","url(../img/background.png)");
+      $('.BackgroundScroll2').css("background","url(../img/background2.png)");
     }
   });
 
@@ -53,6 +75,13 @@ $(document).ready(function(){
       case 'newgame':
         hideMenu();
         $('.gameMenuDiv').show();
+        $(".levelBtn").each(function(){
+          var levelname = $(this).attr("level");
+          var obj = $(this).find("svg").find("text").find("tspan");
+          obj.html(levelname);
+          $(this).find("tspan").html("test");
+          $(this).find("tspan").html(levelname);
+        });
       break;
       // switch to settings menu
       case 'settings':
@@ -86,7 +115,11 @@ $(document).ready(function(){
     }
   });
 
-
+  // TODO: delete next lines after debug mode:
+  //var level_obj = makeNewLevel(123);
+  //hideMenu();
+  //addProcLevel(level_obj);
+  //$('.gameDiv').show();
 // end document ready function
 });
 
@@ -103,6 +136,14 @@ function hideMenu(){
 // Main SVG Loader Function
 function loadsvg(obj, src){
   $(obj).load(src);
+}
+
+// use only manual with the chromium console
+function makeNewLevel(id){
+  console.log("Start Procedural Level Module!");
+  var plg = new PLG(id);
+  console.log(plg.res());
+  return plg.json;
 }
 
 // TODO: Do we realy need this? NS

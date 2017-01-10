@@ -50,9 +50,10 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript" src="js/d3.min.js"></script>
     <script type="text/javascript" src="js/d3-extended.min.js"></script>
+    <script type="text/javascript" src="js/PLG.js"></script>
     <!-- Main Menu -->
     <div class="mainMenuDiv menuDiv">
-      <div id="BackgroundScroll">
+      <div class="BackgroundScroll">
         <div class="container">
           <div>
             <span class="lsvg maintitle" svgsrc="svg/maintitle.svg"></span>
@@ -66,28 +67,41 @@
     </div>
     <!-- Level Menu -->
     <div class="gameMenuDiv  menuDiv">
-      <div id="BackgroundScroll2">
+      <div class="BackgroundScroll2">
         <div class="container">
           <div>
             <span class="lsvg Btn" svgsrc="svg/newgameTitle.svg"></span>
-            <!--<span class="lsvg Btn" do="startlevel" svgsrc="svg/levelBtn.svg" level="Debug"></span>-->
-             <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level1.svg" level="1"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level2.svg" level="2"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level3.svg" level="3"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level4.svg" level="4"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level5.svg" level="5"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level6.svg" level="6"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level7.svg" level="7"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level8.svg" level="8"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level9.svg" level="9"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level10.svg" level="10"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level11.svg" level="11"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level12.svg" level="12"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level13.svg" level="13"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level14.svg" level="14"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level15.svg" level="15"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level16.svg" level="16"></span>
-              <span class="lsvg Btn help" do="startlevel" svgsrc="svg/level/level17.svg" level="17"></span>
+            <!--<span class="lsvg Btn levelBtn" do="startlevel" level="debug" svgsrc="svg/levelBtnNew.svg"></span>-->
+            <span class="lsvg Btn levelBtn" do="startlevel" level="1" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="2" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="3" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="4" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="5" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="6" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="7" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="8" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="9" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="10" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="11" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="12" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="13" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="14" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="15" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="16" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="17" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="18" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="19" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="20" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="21" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="22" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="23" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="24" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="25" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="26" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="27" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="28" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="29" svgsrc="svg/levelBtnNew.svg"></span>
+            <span class="lsvg Btn levelBtn" do="startlevel" level="30" svgsrc="svg/levelBtnNew.svg"></span>
             <span class="lsvg Btn back" do="mainmenu" from="gameDiv" svgsrc="svg/backMini.svg"></span>
           </div>
         </div>
@@ -95,7 +109,7 @@
     </div>
     <!-- Settings Menu -->
     <div class="settingsMenuDiv  menuDiv">
-      <div id="BackgroundScroll2">
+      <div class="BackgroundScroll2">
         <div class="container">
           <div>
             <span class="lsvg Btn" svgsrc="svg/settingsTitle.svg"></span>
@@ -109,7 +123,7 @@
     </div>
      <!-- Help menu -->
     <div class="helpMenuDiv  menuDiv">
-      <div id="BackgroundScroll2">
+      <div class="BackgroundScroll2">
         <div class="container">
           <div>
             <span class="lsvg Btn" svgsrc="svg/helpTitle.svg"></span>
@@ -133,7 +147,7 @@
     </div>
     <!-- Stats Menu -->
     <div class="statsMenuDiv  menuDiv">
-      <div id="BackgroundScroll2">
+      <div class="BackgroundScroll2">
         <div class="container">
           <div>
             <span class="lsvg Btn" svgsrc="svg/statsTitle.svg"></span>
@@ -144,7 +158,7 @@
     </div>
     <!-- Game View -->
     <div class="gameDiv  menuDiv">
-      <div id="BackgroundScroll2">
+      <div class="BackgroundScroll2">
         <div class="container">
           <engine></engine>
           <span class="lsvg Btn gameback" do="newgame" from="gameDiv" svgsrc="svg/backMini.svg"></span>
