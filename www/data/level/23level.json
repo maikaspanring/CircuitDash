@@ -1,7 +1,7 @@
 {
-  "ID": 123,
+  "ID": 23,
   "name": "PLG_123",
-  "time": 3600,
+  "time": 65,
   "endpoints": [
     {
       "id": "p0",
@@ -9,11 +9,11 @@
     },
     {
       "id": "p1",
-      "need": 0
+      "need": 1
     },
     {
       "id": "p2",
-      "need": 0
+      "need": 1
     }
   ],
   "startpoints": [
@@ -52,7 +52,7 @@
     },
     {
       "id": "sp3",
-      "on": 0,
+      "on": 1,
       "next": [
         {
           "id": "ebene3obj2"
@@ -75,7 +75,7 @@
     {
       "type": "drop",
       "id": "ebene1obj2",
-      "obj": "or",
+      "obj": "and",
       "ebene": 1,
       "next": [
         {
@@ -86,7 +86,7 @@
     {
       "type": "drop",
       "id": "ebene1obj3",
-      "obj": "or",
+      "obj": "xor",
       "ebene": 1,
       "next": [
         {
@@ -97,9 +97,12 @@
     {
       "type": "drop",
       "id": "ebene2obj1",
-      "obj": "xor",
+      "obj": "and",
       "ebene": 2,
       "next": [
+        {
+          "id": "ebene1obj1"
+        },
         {
           "id": "ebene1obj2"
         },
@@ -111,22 +114,28 @@
     {
       "type": "drop",
       "id": "ebene3obj1",
-      "obj": "xor",
+      "obj": "or",
       "ebene": 3,
       "next": [
         {
           "id": "ebene1obj1"
+        },
+        {
+          "id": "ebene2obj1"
         }
       ]
     },
     {
       "type": "drop",
       "id": "ebene3obj2",
-      "obj": "xor",
+      "obj": "or",
       "ebene": 3,
       "next": [
         {
-          "id": "ebene1obj1"
+          "id": "ebene2obj1"
+        },
+        {
+          "id": "ebene1obj3"
         }
       ]
     }

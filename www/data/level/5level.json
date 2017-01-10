@@ -1,7 +1,7 @@
 {
   "ID":5,
   "name":"Level",
-  "time":3600,
+  "time":30,
   "endpoints":[
     {
       "id":"p1",

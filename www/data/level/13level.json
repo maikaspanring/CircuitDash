@@ -1,7 +1,7 @@
 {
   "ID":13,
-  "Name":"Debug",
-  "Time":3600,
+  "name":"Debug",
+  "time":60,
   "endpoints":[
     {
       "id":"p1",

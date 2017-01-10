@@ -1,7 +1,7 @@
 {
-  "ID": 123,
-  "name": "PLG_123",
-  "time": 3600,
+  "ID": 18,
+  "name": "Level",
+  "time": 60,
   "endpoints": [
     {
       "id": "p1",
@@ -48,7 +48,7 @@
     {
       "type": "drop",
       "id": "ebene1obj1",
-      "obj": "and",
+      "obj": "xor",
       "ebene": 1,
       "next": [
         {
@@ -59,7 +59,7 @@
     {
       "type": "drop",
       "id": "ebene1obj2",
-      "obj": "or",
+      "obj": "and",
       "ebene": 1,
       "next": [
         {
@@ -70,7 +70,7 @@
     {
       "type": "drop",
       "id": "ebene2obj1",
-      "obj": "and",
+      "obj": "or",
       "ebene": 2,
       "next": [
         {
@@ -84,7 +84,7 @@
     {
       "type": "drop",
       "id": "ebene2obj2",
-      "obj": "xor",
+      "obj": "or",
       "ebene": 2,
       "next": [
         {
