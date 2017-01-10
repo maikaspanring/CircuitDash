@@ -20,8 +20,8 @@ $(document).ready(function(){
   });
 
   if(localStorage.theme == 1){
-    $('.BackgroundScroll').css("background","url(../img/backgroundB.png)");
-    $('.BackgroundScroll2').css("background","url(../img/background2B.png)");
+    $('.BackgroundScroll').css("background","url('img/backgroundB.png')");
+    $('.BackgroundScroll2').css("background","url('img/background2B.png')");
   }
 
   /*********************
@@ -43,12 +43,12 @@ $(document).ready(function(){
   $("#colorchange").on("click", function(){
     if(localStorage.theme == 0) {
       localStorage.theme = 1;
-      $('.BackgroundScroll').css("background","url(../img/backgroundB.png)");
-      $('.BackgroundScroll2').css("background","url(../img/background2B.png)");
+      $('.BackgroundScroll').css("background","url('img/backgroundB.png')");
+      $('.BackgroundScroll2').css("background","url('img/background2B.png')");
     } else {
       localStorage.theme = 0;
-      $('.BackgroundScroll').css("background","url(../img/background.png)");
-      $('.BackgroundScroll2').css("background","url(../img/background2.png)");
+      $('.BackgroundScroll').css("background","url('img/background.png')");
+      $('.BackgroundScroll2').css("background","url('img/background2.png')");
     }
   });
 
