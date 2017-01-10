@@ -1,6 +1,6 @@
 {
   "ID":25,
-  "name":"Level",
+  "name":"Level 25 - 30",
   "time":70,
   "endpoints":[
     {
@@ -10,7 +10,7 @@
     {
       "id":"p2",
       "need":0
-    },    
+    },
     {
       "id":"p3",
       "need":1

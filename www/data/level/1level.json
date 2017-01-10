@@ -1,6 +1,6 @@
 {
   "ID":1,
-  "name":"Level",
+  "name":"Level 1 - 30",
   "time":15,
   "endpoints":[
     {
@@ -51,4 +51,3 @@
     }
   ]
 }
-
