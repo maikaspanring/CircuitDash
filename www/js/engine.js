@@ -654,7 +654,8 @@ function triggerWin(){
     localStorage[level_id + "win"] = 1;
     if(localStorage[level_id + 'winN'] == undefined) localStorage[level_id + "winN"] = 0;
     localStorage[level_id + "winN"]++;
-    localStorage[level_id + "time"] = clockTime;
+    if(localStorage[level_id + "time"] == undefined) localStorage[level_id + "time"] = clockTime;
+    if(localStorage[level_id + "time"] < clockTime) localStorage[level_id + "time"] = clockTime;
     // open next level
     localStorage[(parseInt(level_id) + 1) + "open"] = 1;
     // global wins
