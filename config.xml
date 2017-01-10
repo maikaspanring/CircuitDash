@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.testapp2591995" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.cybot.circuitdash" version="0.9.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Circuit Dash</name>
   <description>
-        An Game Project
+        An Logic Game
     </description>
-  <author email="you@example.com" href="http://spanring.companyweb.at/CD">
+  <author email="niklasspanring@gmail.com" href="http://spanring.companyweb.at/CD">
       Lisa Lackner, Niklas Spanring
     </author>
   <content src="index.html"/>
@@ -13,8 +13,8 @@
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
-  <preference name="SplashScreenDelay" value="2000"/>
-  <preference name="FadeSplashScreenDuration" value="2000"/>
+  <preference name="SplashScreenDelay" value="500"/>
+  <preference name="FadeSplashScreenDuration" value="500"/>
   <preference name="android-minSdkVersion" value="16"/>
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
