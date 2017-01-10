@@ -1,78 +1,99 @@
 {
-  "ID":0,
-  "name":"Debug",
-  "time":3600,
+  "ID":28,
+  "name":"Level",
+  "time":60,
   "endpoints":[
     {
       "id":"p1",
-      "need":1
-    },
-    {
-      "id":"p2",
       "need":0
     },
     {
+      "id":"p2",
+      "need":1
+    },
+    {
       "id":"p3",
+      "need":1
+    },
+    {
+      "id":"p4",
       "need":0
     }
   ],
   "startpoints":[
     {
       "id":"sp1",
-      "on":1,
-      "next":[{"id":"block1"}]
+      "on":0,
+      "next":[{"id":"block2"}]
     },
     {
       "id":"sp2",
+      "on":1,
+      "next":[{"id":"block2"}]
+    },
+    {
+      "id":"sp3",
       "on":0,
       "next":[{"id":"block1"}]
     },
     {
-      "id":"sp3",
+      "id":"sp4",
+      "on":1,
+      "next":[{"id":"block1"}]
+    },
+    {
+      "id":"sp5",
       "on":1,
       "next":[{"id":"block0"}]
     },
     {
-      "id":"sp4",
-      "on":0,
+      "id":"sp6",
+      "on":1,
       "next":[{"id":"block0"}]
     }
   ],
-  "elements":[
+ "elements":[
     {
       "type":"drop",
-      "id":"block4",
+      "id":"block5",
       "obj":"or",
-      "ebene":1,
-      "next":[{"id":"p1"}]
-    },
-    {
-      "type":"drop",
-      "id":"block3",
-      "obj":"and",
       "ebene":1,
       "next":[{"id":"p3"}]
     },
     {
       "type":"drop",
-      "id":"block2",
+      "id":"block4",
+      "obj":"or",
+      "ebene":2,
+      "next":[{"id":"p2"}, {"id":"block5"}]
+    },
+    {
+      "type":"drop",
+      "id":"block3",
       "obj":"xor",
       "ebene":2,
-      "next":[{"id":"block4"}, {"id":"p2"}, {"id":"block3"}]
+      "next":[{"id":"block5"}, {"id":"p4"}]
+    },
+    {
+      "type":"drop",
+      "id":"block2",
+      "obj":"and",
+      "ebene":3,
+      "next":[{"id":"p1"}, {"id":"block4"}]
     },
     {
       "type":"drop",
       "id":"block1",
-      "obj":"xor",
+      "obj":"or",
       "ebene":3,
-      "next":[{"id":"block4"}, {"id":"block2"}]
+      "next":[{"id":"block4"}, {"id":"block3"}]
     },
     {
       "type":"drop",
       "id":"block0",
-      "obj":"or",
+      "obj":"and",
       "ebene":3,
-      "next":[{"id":"block2"}, {"id":"block3"}]
+      "next":[{"id":"block3"}]
     }
   ]
 }

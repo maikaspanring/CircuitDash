@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2"
-     inkscape:cx="58.0883"
+     inkscape:cx="104.55585"
      inkscape:cy="87.048095"
      inkscape:document-units="px"
      inkscape:current-layer="layer1-1"
@@ -101,15 +101,15 @@
            transform="scale(0.90504928,1.1049122)"
            sodipodi:linespacing="125%"
            id="text4180"
-           y="127.64933"
-           x="25.954279"
+           y="122.21904"
+           x="6.0658617"
            style="font-style:normal;font-weight:normal;font-size:251.27700806px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffcf29;fill-opacity:1;stroke:#ffcf29;stroke-width:6.28192472px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
            xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:129.04670715px;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';fill:#ffcf29;fill-opacity:1;stroke:#ffcf29;stroke-width:6.28192472px;stroke-opacity:1"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:106.25px;font-family:Orbitron;-inkscape-font-specification:Orbitron;fill:#ffcf29;fill-opacity:1;stroke:#ffcf29;stroke-width:6.28192472px;stroke-opacity:1"
              id="tspan4184"
-             y="127.64933"
-             x="25.954279"
-             sodipodi:role="line">SET</tspan></text>
+             y="122.21904"
+             x="6.0658617"
+             sodipodi:role="line">RULE</tspan></text>
         <path
            inkscape:connector-curvature="0"
            id="path4202"
