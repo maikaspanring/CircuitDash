@@ -689,25 +689,36 @@ function circelThrouLogic(){
 
 function triggerWin(){
   if(win_triggert == 0){
-    //alert("OMG YOU ARE A WINNER!");
+    //level stats
+    localStorage[level_id + "win"] = 1;
+    if(localStorage[level_id + 'winN'] == undefined) localStorage[level_id + "winN"] = 0;
+    localStorage[level_id + "winN"]++;
+    localStorage[level_id + "time"] = clockTime;
+    // open next level
+    localStorage[(parseInt(level_id) + 1) + "open"] = 1;
+    // global wins
+    if(localStorage['winN'] == undefined) localStorage['winN'] = 0;
+    localStorage['winN']++;
+
+    stopTime();
+    hideMenu();
+    $('#levelWinLost').html("You Win!");
+    $('.winloseMenuDiv').show();
   }
   win_triggert = 1;
-  localStorage[level_id + "win"] = 1;
-  localStorage[(parseInt(level_id) + 1) + "open"] = 1;
-  stopTime();
-  hideMenu();
-  $('#levelWinLost').html("You Win!");
-  $('.winloseMenuDiv').show();
 }
 function triggerLost(){
   if(lost_triggert == 0){
-    //alert("OMG YOU ARE A LOOSER!");
+    if(localStorage[level_id + "lostN"] == undefined) localStorage[level_id + "lostN"] = 0;
+    localStorage[level_id + "lostN"]++;
+    if(localStorage['lostN'] == undefined) localStorage['lostN'] = 0;
+    localStorage['lostN']++;
+    lost_triggert = 1;
+    stopTime();
+    hideMenu();
+    $('#levelWinLost').html("Game Over!");
+    $('.winloseMenuDiv').show();
   }
-  lost_triggert = 1;
-  stopTime();
-  hideMenu();
-  $('#levelWinLost').html("Game Over!");
-  $('.winloseMenuDiv').show();
 }
 
 var tmp_ebene = 'null';

@@ -175,6 +175,12 @@ function showLevel(id){
     $('#levelDetailTime').html(min10 + "" + min1 + ":" + sec10 + "" + sec1 );
     $('#levelDetailDesc').html(data.desc);
     $('#levelDetailID').attr("level", id);
+
+    stats = '';
+    if(localStorage[id+'winN'] != undefined) stats+= 'Wins: '+localStorage[id+'winN'] + '<br>';
+    if(localStorage[id+'time'] != undefined) stats+= 'Best time left: '+localStorage[id+'time']+' sec. <br>';
+    if(localStorage[id+'lostN'] != undefined) stats+= 'Lost: '+localStorage[id+'lostN'];
+    $('#levelDetailStats').html(stats);
   });
 }
 
