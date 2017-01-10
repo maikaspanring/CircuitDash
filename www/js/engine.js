@@ -24,6 +24,8 @@ var place_svg_html;
 var elemnts_svg_html = [];
 var obj_level;
 var bomb_svg_html;
+var win_triggert = 0;
+var lost_triggert = 0;
 // SVG Path function for leiterbahnen
 function addLevel(id){
 
@@ -38,6 +40,9 @@ function addLevel(id){
   start_y = 0;
   Gatter_map = [];
   Gatter_id_map = [];
+  win_triggert = 0;
+  lostTime = 0;
+  lost_triggert = 0;
 
   d3.json("data/level/"+id+"level.json", function(error, data) {
     obj_level = data; // put data into obj_level
@@ -82,6 +87,9 @@ function addProcLevel(obj){
     Gatter_map = [];
     Gatter_id_map = [];
     obj_level = obj; // put data into obj_level
+    win_triggert = 0;
+    lostTime = 0;
+    lost_triggert = 0;
 
     d3.xml("svg/bombe.svg").mimeType("image/svg+xml").get(function(error, xml) {
       bomb_svg_html = $(xml).find("g").html();
@@ -300,7 +308,7 @@ function start_first_render(obj_level){
                     .attr("obj", this.obj)
                     .attr("id","g"+index)
                     .attr("lx", -25)
-                    .attr("ly", 81 * (index + 1))
+                    .attr("ly", ((dwidth / (celements + 1)) * (index + 1) * 5) * 0.2)
                     .html(elemnts_svg_html[this.obj])
                     .attr("transform", "scale(0.2,0.2) translate(-120, "+((dwidth / (celements + 1)) * (index + 1) * 5)+")")
                       .call(d3.drag()
@@ -488,8 +496,8 @@ function dragended(d) {
       if(Input_map[tmp_this.id] !== undefined){
         if(Input_map[tmp_this.id][this.id] == 1){
           if(d3.select('#'+tmp_this.id).attr("need") != Input_map[tmp_this.id][this.id]){
-            clockTime  = clockTime - 500;
-            Materialize.toast('- 500 Seconds !!!', 4000) // 4000 is the duration of the toast
+            clockTime  = clockTime - 30;
+            Materialize.toast('- 30 Seconds !!!', 1000) // 4000 is the duration of the toast
           }
         }
       }
@@ -527,8 +535,8 @@ function place_gatter(gatter, place){
   if( "storedrop" == ptmp_id) {
     d3.select(".drop[drop="+'"'+d3.select(gatter).attr("id")+'"'+"]").attr("drop", "0")
     Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
-    clockTime  = clockTime - 100;
-    Materialize.toast('- 100 Seconds', 4000) // 4000 is the duration of the toast
+    clockTime  = clockTime - 5;
+    Materialize.toast('- 5 Seconds', 1000) // 4000 is the duration of the toast
   }
   win = 1;
   $(obj_level.elements).each(function(index){
@@ -541,7 +549,7 @@ function place_gatter(gatter, place){
   });
 
   if(win == 1){
-    triggerWin();
+    //triggerWin();
   }
   circelThrouLogic();
 }
@@ -593,6 +601,14 @@ function circelThrouLogic(){
           if(!result ^ !val) result = 1;
           else result = 0;
         });
+        if(tmp_input.length == 2) {
+          if(!tmp_input[0] ^ !tmp_input[1]) result = 1;
+          else result = 0;
+        }
+        if(tmp_input.length == 3) {
+          if((tmp_input[0] ^ tmp_input[1] ^ tmp_input[2]) && !(tmp_input[0] && tmp_input[1] && tmp_input[2])) result = 1;
+          else result = 0;
+        }
         break;
       default:
         result = 0;
@@ -624,10 +640,46 @@ function circelThrouLogic(){
       circelThrouLogic();
     }
   });
+
+  var otherway_win = 1;
+  $(obj_level.elements).reverse().each(function(index){
+    tmp_this = this;
+    $(obj_level.endpoints).each(function(index){
+      if(Input_map[this.id] !== undefined){
+        if(Input_map[this.id][tmp_this.id] !== undefined){
+          if(this.need == 1 && Input_map[this.id][tmp_this.id] == 0){
+            otherway_win = 0;
+            console.log("Input_map: no power for endpoint [",this.id,"]!");
+          }
+          if(this.need == 0 && Input_map[this.id][tmp_this.id] == 1){
+            otherway_win = 0;
+            console.log("Input_map: ther is power for endpoint [",this.id,"]!");
+          }
+        }
+      }
+    });
+    if(Gatter_map[tmp_this.id] == undefined){
+      otherway_win = 0;
+      console.log("Gatter_map: not all elements placed!");
+    }
+  });
+
+  if(otherway_win == 1){
+    triggerWin();
+  }
 }
 
 function triggerWin(){
-  alert("OMG YOU ARE A WINNER!");
+  if(win_triggert == 0){
+    alert("OMG YOU ARE A WINNER!");
+  }
+  win_triggert = 1;
+}
+function triggerLost(){
+  if(lost_triggert == 0){
+    alert("OMG YOU ARE A LOOSER!");
+  }
+  lost_triggert = 1;
 }
 
 var tmp_ebene = 'null';
@@ -640,16 +692,19 @@ function calc_line(lx_stp, ly_stp, lx_enp, ly_enp, ebene){
   } else {
     multi++;
   }
+
+  multi = 0;
+
   lx_a1 = lx_stp;
   ly_a1 = (ly_enp + ly_stp) / 2;
 
   lx_a2 = lx_enp;
-  ly_a2 = ly_a1;
+  ly_a2 = ly_a1 + 25;
 
   ldata = [
             { "x": lx_stp,  "y": ly_stp},
-            { "x": lx_a1,   "y": ly_a1 - (multi * 6) + 10},
-            { "x": lx_a2,   "y": ly_a2 - (multi * 6) + 10},
+            { "x": lx_a1,   "y": ly_a1 - (multi * 6) - 15},
+            { "x": lx_a2,   "y": ly_a2 - (multi * 6) - 15},
             { "x": lx_enp,  "y": ly_enp}
           ];
   return ldata;
@@ -667,6 +722,7 @@ function poweronline(obj){
 
 var clockInterval;
 var clockTime;
+var lostTime = 0;
 function createBombClock(time){
   clockTime = time;
   if(clockInterval != undefined) clearInterval(clockInterval);
@@ -696,15 +752,26 @@ function createBombClock(time){
   counter4 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 4) + 3, 42, 0.14, '#cc1010');
 
   clockInterval = setInterval(function(){
-    if(clockTime > 0) clockTime--;
-    min10 = Math.floor(clockTime / 60 / 10);
-    min1 = Math.floor(clockTime / 60 % 10);
-    sec10 = Math.floor((clockTime - ((min10 * 10 + min1) * 60)) / 10);
-    sec1 = Math.floor((clockTime - ((min10 * 10 + min1) * 60)) % 10);
-    counter1 = changeDigit(counter1, (min10), 0.14, '#cc1010');
-    counter2 = changeDigit(counter2, (min1), 0.14, '#cc1010');
-    counter3 = changeDigit(counter3, (sec10), 0.14, '#cc1010');
-    counter4 = changeDigit(counter4, (sec1), 0.14, '#cc1010');
+    if(clockTime > 0) {
+      clockTime--;
+      min10 = Math.floor(clockTime / 60 / 10);
+      min1 = Math.floor(clockTime / 60 % 10);
+      sec10 = Math.floor((clockTime - ((min10 * 10 + min1) * 60)) / 10);
+      sec1 = Math.floor((clockTime - ((min10 * 10 + min1) * 60)) % 10);
+      counter1 = changeDigit(counter1, (min10), 0.14, '#cc1010');
+      counter2 = changeDigit(counter2, (min1), 0.14, '#cc1010');
+      counter3 = changeDigit(counter3, (sec10), 0.14, '#cc1010');
+      counter4 = changeDigit(counter4, (sec1), 0.14, '#cc1010');
+    } else {
+      lostTime = 1;
+      counter1 = changeDigit(counter1, 0, 0.14, '#cc1010');
+      counter2 = changeDigit(counter2, 0, 0.14, '#cc1010');
+      counter3 = changeDigit(counter3, 0, 0.14, '#cc1010');
+      counter4 = changeDigit(counter4, 0, 0.14, '#cc1010');
+    }
+    if(lostTime == 1){
+      triggerLost();
+    }
   }, 1000);
 }
 
