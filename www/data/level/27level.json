@@ -1,6 +1,6 @@
 {
   "ID": 27,
-  "name": "Level",
+  "name": "Level 27 - 30",
   "time": 60,
   "endpoints": [
     {
@@ -66,7 +66,7 @@
           "id": "p0"
         }
       ]
-    },    
+    },
     {
       "type": "drop",
       "id": "ebene1obj2",

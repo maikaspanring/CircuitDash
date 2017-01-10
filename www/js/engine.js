@@ -26,10 +26,11 @@ var obj_level;
 var bomb_svg_html;
 var win_triggert = 0;
 var lost_triggert = 0;
+var level_id = "";
 // SVG Path function for leiterbahnen
 function addLevel(id){
 
-  place_svg_html = "";
+  place_svg_html = undefined;
   elemnts_svg_html = [];
   obj_level = undefined;
   Pline_map = [];
@@ -43,6 +44,7 @@ function addLevel(id){
   win_triggert = 0;
   lostTime = 0;
   lost_triggert = 0;
+  level_id = id;
 
   d3.json("data/level/"+id+"level.json", function(error, data) {
     obj_level = data; // put data into obj_level
@@ -63,58 +65,35 @@ function addLevel(id){
         //load finishd
         d3.xml("svg/elements/place.svg").mimeType("image/svg+xml").get(function(error, xml) {
           place_svg_html = $(xml).find("g").html();
-          // load function after assets are loaded
-          start_first_render(obj_level);
         });
       }
     });
-
+    started = 0;
+    startInterval = setInterval(function(){
+      start = 1;
+      if(bomb_svg_html == undefined){
+        start = 0;
+      }
+      $(obj_level.elements).each(function(index){
+        if(elemnts_svg_html[this.obj] == undefined){
+          start = 0;
+        }
+      });
+      if(place_svg_html == undefined){
+        start = 0;
+      }
+      if(start == 1){
+        clearInterval(startInterval);
+        // load function after assets are loaded
+        if(started == 0){
+          start_first_render(obj_level);
+          started = 1;
+        }
+      }
+    }, 10);
   // load json end
   });
 }
-
-function addProcLevel(obj){
-
-    place_svg_html = "";
-    elemnts_svg_html = [];
-    obj_level = undefined;
-    Pline_map = [];
-    Nline_map = [];
-    Input_map = [];
-    gamecontainer
-    start_x = 0;
-    start_y = 0;
-    Gatter_map = [];
-    Gatter_id_map = [];
-    obj_level = obj; // put data into obj_level
-    win_triggert = 0;
-    lostTime = 0;
-    lost_triggert = 0;
-
-    d3.xml("svg/bombe.svg").mimeType("image/svg+xml").get(function(error, xml) {
-      bomb_svg_html = $(xml).find("g").html();
-    });
-
-    var celements = obj_level.elements.length - 1;
-    $(obj_level.elements).each(function(index){
-      if(this.type == "drop"){
-        var obname = this.obj;
-        d3.xml("svg/elements/"+this.obj+".svg").mimeType("image/svg+xml").get(function(error, xml) {
-          elemnts_svg_html[obname] = $(xml).find("g").html();
-        });
-      }
-      if(celements == index){
-        //load finishd
-        d3.xml("svg/elements/place.svg").mimeType("image/svg+xml").get(function(error, xml) {
-          place_svg_html = $(xml).find("g").html();
-          // load function after assets are loaded
-          start_first_render(obj_level);
-        });
-      }
-    });
-
-  }
-
 
 /**
  * START Rendering after loading the assets
@@ -671,15 +650,37 @@ function circelThrouLogic(){
 
 function triggerWin(){
   if(win_triggert == 0){
-    alert("OMG YOU ARE A WINNER!");
+    //level stats
+    localStorage[level_id + "win"] = 1;
+    if(localStorage[level_id + 'winN'] == undefined) localStorage[level_id + "winN"] = 0;
+    localStorage[level_id + "winN"]++;
+    if(localStorage[level_id + "time"] == undefined) localStorage[level_id + "time"] = clockTime;
+    if(localStorage[level_id + "time"] < clockTime) localStorage[level_id + "time"] = clockTime;
+    // open next level
+    localStorage[(parseInt(level_id) + 1) + "open"] = 1;
+    // global wins
+    if(localStorage['winN'] == undefined) localStorage['winN'] = 0;
+    localStorage['winN']++;
+
+    stopTime();
+    hideMenu();
+    $('#levelWinLost').html("You Win!");
+    $('.winloseMenuDiv').show();
   }
   win_triggert = 1;
 }
 function triggerLost(){
   if(lost_triggert == 0){
-    alert("OMG YOU ARE A LOOSER!");
+    if(localStorage[level_id + "lostN"] == undefined) localStorage[level_id + "lostN"] = 0;
+    localStorage[level_id + "lostN"]++;
+    if(localStorage['lostN'] == undefined) localStorage['lostN'] = 0;
+    localStorage['lostN']++;
+    lost_triggert = 1;
+    stopTime();
+    hideMenu();
+    $('#levelWinLost').html("Game Over!");
+    $('.winloseMenuDiv').show();
   }
-  lost_triggert = 1;
 }
 
 var tmp_ebene = 'null';
@@ -773,6 +774,10 @@ function createBombClock(time){
       triggerLost();
     }
   }, 1000);
+}
+
+function  stopTime(){
+  clearInterval(clockInterval);
 }
 
 /**

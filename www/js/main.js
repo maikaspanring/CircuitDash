@@ -2,6 +2,7 @@ var dwidth = 0;
 var dheight = 0;
 // fires when the document is ready \(o.o)/
 $(document).ready(function(){
+  localStorage["1open"] = 1; // open first level
   dwidth = $(document).width();
   dheight = $(document).height();
 
@@ -65,12 +66,13 @@ $(document).ready(function(){
     var todo = $(this).attr('do');
     var from = $(this).attr('from');
     var level = $(this).attr('level');
+    stopTime();
     switch(todo){
       // switch back Main Menu
       case 'mainmenu':
         hideMenu();
         $('.mainMenuDiv').show();
-      break;level
+      break;
       // switch to level selection
       case 'newgame':
         hideMenu();
@@ -82,6 +84,7 @@ $(document).ready(function(){
           $(this).find("tspan").html("test");
           $(this).find("tspan").html(levelname);
         });
+        getLevelList();
       break;
       // switch to settings menu
       case 'settings':
@@ -93,6 +96,11 @@ $(document).ready(function(){
         hideMenu();
         $('.helpMenuDiv').show();
       break;
+      case 'showlevel':
+        hideMenu();
+        showLevel(level);
+        $('.levelDetailMenuDiv').show();
+      break;
       // switch to Game View
       case 'startlevel':
         hideMenu();
@@ -102,8 +110,12 @@ $(document).ready(function(){
       break;
       // switch to stats menu
       case 'stats':
-      hideMenu();
+        hideMenu();
         $('.statsMenuDiv').show();
+      break;
+      case 'reset':
+        localStorage.clear();
+        localStorage["1open"] = 1; // open first level
       break;
       // TODO: Check for posible expetions
       default:
@@ -136,6 +148,40 @@ function hideMenu(){
 // Main SVG Loader Function
 function loadsvg(obj, src){
   $(obj).load(src);
+}
+
+
+function getLevelList(){
+  $(".levelBtn").each(function(){
+    level = $(this).attr("level");
+    if(localStorage[level + "win"] == 1 || localStorage[level + "open"] == 1){
+      console.log(level, " is finishd/open");
+      $(this).css("pointer-events", "auto");
+      $(this).css("opacity", 1);
+    } else {
+      $(this).css("pointer-events", "none");
+      $(this).css("opacity", 0.5);
+    }
+  });
+}
+
+function showLevel(id){
+  d3.json("data/level/"+id+"level.json", function(error, data) {
+    $('#levelDetailName').html(data.name);
+    min10 = Math.floor(data.time / 60 / 10);
+    min1 = Math.floor(data.time / 60 % 10);
+    sec10 = Math.floor((data.time - ((min10 * 10 + min1) * 60)) / 10);
+    sec1 = Math.floor((data.time - ((min10 * 10 + min1) * 60)) % 10);
+    $('#levelDetailTime').html(min10 + "" + min1 + ":" + sec10 + "" + sec1 );
+    $('#levelDetailDesc').html(data.desc);
+    $('#levelDetailID').attr("level", id);
+
+    stats = '';
+    if(localStorage[id+'winN'] != undefined) stats+= 'Wins: '+localStorage[id+'winN'] + '<br>';
+    if(localStorage[id+'time'] != undefined) stats+= 'Best time left: '+localStorage[id+'time']+' sec. <br>';
+    if(localStorage[id+'lostN'] != undefined) stats+= 'Lost: '+localStorage[id+'lostN'];
+    $('#levelDetailStats').html(stats);
+  });
 }
 
 // use only manual with the chromium console
