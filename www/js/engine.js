@@ -30,7 +30,7 @@ var level_id = "";
 // SVG Path function for leiterbahnen
 function addLevel(id){
 
-  place_svg_html = "";
+  place_svg_html = undefined;
   elemnts_svg_html = [];
   obj_level = undefined;
   Pline_map = [];
@@ -68,6 +68,7 @@ function addLevel(id){
         });
       }
     });
+    started = 0;
     startInterval = setInterval(function(){
       start = 1;
       if(bomb_svg_html == undefined){
@@ -84,55 +85,15 @@ function addLevel(id){
       if(start == 1){
         clearInterval(startInterval);
         // load function after assets are loaded
-        start_first_render(obj_level);
+        if(started == 0){
+          start_first_render(obj_level);
+          started = 1;
+        }
       }
     }, 10);
   // load json end
   });
 }
-
-function addProcLevel(obj){
-
-    place_svg_html = "";
-    elemnts_svg_html = [];
-    obj_level = undefined;
-    Pline_map = [];
-    Nline_map = [];
-    Input_map = [];
-    gamecontainer
-    start_x = 0;
-    start_y = 0;
-    Gatter_map = [];
-    Gatter_id_map = [];
-    obj_level = obj; // put data into obj_level
-    win_triggert = 0;
-    lostTime = 0;
-    lost_triggert = 0;
-
-    d3.xml("svg/bombe.svg").mimeType("image/svg+xml").get(function(error, xml) {
-      bomb_svg_html = $(xml).find("g").html();
-    });
-
-    var celements = obj_level.elements.length - 1;
-    $(obj_level.elements).each(function(index){
-      if(this.type == "drop"){
-        var obname = this.obj;
-        d3.xml("svg/elements/"+this.obj+".svg").mimeType("image/svg+xml").get(function(error, xml) {
-          elemnts_svg_html[obname] = $(xml).find("g").html();
-        });
-      }
-      if(celements == index){
-        //load finishd
-        d3.xml("svg/elements/place.svg").mimeType("image/svg+xml").get(function(error, xml) {
-          place_svg_html = $(xml).find("g").html();
-          // load function after assets are loaded
-          start_first_render(obj_level);
-        });
-      }
-    });
-
-  }
-
 
 /**
  * START Rendering after loading the assets
