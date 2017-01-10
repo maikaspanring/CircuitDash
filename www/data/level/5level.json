@@ -1,19 +1,19 @@
 {
-  "ID":0,
-  "Name":"Debug",
-  "Time":3600,
+  "ID":5,
+  "name":"Level",
+  "time":3600,
   "endpoints":[
     {
       "id":"p1",
-      "need":1
+      "need":0
     },
     {
       "id":"p2",
-      "need":0
+      "need":1
     },
     {
       "id":"p3",
-      "need":0
+      "need":1
     }
   ],
   "startpoints":[
@@ -24,55 +24,41 @@
     },
     {
       "id":"sp2",
-      "on":0,
+      "on":1,
       "next":[{"id":"block1"}]
     },
     {
       "id":"sp3",
-      "on":1,
+      "on":0,
       "next":[{"id":"block0"}]
     },
     {
       "id":"sp4",
-      "on":0,
+      "on":1,
       "next":[{"id":"block0"}]
     }
   ],
-  "elements":[
-    {
-      "type":"drop",
-      "id":"block4",
-      "obj":"or",
-      "ebene":1,
-      "next":[{"id":"p1"}]
-    },
-    {
-      "type":"drop",
-      "id":"block3",
-      "obj":"and",
-      "ebene":1,
-      "next":[{"id":"p3"}]
-    },
+ "elements":[
     {
       "type":"drop",
       "id":"block2",
-      "obj":"xor",
-      "ebene":2,
-      "next":[{"id":"block4"}, {"id":"p2"}, {"id":"block3"}]
+      "obj":"or",
+      "ebene":1,
+      "next":[{"id":"p2"}]
     },
     {
       "type":"drop",
       "id":"block1",
       "obj":"xor",
-      "ebene":3,
-      "next":[{"id":"block4"}, {"id":"block2"}]
+      "ebene":2,
+      "next":[{"id":"p1"}, {"id":"block2"}]
     },
     {
       "type":"drop",
       "id":"block0",
       "obj":"or",
-      "ebene":3,
-      "next":[{"id":"block2"}, {"id":"block3"}]
+      "ebene":2,
+      "next":[{"id":"block2"}, {"id":"p3"}]
     }
   ]
 }

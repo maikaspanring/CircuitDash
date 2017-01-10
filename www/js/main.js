@@ -42,12 +42,13 @@ $(document).ready(function(){
   $( ".Btn" ).on("tap",function(){
     var todo = $(this).attr('do');
     var from = $(this).attr('from');
+    var level = $(this).attr('level');
     switch(todo){
       // switch back Main Menu
       case 'mainmenu':
         hideMenu();
         $('.mainMenuDiv').show();
-      break;
+      break;level
       // switch to level selection
       case 'newgame':
         hideMenu();
@@ -67,7 +68,7 @@ $(document).ready(function(){
       case 'startlevel':
         hideMenu();
         // TODO: [change this to level selector] Start Level
-        addLevel("debug");
+        addLevel(level);
         $('.gameDiv').show();
       break;
       // switch to stats menu
