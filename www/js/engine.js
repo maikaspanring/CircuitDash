@@ -45,6 +45,7 @@ function addLevel(id){
   lostTime = 0;
   lost_triggert = 0;
   level_id = id;
+  clockspeed = 1000;
 
   d3.json("data/level/"+id+"level.json", function(error, data) {
     obj_level = data; // put data into obj_level
@@ -312,10 +313,10 @@ function start_first_render(obj_level){
     var on = this.on;
     var next = this.next;
     if(on == 0) {
-      stafill = "red";
+      stafill = "grey";
       stroke_color = "yellow";
     } else {
-      stafill = "lightgreen";
+      stafill = "blue";
       stroke_color = "blue";
     }
     var rectangle = gamecontainer.append("rect")
@@ -475,8 +476,9 @@ function dragended(d) {
       if(Input_map[tmp_this.id] !== undefined){
         if(Input_map[tmp_this.id][this.id] == 1){
           if(d3.select('#'+tmp_this.id).attr("need") != Input_map[tmp_this.id][this.id]){
-            clockTime  = clockTime - 30;
-            Materialize.toast('- 30 Seconds !!!', 1000) // 4000 is the duration of the toast
+            //clockTime  = clockTime - 30;
+            changeClockSpeed(clockspeed - 250);
+            Materialize.toast('Time is now going a bit FASTER !!!', 2000) // 4000 is the duration of the toast
           }
         }
       }
@@ -514,8 +516,9 @@ function place_gatter(gatter, place){
   if( "storedrop" == ptmp_id) {
     d3.select(".drop[drop="+'"'+d3.select(gatter).attr("id")+'"'+"]").attr("drop", "0")
     Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
-    clockTime  = clockTime - 5;
-    Materialize.toast('- 5 Seconds', 1000) // 4000 is the duration of the toast
+    //clockTime  = clockTime - 5;
+    changeClockSpeed(clockspeed - 50);
+    Materialize.toast('Time runs now a little bit Faster !', 2000) // 4000 is the duration of the toast
   }
   win = 1;
   $(obj_level.elements).each(function(index){
@@ -665,10 +668,14 @@ function triggerWin(){
     stopTime();
     hideMenu();
     $('#levelWinLost').html("You Win!");
+    $('#LostRetryBtn').hide();
+    $('#WinNextBtn').show();
+    $('#WinNextBtn').attr("level", (parseInt(level_id) + 1));
     $('.winloseMenuDiv').show();
   }
   win_triggert = 1;
 }
+
 function triggerLost(){
   if(lost_triggert == 0){
     if(localStorage[level_id + "lostN"] == undefined) localStorage[level_id + "lostN"] = 0;
@@ -679,6 +686,9 @@ function triggerLost(){
     stopTime();
     hideMenu();
     $('#levelWinLost').html("Game Over!");
+    $('#LostRetryBtn').show();
+    $('#WinNextBtn').hide();
+    $('#LostRetryBtn').attr("level", level_id);
     $('.winloseMenuDiv').show();
   }
 }
@@ -724,23 +734,41 @@ function poweronline(obj){
 var clockInterval;
 var clockTime;
 var lostTime = 0;
+var clockspeed = 1000;
+var bcounter1;
+var bcounter2;
+var bcounter3;
+var bcounter4;
+var counter1;
+var counter2;
+var counter3;
+var counter4;
 function createBombClock(time){
   clockTime = time;
   if(clockInterval != undefined) clearInterval(clockInterval);
-  // make number for bomb
-  bcounter1 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 1), 42, 0.14, 'grey');
-  bcounter2 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 2), 42, 0.14, 'grey');
-  bcounter3 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 3) + 4, 42, 0.14, 'grey');
-  bcounter4 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 4) + 4, 42, 0.14, 'grey');
+  if(bcounter1 !== undefined) bcounter1.remove();
+  if(bcounter2 !== undefined) bcounter2.remove();
+  if(bcounter3 !== undefined) bcounter3.remove();
+  if(bcounter4 !== undefined) bcounter4.remove();
 
-  svgContainer.append("rect")
+  if(counter1 !== undefined) counter1.remove();
+  if(counter2 !== undefined) counter2.remove();
+  if(counter3 !== undefined) counter3.remove();
+  if(counter4 !== undefined) counter4.remove();
+  // make number for bomb
+  bcounter1 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 1), 42, 0.14, '#272727');
+  bcounter2 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 2), 42, 0.14, '#272727');
+  bcounter3 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 3) + 3, 42, 0.14, '#272727');
+  bcounter4 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 4) + 3, 42, 0.14, '#272727');
+
+  bcounterContainer = svgContainer.append("rect")
                 .attr("x", ((dwidth / 2) + 30.5) + (21.5 * 3))
                 .attr("y", 48)
                 .attr("width", 2)
                 .attr("height", 3)
                 .attr("fill", "#cc1010");
 
-  svgContainer.append("rect")
+  counterContainer = svgContainer.append("rect")
                 .attr("x", ((dwidth / 2) + 30.5) + (21.5 * 3))
                 .attr("y", 48 + 17)
                 .attr("width", 2)
@@ -752,9 +780,19 @@ function createBombClock(time){
   counter3 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 3) + 3, 42, 0.14, '#cc1010');
   counter4 = createDigit(8, ((dwidth / 2) + 31) + (21.5 * 4) + 3, 42, 0.14, '#cc1010');
 
+  d3.select("#bigredLED").style('opacity', 0.2);
+
   clockInterval = setInterval(function(){
     if(clockTime > 0) {
       clockTime--;
+
+      d3.select("#bigredLED").transition()
+                  .duration(10)
+                  .style('opacity', 1)
+                  .transition()
+                    .duration(300)
+                    .style('opacity', 0.2);
+
       min10 = Math.floor(clockTime / 60 / 10);
       min1 = Math.floor(clockTime / 60 % 10);
       sec10 = Math.floor((clockTime - ((min10 * 10 + min1) * 60)) / 10);
@@ -773,10 +811,15 @@ function createBombClock(time){
     if(lostTime == 1){
       triggerLost();
     }
-  }, 1000);
+  }, clockspeed);
 }
 
-function  stopTime(){
+function changeClockSpeed(NewSpeed){
+  clockspeed = NewSpeed;
+  createBombClock(clockTime);
+}
+
+function stopTime(){
   clearInterval(clockInterval);
 }
 
