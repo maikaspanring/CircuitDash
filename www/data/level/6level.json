@@ -1,12 +1,8 @@
 {
   "ID": 6,
   "name": "Level 6 - 30",
-  "time": 60,
+  "time": 30,
   "endpoints": [
-    {
-      "id": "p0",
-      "need": 1
-    },
     {
       "id": "p1",
       "need": 0
@@ -19,16 +15,7 @@
   "startpoints": [
     {
       "id": "sp0",
-      "on": 1,
-      "next": [
-        {
-          "id": "ebene2obj1"
-        }
-      ]
-    },
-    {
-      "id": "sp1",
-      "on": 1,
+      "on": 0,
       "next": [
         {
           "id": "ebene2obj1"
@@ -39,6 +26,9 @@
       "id": "sp2",
       "on": 1,
       "next": [
+        {
+          "id": "ebene2obj1"
+        },
         {
           "id": "ebene2obj2"
         }
@@ -68,6 +58,17 @@
     },
     {
       "type": "drop",
+      "id": "ebene1obj2",
+      "obj": "and",
+      "ebene": 1,
+      "next": [
+        {
+          "id": "p2"
+        }
+      ]
+    },
+    {
+      "type": "drop",
       "id": "ebene2obj1",
       "obj": "or",
       "ebene": 2,
@@ -76,7 +77,7 @@
           "id": "ebene1obj1"
         },
         {
-          "id": "p0"
+          "id": "ebene1obj2"
         }
       ]
     },
@@ -90,7 +91,7 @@
           "id": "ebene1obj1"
         },
         {
-          "id": "p2"
+          "id": "ebene1obj2"
         }
       ]
     }

@@ -19,12 +19,12 @@
   "startpoints":[
     {
       "id":"sp1",
-      "on":0,
+      "on":1,
       "next":[{"id":"block1"}]
     },
     {
       "id":"sp2",
-      "on":0,
+      "on":1,
       "next":[{"id":"block1"}]
     },
     {
@@ -54,7 +54,7 @@
     {
       "type":"drop",
       "id":"block1",
-      "obj":"or",
+      "obj":"xor",
       "ebene":2,
       "next":[{"id":"p1"}]
     },

@@ -1,24 +1,40 @@
 {
   "ID": 18,
   "name": "Level 18 - 30",
-  "time": 60,
+  "time": 50,
   "endpoints": [
     {
+      "id": "p0",
+      "need": 1
+    },
+    {
       "id": "p1",
-      "need": 0
+      "need": 1
     },
     {
       "id": "p2",
-      "need": 1
+      "need": 0
     }
   ],
   "startpoints": [
     {
       "id": "sp0",
-      "on": 0,
+      "on": 1,
       "next": [
         {
-          "id": "ebene2obj1"
+          "id": "ebene3obj3"
+        }
+      ]
+    },
+    {
+      "id": "sp1",
+      "on": 1,
+      "next": [
+        {
+          "id": "ebene3obj2"
+        },
+        {
+          "id": "ebene3obj3"
         }
       ]
     },
@@ -27,10 +43,10 @@
       "on": 1,
       "next": [
         {
-          "id": "ebene2obj1"
+          "id": "ebene3obj2"
         },
         {
-          "id": "ebene2obj2"
+          "id": "ebene3obj1"
         }
       ]
     },
@@ -39,27 +55,27 @@
       "on": 0,
       "next": [
         {
-          "id": "ebene2obj2"
+          "id": "ebene3obj1"
         }
       ]
     }
   ],
   "elements": [
-    {
+        {
       "type": "drop",
       "id": "ebene1obj1",
       "obj": "xor",
       "ebene": 1,
       "next": [
         {
-          "id": "p1"
+          "id": "p0"
         }
       ]
     },
-    {
+        {
       "type": "drop",
       "id": "ebene1obj2",
-      "obj": "and",
+      "obj": "or",
       "ebene": 1,
       "next": [
         {
@@ -70,7 +86,7 @@
     {
       "type": "drop",
       "id": "ebene2obj1",
-      "obj": "or",
+      "obj": "xor",
       "ebene": 2,
       "next": [
         {
@@ -78,17 +94,42 @@
         },
         {
           "id": "ebene1obj2"
+        },
+        {
+          "id": "p1"
         }
       ]
     },
     {
       "type": "drop",
-      "id": "ebene2obj2",
+      "id": "ebene3obj3",
       "obj": "or",
-      "ebene": 2,
+      "ebene": 3,
       "next": [
         {
-          "id": "ebene1obj1"
+          "id": "ebene2obj1"
+        }
+      ]
+    },
+    {
+      "type": "drop",
+      "id": "ebene3obj2",
+      "obj": "and",
+      "ebene": 3,
+      "next": [
+        {
+          "id": "ebene2obj1"
+        }
+      ]
+    },
+    {
+      "type": "drop",
+      "id": "ebene3obj1",
+      "obj": "and",
+      "ebene": 3,
+      "next": [
+        {
+          "id": "ebene2obj1"
         },
         {
           "id": "ebene1obj2"

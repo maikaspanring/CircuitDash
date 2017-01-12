@@ -20,12 +20,12 @@
     {
       "id":"sp1",
       "on":1,
-      "next":[{"id":"block1"}]
+      "next":[{"id":"block2"}]
     },
     {
       "id":"sp2",
       "on":1,
-      "next":[{"id":"block1"}]
+      "next":[{"id":"block0"}]
     },
     {
       "id":"sp3",
@@ -35,30 +35,37 @@
     {
       "id":"sp4",
       "on":0,
-      "next":[{"id":"block0"}]
+      "next":[{"id":"block1"}]
     }
   ],
  "elements":[
     {
       "type":"drop",
-      "id":"block2",
-      "obj":"xor",
+      "id":"block3",
+      "obj":"or",
       "ebene":1,
       "next":[{"id":"p2"}]
+    },
+    {
+      "type":"drop",
+      "id":"block2",
+      "obj":"or",
+      "ebene":2,
+      "next":[{"id":"p1"}, {"id":"block3"}]
     },
     {
       "type":"drop",
       "id":"block1",
       "obj":"xor",
       "ebene":2,
-      "next":[{"id":"p1"}, {"id":"block2"}]
+      "next":[{"id":"block3"}, {"id":"p3"}]
     },
     {
       "type":"drop",
       "id":"block0",
-      "obj":"xor",
-      "ebene":2,
-      "next":[{"id":"block2"}, {"id":"p3"}]
+      "obj":"and",
+      "ebene":3,
+      "next":[{"id":"block2"}, {"id":"block1"}]
     }
   ]
 }

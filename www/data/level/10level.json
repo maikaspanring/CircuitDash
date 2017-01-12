@@ -1,118 +1,85 @@
 {
-  "ID": 10,
-  "name": "Level 10 - 30",
-  "time": 40,
-  "endpoints": [
+  "ID":10,
+  "name":"Level 10 - 30",
+  "time":30,
+  "endpoints":[
     {
-      "id": "p0",
-      "need": 0
+      "id":"p1",
+      "need":0
     },
     {
-      "id": "p1",
-      "need": 1
+      "id":"p2",
+      "need":1
     },
     {
-      "id": "p2",
-      "need": 1
+      "id":"p3",
+      "need":1
     }
   ],
-  "startpoints": [
+  "startpoints":[
     {
-      "id": "sp0",
-      "on": 0,
-      "next": [
-        {
-          "id": "ebene2obj1"
-        },
-        {
-          "id": "ebene2obj2"
-        }
-      ]
+      "id":"sp1",
+      "on":1,
+      "next":[{"id":"block1"}]
     },
     {
-      "id": "sp1",
-      "on": 1,
-      "next": [
-        {
-          "id": "ebene2obj1"
-        },
-        {
-          "id": "ebene2obj2"
-        }
-      ]
+      "id":"sp2",
+      "on":1,
+      "next":[{"id":"block1"}]
     },
     {
-      "id": "sp2",
-      "on": 1,
-      "next": [
-        {
-          "id": "ebene2obj2"
-        },
-        {
-          "id": "ebene2obj3"
-        }
-      ]
+      "id":"sp3",
+      "on":0,
+      "next":[{"id":"block0"}]
     },
     {
-      "id": "sp3",
-      "on": 0,
-      "next": [
-        {
-          "id": "ebene2obj3"
-        }
-      ]
+      "id":"sp4",
+      "on":1,
+      "next":[{"id":"block0"}]
     }
   ],
-  "elements": [
+ "elements":[
     {
-      "type": "drop",
-      "id": "ebene1obj1",
-      "obj": "or",
-      "ebene": 1,
-      "next": [
-        {
-          "id": "p1"
-        }
-      ]
+      "type":"drop",
+      "id":"block5",
+      "obj":"or",
+      "ebene":1,
+      "next":[{"id":"p2"}]
     },
     {
-      "type": "drop",
-      "id": "ebene2obj1",
-      "obj": "and",
-      "ebene": 2,
-      "next": [
-        {
-          "id": "p0"
-        },
-        {
-          "id": "ebene1obj1"
-        }
-      ]
+      "type":"drop",
+      "id":"block4",
+      "obj":"or",
+      "ebene":2,
+      "next":[{"id":"p1"}, {"id":"block5"}]
     },
     {
-      "type": "drop",
-      "id": "ebene2obj2",
-      "obj": "or",
-      "ebene": 2,
-      "next": [
-        {
-          "id": "ebene1obj1"
-        }
-      ]
+      "type":"drop",
+      "id":"block3",
+      "obj":"and",
+      "ebene":2,
+      "next":[{"id":"block5"}]
     },
     {
-      "type": "drop",
-      "id": "ebene2obj3",
-      "obj": "or",
-      "ebene": 2,
-      "next": [
-        {
-          "id": "ebene1obj1"
-        },
-        {
-          "id": "p2"
-        }
-      ]
+      "type":"drop",
+      "id":"block2",
+      "obj":"and",
+      "ebene":2,
+      "next":[{"id":"block5"}, {"id":"p3"}]
+    },
+    {
+      "type":"drop",
+      "id":"block1",
+      "obj":"xor",
+      "ebene":3,
+      "next":[{"id":"block4"}, {"id":"block3"}]
+    },
+    {
+      "type":"drop",
+      "id":"block0",
+      "obj":"or",
+      "ebene":3,
+      "next":[{"id":"block4"}, {"id":"block3"}, {"id":"block2"}]
     }
   ]
 }

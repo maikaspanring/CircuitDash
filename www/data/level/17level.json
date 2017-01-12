@@ -41,7 +41,7 @@
     {
       "type":"drop",
       "id":"block4",
-      "obj":"xor",
+      "obj":"or",
       "ebene":2,
       "next":[{"id":"block5"}]
     },
@@ -62,14 +62,14 @@
     {
       "type":"drop",
       "id":"block1",
-      "obj":"xor",
+      "obj":"and",
       "ebene":3,
       "next":[{"id":"block4"}, {"id":"block3"}]
     },
     {
       "type":"drop",
       "id":"block0",
-      "obj":"or",
+      "obj":"and",
       "ebene":3,
       "next":[{"id":"block3"}, {"id":"block2"}]
     }
