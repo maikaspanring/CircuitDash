@@ -17,7 +17,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="backMini.svg">
+   sodipodi:docname="exitMini.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -47,7 +47,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="78.494456"
+     inkscape:cx="20.28017"
      inkscape:cy="65.163101"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -122,18 +122,18 @@
            id="path3351"
            style="fill:#000000;fill-opacity:0.39607843;stroke:url(#linearGradient4161);stroke-width:5.26957273;stroke-miterlimit:4;stroke-dasharray:none" />
         <text
-           transform="scale(1.1303431,0.88468713)"
+           transform="scale(0.93405014,1.0706063)"
            sodipodi:linespacing="125%"
            id="text4180"
-           y="166.17516"
-           x="279.20355"
-           style="font-style:normal;font-weight:normal;font-size:259.96878052px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffcf29;fill-opacity:1;stroke:#000000;stroke-width:6.49921799px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           y="137.81984"
+           x="340.96707"
+           style="font-style:normal;font-weight:normal;font-size:216.94677734px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffcf29;fill-opacity:1;stroke:#000000;stroke-width:5.42366838px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
            xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:212.039505px;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';fill:#ffcf29;fill-opacity:1;stroke:#000000;stroke-width:6.49921799px;stroke-opacity:1"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:176.94927979px;font-family:Orbitron;-inkscape-font-specification:'Orbitron Bold';fill:#ffcf29;fill-opacity:1;stroke:#000000;stroke-width:5.42366838px;stroke-opacity:1"
              id="tspan4184"
-             y="166.17516"
-             x="279.20355"
-             sodipodi:role="line">&lt;</tspan></text>
+             y="137.81984"
+             x="340.96707"
+             sodipodi:role="line">x</tspan></text>
         <text
            sodipodi:linespacing="125%"
            id="text3353"

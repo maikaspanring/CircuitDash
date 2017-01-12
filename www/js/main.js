@@ -20,8 +20,8 @@ $(document).ready(function(){
   });
 
   if(localStorage.theme == 1){
-    $('.BackgroundScroll').css("background","url(../img/backgroundB.png)");
-    $('.BackgroundScroll2').css("background","url(../img/background2B.png)");
+    $('.BackgroundScroll').css("background","url('img/backgroundB.png')");
+    $('.BackgroundScroll2').css("background","url('img/background2B.png')");
   }
 
   /*********************
@@ -43,12 +43,12 @@ $(document).ready(function(){
   $("#colorchange").on("click", function(){
     if(localStorage.theme == 0) {
       localStorage.theme = 1;
-      $('.BackgroundScroll').css("background","url(../img/backgroundB.png)");
-      $('.BackgroundScroll2').css("background","url(../img/background2B.png)");
+      $('.BackgroundScroll').css("background","url('img/backgroundB.png')");
+      $('.BackgroundScroll2').css("background","url('img/background2B.png')");
     } else {
       localStorage.theme = 0;
-      $('.BackgroundScroll').css("background","url(../img/background.png)");
-      $('.BackgroundScroll2').css("background","url(../img/background2.png)");
+      $('.BackgroundScroll').css("background","url('img/background.png')");
+      $('.BackgroundScroll2').css("background","url('img/background2.png')");
     }
   });
 
@@ -104,6 +104,7 @@ $(document).ready(function(){
       // switch to Game View
       case 'startlevel':
         hideMenu();
+        closeLevel();
         // TODO: [change this to level selector] Start Level
         addLevel(level);
         $('.gameDiv').show();
@@ -116,6 +117,9 @@ $(document).ready(function(){
       case 'reset':
         localStorage.clear();
         localStorage["1open"] = 1; // open first level
+      case 'loosGame':
+        triggerLost();
+      break;
       break;
       // TODO: Check for posible expetions
       default:
@@ -150,11 +154,11 @@ function loadsvg(obj, src){
   $(obj).load(src);
 }
 
-
+var openAllLevels = 0;
 function getLevelList(){
   $(".levelBtn").each(function(){
     level = $(this).attr("level");
-    if(localStorage[level + "win"] == 1 || localStorage[level + "open"] == 1){
+    if(localStorage[level + "win"] == 1 || localStorage[level + "open"] == 1 || openAllLevels == 1){
       console.log(level, " is finishd/open");
       $(this).css("pointer-events", "auto");
       $(this).css("opacity", 1);
