@@ -810,6 +810,8 @@ function createBombClock(time){
   d3.select("#bigredLED").style('opacity', 0.2);
 
   clockInterval = setInterval(function(){
+  if(localStorage["allTimeN"] === undefined) localStorage["allTimeN"] = 0;
+  localStorage["allTimeN"] = parseInt(localStorage["allTimeN"]) + 1;
     if(clockTime > 0) {
       clockTime--;
 
