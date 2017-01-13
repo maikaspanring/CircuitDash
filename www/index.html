@@ -169,6 +169,20 @@
           <div>
             <span class="lsvg Btn" svgsrc="svg/statsTitle.svg"></span>
             <span class="lsvg Btn back" do="mainmenu" from="gameDiv" svgsrc="svg/backMini.svg"></span>
+                <span id="stats"></span>
+        <!-- Script for the fold-out links -->
+        <script type="text/javascript">
+          function toggle(control) {
+            var elem = document.getElementById(control);
+            if(elem.style.display == "none"){
+              elem.style.display = "block";
+            }
+            else {
+              elem.style.display = "none";
+              }
+          }
+        </script>
+      <script src='js/stats.js'></script>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 // the content of the helptext (with folding links)
 var html = "<!DOCTYPE html><html><head><meta charset='utf-8'><title></title></head><body>";
-var allgemein = "<br><br><p style='font-size:20px;'>Bitte öffnen Sie für die Erklärungen die jeweiligen Unterpunkte durch antippen. Zum Schließen, diesen Vorgang wiederholen.</p><br>"
+//var allgemein = "<br><br><p style='font-size:20px;'>Bitte öffnen Sie für die Erklärungen die jeweiligen Unterpunkte durch antippen. Zum Schließen, diesen Vorgang wiederholen.</p><br>"
 var logikgatter_text = "<p style='font-size:20px;'>Dieses Logikspiel beinhaltet 3 Logikgatter:</p>";
 var and_button = "<p><span class='lsvg helpgatter' svgsrc='svg/elements/and.svg'></span></p></a>";
 var xor_button = "<p><span class='lsvg helpgatter' svgsrc='svg/elements/xor.svg'></span></p></a>";
