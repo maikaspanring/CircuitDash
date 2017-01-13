@@ -105,6 +105,7 @@ $(document).ready(function(){
       case 'startlevel':
         hideMenu();
         closeLevel();
+        $('#winloseGameScreen').hide();
         // TODO: [change this to level selector] Start Level
         addLevel(level);
         $('.gameDiv').show();
@@ -128,7 +129,7 @@ $(document).ready(function(){
       break;
     }
     if(from == "gameDiv"){
-      closeLevel();
+      //closeLevel();
     }
   });
 
@@ -160,7 +161,7 @@ function getLevelList(){
   $(".levelBtn").each(function(){
     level = $(this).attr("level");
     if(localStorage[level + "win"] == 1 || localStorage[level + "open"] == 1 || openAllLevels == 1){
-      console.log(level, " is finishd/open");
+      //console.log(level, " is finishd/open");
       $(this).css("pointer-events", "auto");
       $(this).css("opacity", 1);
     } else {

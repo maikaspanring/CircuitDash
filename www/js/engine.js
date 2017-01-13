@@ -478,7 +478,7 @@ function dragended(d) {
           if(d3.select('#'+tmp_this.id).attr("need") != Input_map[tmp_this.id][this.id]){
             //clockTime  = clockTime - 30;
             changeClockSpeed(clockspeed - 250);
-            Materialize.toast('Time is now going a bit FASTER !!!', 2000) // 4000 is the duration of the toast
+            Materialize.toast('Time is now going FASTER !!!', 2000) // 4000 is the duration of the toast
           }
         }
       }
@@ -506,9 +506,11 @@ function place_gatter(gatter, place){
           Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
           Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
           Gatter_map[this.id] = d3.select(gatter).attr("obj");
+          console.log(this.id, ": ", d3.select(gatter).attr("obj"));
         } else {
           Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
           Gatter_map[this.id] = d3.select(gatter).attr("obj");
+          console.log(this.id, ": ", d3.select(gatter).attr("obj"));
         }
       }
     }
@@ -631,18 +633,18 @@ function circelThrouLogic(){
         if(Input_map[this.id][tmp_this.id] !== undefined){
           if(this.need == 1 && Input_map[this.id][tmp_this.id] == 0){
             otherway_win = 0;
-            console.log("Input_map: no power for endpoint [",this.id,"]!");
+            //console.log("Input_map: no power for endpoint [",this.id,"]!");
           }
           if(this.need == 0 && Input_map[this.id][tmp_this.id] == 1){
             otherway_win = 0;
-            console.log("Input_map: ther is power for endpoint [",this.id,"]!");
+            //console.log("Input_map: ther is power for endpoint [",this.id,"]!");
           }
         }
       }
     });
     if(Gatter_map[tmp_this.id] == undefined){
       otherway_win = 0;
-      console.log("Gatter_map: not all elements placed!");
+      //console.log("Gatter_map: not all elements placed!");
     }
   });
 
@@ -666,12 +668,24 @@ function triggerWin(){
     localStorage['winN']++;
 
     stopTime();
-    hideMenu();
+    //hideMenu();
     $('#levelWinLost').html("You Win!");
     $('#LostRetryBtn').hide();
     $('#WinNextBtn').show();
     $('#WinNextBtn').attr("level", (parseInt(level_id) + 1));
-    $('.winloseMenuDiv').show();
+    //$('.winloseMenuDiv').show();
+    //$('#winloseGameScreen').html($('.winloseMenuDiv').html());
+    $('#winloseGameScreen .BackgroundScroll2').css("background", "none");
+    $('#winloseGameScreen .BackgroundScroll2').css("margin-top", "50%");
+    $('#winloseGameScreen .container').css("background", "rgba(0,180,0,1)");
+    $('#winloseGameScreen .container').css("padding-left", "20px");
+    $('#winloseGameScreen .container').css("padding-right", "20px");
+    $('#winloseGameScreen .container').css("border", "2px solid");
+    $('#winloseGameScreen .container').css("border-radius", "30px");
+    $('#winloseGameScreen #backToLevelMenu').css("position", "inherit");
+    $('#winloseGameScreen #backToLevelMenu').css("left", "inherit");
+    $('#winloseGameScreen #backToLevelMenu').css("top", "inherit");
+    $('#winloseGameScreen').fadeIn('fast');
   }
   win_triggert = 1;
 }
@@ -684,12 +698,25 @@ function triggerLost(){
     localStorage['lostN']++;
     lost_triggert = 1;
     stopTime();
-    hideMenu();
+    //hideMenu();
     $('#levelWinLost').html("Game Over!");
     $('#LostRetryBtn').show();
     $('#WinNextBtn').hide();
     $('#LostRetryBtn').attr("level", level_id);
-    $('.winloseMenuDiv').show();
+    //$('.winloseMenuDiv').show();
+    //$('#winloseGameScreen').html($('.winloseMenuDiv').html());
+    $('#winloseGameScreen .BackgroundScroll2').css("background", "none");
+    $('#winloseGameScreen .BackgroundScroll2').css("margin-top", "50%");
+    $('#winloseGameScreen .container').css("background", "rgba(0,180,0,1)");
+    $('#winloseGameScreen .container').css("padding-left", "20px");
+    $('#winloseGameScreen .container').css("padding-right", "20px");
+    $('#winloseGameScreen .container').css("border", "2px solid");
+    $('#winloseGameScreen .container').css("border-radius", "30px");
+    $('#winloseGameScreen #backToLevelMenu').css("position", "inherit");
+    $('#winloseGameScreen #backToLevelMenu').css("left", "inherit");
+    $('#winloseGameScreen #backToLevelMenu').css("top", "inherit");
+    $('#winloseGameScreen').fadeIn('fast');
+    //closeLevel();
   }
 }
 
@@ -783,6 +810,8 @@ function createBombClock(time){
   d3.select("#bigredLED").style('opacity', 0.2);
 
   clockInterval = setInterval(function(){
+  if(localStorage["allTimeN"] === undefined) localStorage["allTimeN"] = 0;
+  localStorage["allTimeN"] = parseInt(localStorage["allTimeN"]) + 1;
     if(clockTime > 0) {
       clockTime--;
 

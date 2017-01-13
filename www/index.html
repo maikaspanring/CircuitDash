@@ -194,21 +194,20 @@
         <div class="container">
           <engine></engine>
           <!--TODO: make back btn to lose the game quick-->
+          <span id="winloseGameScreen" class="winloseGameScreen">
+            <div class="BackgroundScroll2">
+              <div class="container">
+                <div>
+                  <!--<span class="lsvg Btn" svgsrc="svg/newgameTitle.svg"></span>-->
+                  <span id="backToLevelMenu" class="lsvg Btn back" do="newgame" from="gameDiv" svgsrc="svg/backMini.svg"></span>
+                  <p/><div id="levelWinLost"></div><p/>
+                  <span id="LostRetryBtn" class="lsvg Btn" do="startlevel" level="30" svgsrc="svg/retryBtn.svg"></span>
+                  <span id="WinNextBtn" class="lsvg Btn" do="startlevel" level="30" svgsrc="svg/nextBtn.svg"></span>
+                </div>
+              </div>
+            </div>
+          </span>
           <span class="lsvg Btn gameback" do="loosGame" from="gameDiv" id="exitGame" svgsrc="svg/exitMini.svg"></span>
-        </div>
-      </div>
-    </div>
-    <!-- WinLost Menu -->
-    <div class="winloseMenuDiv  menuDiv">
-      <div class="BackgroundScroll2">
-        <div class="container">
-          <div>
-            <span class="lsvg Btn" svgsrc="svg/newgameTitle.svg"></span>
-            <span id="levelWinLost" style='font-size:20px;'></span></p>
-            <span id="LostRetryBtn" class="lsvg Btn" do="startlevel" level="30" svgsrc="svg/retryBtn.svg"></span>
-            <span id="WinNextBtn" class="lsvg Btn" do="startlevel" level="30" svgsrc="svg/nextBtn.svg"></span>
-            <span class="lsvg Btn back" do="newgame" from="gameDiv" svgsrc="svg/backMini.svg"></span>
-          </div>
         </div>
       </div>
     </div>
