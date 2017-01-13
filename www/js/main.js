@@ -182,10 +182,13 @@ function showLevel(id){
     $('#levelDetailDesc').html(data.desc);
     $('#levelDetailID').attr("level", id);
 
-    stats = '';
-    if(localStorage[id+'winN'] != undefined) stats+= 'Wins: '+localStorage[id+'winN'] + '<br>';
-    if(localStorage[id+'time'] != undefined) stats+= 'Best time left: '+localStorage[id+'time']+' sec. <br>';
-    if(localStorage[id+'lostN'] != undefined) stats+= 'Lost: '+localStorage[id+'lostN'];
+    stats = '<div class="levelDetail">';
+    if(localStorage[id+'winN'] != undefined) stats+= '<p>Wins: '+localStorage[id+'winN'] + '</p>';
+    if(localStorage[id+'time'] != undefined) stats+= '<p>Best time left: '+localStorage[id+'time']+' sec. ';
+    if(localStorage[id+'bestTimePrc'] != undefined) stats+= '('+localStorage[id+'bestTimePrc']+'%)</p>';
+    else stats+='</p>';
+    if(localStorage[id+'lostN'] != undefined) stats+= '<p>Lost: '+localStorage[id+'lostN']+'</p>';
+    stats = stats + '</div>';
     $('#levelDetailStats').html(stats);
   });
 }

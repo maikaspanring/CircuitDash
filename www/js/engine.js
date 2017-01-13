@@ -661,8 +661,20 @@ function triggerWin(){
     localStorage[level_id + "winN"]++;
     if(localStorage[level_id + "time"] == undefined) localStorage[level_id + "time"] = clockTime;
     if(localStorage[level_id + "time"] < clockTime) localStorage[level_id + "time"] = clockTime;
+
     // open next level
     localStorage[(parseInt(level_id) + 1) + "open"] = 1;
+
+    if(localStorage["bestTime"] == undefined) localStorage["bestTime"] = 0;
+    var prcTimeLevel = ( clockTime / obj_level.time ) * 100;
+
+    if(localStorage[level_id + "bestTimePrc"] == undefined) localStorage[level_id + "bestTimePrc"] = 0;
+    if(localStorage[level_id + "bestTimePrc"] < prcTimeLevel) localStorage[level_id + "bestTimePrc"] = prcTimeLevel;
+    if(localStorage["bestTime"] < prcTimeLevel){
+      localStorage["bestTime"] = prcTimeLevel;
+      if(localStorage["bestLevel"] == undefined) localStorage["bestLevel"] = 0;
+      localStorage["bestLevel"] = level_id;
+    }
     // global wins
     if(localStorage['winN'] == undefined) localStorage['winN'] = 0;
     localStorage['winN']++;
