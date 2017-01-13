@@ -112,6 +112,7 @@ $(document).ready(function(){
       // switch to stats menu
       case 'stats':
         hideMenu();
+        statsText();
         $('.statsMenuDiv').show();
       break;
       case 'reset':
