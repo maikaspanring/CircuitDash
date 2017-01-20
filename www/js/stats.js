@@ -12,6 +12,10 @@ if (localStorage['lostN'] === undefined) {
 }
 if (localStorage['alltimeN'] === undefined) {
 	localStorage['alltimeN'] = 0;
+	min10 = 0;
+	min1 = 0;
+	sec10 = 0;
+	sec1 = 0;
 }
 else {
 	min10 = Math.floor(localStorage['alltimeN'] / 60 / 10);
