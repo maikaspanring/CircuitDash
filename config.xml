@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.cybot.circuitdash" version="0.9.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.cybot.circuitdash" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Circuit Dash</name>
   <description>
-        An Logic Game
+        An logic game of a scool projekt from 2016/17 (7 weeks)
     </description>
   <author email="niklasspanring@gmail.com" href="http://spanring.companyweb.at/CD">
       Lisa Lackner, Niklas Spanring
@@ -13,9 +13,9 @@
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
-  <preference name="SplashScreenDelay" value="500"/>
-  <preference name="FadeSplashScreenDuration" value="500"/>
-  <preference name="android-minSdkVersion" value="16"/>
+  <preference name="SplashScreenDelay" value="10"/>
+  <preference name="FadeSplashScreenDuration" value="10"/>
+  <preference name="android-minSdkVersion" value="21"/>
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <feature name="StatusBar">
