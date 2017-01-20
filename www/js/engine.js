@@ -679,6 +679,9 @@ function triggerWin(){
     if(localStorage['winN'] == undefined) localStorage['winN'] = 0;
     localStorage['winN']++;
 
+    if(localStorage['nextLevel'] == undefined) localStorage['nextLevel'] = 1;
+    if(level_id > localStorage['nextLevel']) localStorage['nextLevel'] = level_id;
+
     stopTime();
     //hideMenu();
     $('#levelWinLost').html("You Win!");

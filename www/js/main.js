@@ -185,7 +185,7 @@ function showLevel(id){
     stats = '<div class="levelDetail">';
     if(localStorage[id+'winN'] != undefined) stats+= '<p>Wins: '+localStorage[id+'winN'] + '</p>';
     if(localStorage[id+'time'] != undefined) stats+= '<p>Best time left: '+localStorage[id+'time']+' sec. ';
-    if(localStorage[id+'bestTimePrc'] != undefined) stats+= '('+localStorage[id+'bestTimePrc']+'%)</p>';
+    if(localStorage[id+'bestTimePrc'] != undefined) stats+= '('+(Math.round(localStorage[id+'bestTimePrc'] * 100) / 100)+'%)</p>';
     else stats+='</p>';
     if(localStorage[id+'lostN'] != undefined) stats+= '<p>Lost: '+localStorage[id+'lostN']+'</p>';
     stats = stats + '</div>';
