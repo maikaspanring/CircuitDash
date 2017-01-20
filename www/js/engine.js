@@ -686,6 +686,8 @@ function triggerWin(){
     //hideMenu();
     $('#levelWinLost').html("You Win!");
     $('#LostRetryBtn').hide();
+    $('#WinNextBtn').css("opacity", 1);
+    if((parseInt(level_id) + 1) > 30) $('#WinNextBtn').css("opacity", 0);
     $('#WinNextBtn').show();
     $('#WinNextBtn').attr("level", (parseInt(level_id) + 1));
     //$('.winloseMenuDiv').show();
