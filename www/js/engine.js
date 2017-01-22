@@ -406,11 +406,14 @@ function dragstarted(d) {
   //        .attr("ly", start_y);
 }
 
+var dragSec = 0;
 function dragged(d) {
   d3.select(this)
       .attr("x", d3.event.x)
       .attr("y", d3.event.y)
       .attr("transform", "scale(0.2,0.2) translate("+((d3.event.x * 5) - ((this.getBBox().width / 2) )) + "," + ((d3.event.y * 5) - ((this.getBBox().height / 2) )) + ")");
+  dragSec++;
+  console.log(dragSec);
 }
 
 function dragended(d) {
