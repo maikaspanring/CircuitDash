@@ -40,6 +40,12 @@ svg {
 	height: 100%;
 	font-family: 'Orbitron';
 }
+
+p {
+  color: #ffcf29;
+  text-shadow: 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black;
+}
+
 /*TODO: Define a standard Btn*/
 .Btn svg{
 
@@ -136,6 +142,10 @@ svg {
   fill: #00ffff;
 }
 
+#levelDetailDesc svg, #levelDetailDesc2 svg  {
+  width: 70%;
+}
+
 /**********
  * ENGINE *
  **********/
@@ -169,11 +179,11 @@ engine svg{
 .levelDetail {
   font-size: 3vh;
   color: #ffcf29;
-  text-shadow: -1px 0 2px black, 0 1px 2px black, 1px 0 2px black, 0 -1px 2px black, -2px 0 2px black, 0 2px 2px black, 2px 0 2px black, 0 -2px 2px black;
+  text-shadow: 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black;
 }
 
 #levelWinLost {
   font-size: 7vh;
   color: #ffcf29;
-  text-shadow: -1px 0 2px black, 0 1px 2px black, 1px 0 2px black, 0 -1px 2px black, -2px 0 2px black, 0 2px 2px black, 2px 0 2px black, 0 -2px 2px black;
+  text-shadow: 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black;
 }

@@ -179,17 +179,27 @@ function showLevel(id){
     sec10 = Math.floor((data.time - ((min10 * 10 + min1) * 60)) / 10);
     sec1 = Math.floor((data.time - ((min10 * 10 + min1) * 60)) % 10);
     $('#levelDetailTime').html(min10 + "" + min1 + ":" + sec10 + "" + sec1 );
-    $('#levelDetailDesc').html(data.desc);
     $('#levelDetailID').attr("level", id);
 
-    stats = '<div class="levelDetail">';
-    if(localStorage[id+'winN'] != undefined) stats+= '<p>Wins: '+localStorage[id+'winN'] + '</p>';
-    if(localStorage[id+'time'] != undefined) stats+= '<p>Best time left: '+localStorage[id+'time']+' sec. ';
-    if(localStorage[id+'bestTimePrc'] != undefined) stats+= '('+(Math.round(localStorage[id+'bestTimePrc'] * 100) / 100)+'%)</p>';
-    else stats+='</p>';
-    if(localStorage[id+'lostN'] != undefined) stats+= '<p>Lost: '+localStorage[id+'lostN']+'</p>';
-    stats = stats + '</div>';
-    $('#levelDetailStats').html(stats);
+    if(parseInt(id) <= 1){
+      $('#levelDetailStats').hide();
+      $('#levelDetailDesc').show();
+      $('#levelDetailDesc2').show();
+      $('#levelDetailDesc').load("svg/tutorialOK.svg");
+      $('#levelDetailDesc2').load("svg/tutorialNotOK.svg");
+    } else {
+      $('#levelDetailDesc').hide();
+      $('#levelDetailDesc2').hide();
+      stats = '<div class="levelDetail">';
+      if(localStorage[id+'winN'] != undefined) stats+= '<p>Wins: '+localStorage[id+'winN'] + '</p>';
+      if(localStorage[id+'time'] != undefined) stats+= '<p>Best time left: '+localStorage[id+'time']+' sec. ';
+      if(localStorage[id+'bestTimePrc'] != undefined) stats+= '('+(Math.round(localStorage[id+'bestTimePrc'] * 100) / 100)+'%)</p>';
+      else stats+='</p>';
+      if(localStorage[id+'lostN'] != undefined) stats+= '<p>Lost: '+localStorage[id+'lostN']+'</p>';
+      stats = stats + '</div>';
+      $('#levelDetailStats').html(stats);
+      $('#levelDetailStats').show();
+    }
   });
 }
 

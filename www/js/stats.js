@@ -40,7 +40,7 @@ var gametime = "<p style='font-size:23px;'>Entire playtime: "+ min10 + "" + min1
 var bestLevel = "<p style='font-size:23px;'>Best level: Level "+bestLevelId+" ("+(Math.round(bestLevelPrc * 100) / 100)+"%)</p><br>";
 var openLevel = "<p style='font-size:23px;'>unlocked level: "+(parseInt(localStorage['nextLevel']) + 1)+"</p><br>";
 
-var credits = "<div style='position: fixed; left: 10px; bottom: 0px; width: 100%'><p style='font-size:10px;'>Diese App wurde in Folge eines Schulprojekts 2016/17 von Niklas Spanring und Lisa Lackner programmiert und gestaltet.</p></div><br>";
+var credits = "<div style='position: fixed; left: 10px; bottom: 0px; width: 100%'><p style='font-size:10px; text-shadow: none; color: black;'>Diese App wurde in Folge eines Schulprojekts 2016/17 von Niklas Spanring und Lisa Lackner programmiert und gestaltet.</p></div><br>";
 var ende = "</body></html>";
 
 var name = "<span id='levelDetailName' style='font-size:20px;'></span><p />"

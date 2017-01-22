@@ -27,6 +27,7 @@ var bomb_svg_html;
 var win_triggert = 0;
 var lost_triggert = 0;
 var level_id = "";
+var idToLogic = [];
 // SVG Path function for leiterbahnen
 function addLevel(id){
 
@@ -46,6 +47,7 @@ function addLevel(id){
   lost_triggert = 0;
   level_id = id;
   clockspeed = 1000;
+  idToLogic = [];
 
   d3.json("data/level/"+id+"level.json", function(error, data) {
     obj_level = data; // put data into obj_level
@@ -259,7 +261,15 @@ function start_first_render(obj_level){
         lx_enp = tmp_x + placew;
         ly_enp = tmp_y;
 
-        ldata = calc_line(lx_stp, ly_stp, lx_enp, ly_enp, this_ebene);
+        tmp_this = this;
+        ebene_to = 0;
+        $(obj_level.elements).each(function(index){
+          if(tmp_this.id == this.id){
+              ebene_to = this.ebene;
+          }
+        });
+
+        ldata = calc_line(lx_stp, ly_stp, lx_enp, ly_enp, this_ebene, ebene_to);
         if(Input_map[this.id] == undefined) Input_map[this.id] = [];
         if(Input_map[this.id][id] == undefined) Input_map[this.id][id] = [];
         Input_map[this.id][id][Input_map[this.id][id].length] = 0;
@@ -283,6 +293,7 @@ function start_first_render(obj_level){
         poweronline(PlineGraph);
         $(".pline"+id).hide();
       }); // each next obj
+      idToLogic["g"+index] = this.obj;
       gamecontainer.append("g")
                     .attr("class","gatter")
                     .attr("obj", this.obj)
@@ -356,7 +367,7 @@ function start_first_render(obj_level){
       lx_enp = tmp_x + placew;
       ly_enp = tmp_y;
 
-      ldata = calc_line(lx_stp, ly_stp, lx_enp, ly_enp, 0);
+      ldata = calc_line(lx_stp, ly_stp, lx_enp, ly_enp, 0, 0);
       // stroke-dashoffset
       // stroke-dasharray: 25;
       if(Input_map[this.id] == undefined) Input_map[this.id] = [];
@@ -404,16 +415,18 @@ function dragstarted(d) {
   //d3.select(this)
   //        .attr("lx", start_x)
   //        .attr("ly", start_y);
+  dragmove = 0;
+  console.log(dragmove);
 }
 
-var dragSec = 0;
+var dragmove = 0;
 function dragged(d) {
   d3.select(this)
       .attr("x", d3.event.x)
       .attr("y", d3.event.y)
       .attr("transform", "scale(0.2,0.2) translate("+((d3.event.x * 5) - ((this.getBBox().width / 2) )) + "," + ((d3.event.y * 5) - ((this.getBBox().height / 2) )) + ")");
-  dragSec++;
-  console.log(dragSec);
+  dragmove++;
+  console.log(dragmove);
 }
 
 function dragended(d) {
@@ -447,7 +460,7 @@ function dragended(d) {
       }
   });
 
-  if(intersect != true || d3.select(inscetion_obj).attr("drop") != "0"){
+  if(dragmove < 1) {
     last_x = d3.select(this).attr("lx");
     last_y = d3.select(this).attr("ly");
     d3.select(this)
@@ -456,6 +469,21 @@ function dragended(d) {
         .transition()
           .duration(500)
             .attr("transform", "scale(0.2,0.2) translate(" + last_x * 5 + "," + (last_y * 5 - 32) + ")");
+    d3.select(".drop[drop="+'"'+d3.select(this).attr("id")+'"'+"]").attr("drop", "0");
+    tmp_this = this;
+    $('#storedrop').each(function(){
+      place_gatter(tmp_this, this);
+    });
+  } else if(intersect != true || d3.select(inscetion_obj).attr("drop") != "0"){
+    last_x = d3.select(this).attr("lx");
+    last_y = d3.select(this).attr("ly");
+    d3.select(this)
+        .attr("x", last_x)
+        .attr("y", last_y)
+        .transition()
+          .duration(500)
+            .attr("transform", "scale(0.2,0.2) translate(" + last_x * 5 + "," + (last_y * 5 - 32) + ")");
+    d3.select(".drop[drop="+'"'+d3.select(this).attr("id")+'"'+"]").attr("drop", "0")
     tmp_this = this;
     $('#storedrop').each(function(){
       place_gatter(tmp_this, this);
@@ -469,7 +497,7 @@ function dragended(d) {
           .transition()
             .duration(500)
               .attr("transform", "scale(0.2,0.2) translate(" + ((new_x) * 5) + "," + (new_y * 5 - 32) + ")");
-      d3.select(".drop[drop="+'"'+d3.select(this).attr("id")+'"'+"]").attr("drop", "0")
+      d3.select(".drop[drop="+'"'+d3.select(this).attr("id")+'"'+"]").attr("drop", "0");
       d3.select(inscetion_obj).attr("drop", d3.select(this).attr("id"));
       place_gatter(this, inscetion_obj);
   }
@@ -500,24 +528,35 @@ var Gatter_map = [];
 var Gatter_id_map = [];
 // check dependecie and update logigater/power mode
 function place_gatter(gatter, place){
-  ptmp_id = d3.select(place).attr("id");
-  $(obj_level.elements).each(function(index){
-    if(this.type == "drop"){
-      Rightplace_map[this.id] = 0;
-      if(this.id == ptmp_id){
-        if(Gatter_id_map[d3.select(gatter).attr("id")] != this.id){
-          Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
-          Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
-          Gatter_map[this.id] = d3.select(gatter).attr("obj");
-          console.log(this.id, ": ", d3.select(gatter).attr("obj"));
-        } else {
-          Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
-          Gatter_map[this.id] = d3.select(gatter).attr("obj");
-          console.log(this.id, ": ", d3.select(gatter).attr("obj"), Gatter_id_map);
-        }
-      }
+
+  $(".drop").each(function(index){
+    console.log(d3.select(this).attr("id"), d3.select(this).attr("drop"));
+    Gatter_map[d3.select(this).attr("id")] = undefined;
+    if(d3.select(this).attr("drop") != "0"){
+      Gatter_map[d3.select(this).attr("id")] = idToLogic[d3.select(this).attr("drop")]
     }
+    //Gatter_map[d3.select(this).attr("id")] = d3.select().attr("obj");
+    console.log(d3.select(this).attr("id"), d3.select(this).attr("drop"));
   });
+
+  ptmp_id = d3.select(place).attr("id");
+  //$(obj_level.elements).each(function(index){
+  //  if(this.type == "drop"){
+  //    Rightplace_map[this.id] = 0;
+  //    if(this.id == ptmp_id){
+  //      if(Gatter_id_map[d3.select(gatter).attr("id")] != this.id){
+  //        Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
+  //        Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
+  //        Gatter_map[this.id] = d3.select(gatter).attr("obj");
+  //        console.log(this.id, ": ", d3.select(gatter).attr("obj"));
+  //      } else {
+  //        Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
+  //        Gatter_map[this.id] = d3.select(gatter).attr("obj");
+  //        console.log(this.id, ": ", d3.select(gatter).attr("obj"), Gatter_id_map);
+  //      }
+  //    }
+  //  }
+  //});
   if( "storedrop" == ptmp_id) {
     d3.select(".drop[drop="+'"'+d3.select(gatter).attr("id")+'"'+"]").attr("drop", "0")
     Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
@@ -742,7 +781,7 @@ function triggerLost(){
 
 var tmp_ebene = 'null';
 var multi = 0;
-function calc_line(lx_stp, ly_stp, lx_enp, ly_enp, ebene){
+function calc_line(lx_stp, ly_stp, lx_enp, ly_enp, ebene, ebene_to){
   // make angular lines between
   if(tmp_ebene != ebene) {
     tmp_ebene = ebene;
@@ -752,6 +791,11 @@ function calc_line(lx_stp, ly_stp, lx_enp, ly_enp, ebene){
   }
 
   multi = 0;
+
+  if(ebene > 0 && ebene_to > 0 && ebene_to - ebene == -2){
+    console.log(ebene_to - ebene);
+    multi = 4;
+  }
 
   lx_a1 = lx_stp;
   ly_a1 = (ly_enp + ly_stp) / 2;
