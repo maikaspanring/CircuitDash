@@ -1,11 +1,11 @@
 // the content of the helptext (with folding links)
 var html = "<!DOCTYPE html><html><head><meta charset='utf-8'><title></title></head><body>";
 //var allgemein = "<br><br><p style='font-size:20px;'>Bitte öffnen Sie für die Erklärungen die jeweiligen Unterpunkte durch antippen. Zum Schließen, diesen Vorgang wiederholen.</p><br>"
-var logikgatter_text = "<p style='font-size:20px;'>There are 3 Logic Blocks:</p>";
-var and_button = "<p><span class='lsvg helpgatter' svgsrc='svg/elements/and.svg'></span></p></a>";
-var xor_button = "<p><span class='lsvg helpgatter' svgsrc='svg/elements/xor.svg'></span></p></a>";
-var or_button = "<p><span class='lsvg helpgatter' svgsrc='svg/elements/or.svg'></span></p></a>";
-var allgemein_button = "<p><span class='lsvg helpgatter' svgsrc='svg/elements/allgemein.svg'></span></p></a>";
+var logikgatter_text = '<p style="font-size:20px;">There are 3 Logic Blocks:</p>';
+var and_button = '<p style="text-shadow:none;"><span class="lsvg helpgatter" svgsrc="svg/elements/and.svg"></span></p></a>';
+var xor_button = '<p style="text-shadow:none;"><span class="lsvg helpgatter" svgsrc="svg/elements/xor.svg"></span></p></a>';
+var or_button = '<p style="text-shadow:none;"><span class="lsvg helpgatter" svgsrc="svg/elements/or.svg"></span></p></a>';
+var allgemein_button = '<p style="text-shadow:none;"><span class="lsvg helpgatter" svgsrc="svg/elements/allgemein.svg"></span></p></a>';
 
 // Texts for the help for the user
 var and_text = "<p id='and' style='display: none; font-size:20px;'>All inputs must switched on!</p>";

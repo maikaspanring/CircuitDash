@@ -327,8 +327,14 @@ function start_first_render(obj_level){
       stafill = "grey";
       stroke_color = "yellow";
     } else {
-      stafill = "blue";
-      stroke_color = "blue";
+      if(localStorage.theme == undefined) localStorage.theme = 0;
+      if(localStorage.theme == 0){
+        stafill = "blue";
+        stroke_color = "blue";
+      }else{
+        stafill = "green";
+        stroke_color = "green";
+      }
     }
     var rectangle = gamecontainer.append("rect")
                                  .attr("x", tmp_x)
@@ -460,7 +466,7 @@ function dragended(d) {
       }
   });
 
-  if(dragmove < 1) {
+  if(dragmove < 1 || lost_triggert == 1) {
     last_x = d3.select(this).attr("lx");
     last_y = d3.select(this).attr("ly");
     d3.select(this)
@@ -736,7 +742,12 @@ function triggerWin(){
     //$('#winloseGameScreen').html($('.winloseMenuDiv').html());
     $('#winloseGameScreen .BackgroundScroll2').css("background", "none");
     $('#winloseGameScreen .BackgroundScroll2').css("margin-top", "50%");
-    $('#winloseGameScreen .container').css("background", "rgba(0,180,0,1)");
+    if(localStorage.theme == undefined) localStorage.theme = 0;
+    if(localStorage.theme == 0){
+      $('#winloseGameScreen .container').css("background", "rgba(0,180,0,1)");
+    } else {
+      $('#winloseGameScreen .container').css("background", "rgb(21, 31, 111)");
+    }
     $('#winloseGameScreen .container').css("padding-left", "20px");
     $('#winloseGameScreen .container').css("padding-right", "20px");
     $('#winloseGameScreen .container').css("border", "2px solid");
@@ -766,7 +777,11 @@ function triggerLost(){
     //$('#winloseGameScreen').html($('.winloseMenuDiv').html());
     $('#winloseGameScreen .BackgroundScroll2').css("background", "none");
     $('#winloseGameScreen .BackgroundScroll2').css("margin-top", "50%");
-    $('#winloseGameScreen .container').css("background", "rgba(0,180,0,1)");
+    if(localStorage.theme == 0){
+      $('#winloseGameScreen .container').css("background", "rgba(0,180,0,1)");
+    } else {
+      $('#winloseGameScreen .container').css("background", "rgb(21, 31, 111)");
+    }
     $('#winloseGameScreen .container').css("padding-left", "20px");
     $('#winloseGameScreen .container').css("padding-right", "20px");
     $('#winloseGameScreen .container').css("border", "2px solid");

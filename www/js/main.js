@@ -41,6 +41,7 @@ $(document).ready(function(){
   });
 
   $("#colorchange").on("click", function(){
+    if(localStorage.theme == undefined) localStorage.theme = 0;
     if(localStorage.theme == 0) {
       localStorage.theme = 1;
       $('.BackgroundScroll').css("background","url('img/backgroundB.png')");
