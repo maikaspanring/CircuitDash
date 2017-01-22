@@ -510,7 +510,7 @@ function place_gatter(gatter, place){
         } else {
           Gatter_id_map[d3.select(gatter).attr("id")] = this.id;
           Gatter_map[this.id] = d3.select(gatter).attr("obj");
-          console.log(this.id, ": ", d3.select(gatter).attr("obj"));
+          console.log(this.id, ": ", d3.select(gatter).attr("obj"), Gatter_id_map);
         }
       }
     }
@@ -519,8 +519,8 @@ function place_gatter(gatter, place){
     d3.select(".drop[drop="+'"'+d3.select(gatter).attr("id")+'"'+"]").attr("drop", "0")
     Gatter_map[Gatter_id_map[d3.select(gatter).attr("id")]] = undefined;
     //clockTime  = clockTime - 5;
-    changeClockSpeed(clockspeed - 50);
-    Materialize.toast('Time runs now a little bit Faster !', 2000) // 4000 is the duration of the toast
+    //changeClockSpeed(clockspeed - 50);
+    //Materialize.toast('Time runs now a little bit Faster !', 2000) // 4000 is the duration of the toast
   }
   win = 1;
   $(obj_level.elements).each(function(index){
